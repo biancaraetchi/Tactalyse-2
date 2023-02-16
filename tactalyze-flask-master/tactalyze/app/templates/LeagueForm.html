@@ -1,0 +1,46 @@
+{% include 'header.html' %}
+
+      <div class="container">
+         <form enctype = "multipart/form-data" action="{{ url_for("player_controller.player_form") }}" method="post">
+         <div class="progress row mt-3">
+          <div class="progress-bar" style="width:33%"></div>
+        </div>
+             <div class="row mt-3">
+                 <h3>Add League Excel File</h3>
+             </div>
+
+            <div class="row mt-3">
+                <div class="col-md-6">
+                    <label for="excel" class="form-label">Add League Excel File *</label>
+                     <div class="file-upload-wrapper">
+                      <input type="file" id="excel"  accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+                             required name="excel" class="file-upload" />
+
+                    </div>
+                 </div>
+
+                <div class="col-md-6">
+                    <label for="position" class="form-label">Select Position *</label>
+                    <select  required id="position" name="position" class="form-control">
+                        {% for pos in positions %}
+                        <option value="{{ pos }}">{{ pos }}</option>
+                        {% endfor %}
+                    </select>
+
+                </div>
+
+             </div>
+
+            <div class="row mt-5">
+                <div class="col text-center">
+                    <input type="submit" class="btn btn-primary" value="Next">
+                </div>
+            </div>
+
+
+         </form>
+      </div>
+
+
+   </body>
+</html>

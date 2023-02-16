@@ -1,0 +1,75 @@
+{% include 'header.html' %}
+
+      <div class="container">
+         <form enctype = "multipart/form-data" action="{{ url_for("player_controller.select_stats_form") }}" method="post">
+             <div class="row mt-3">
+                 <h3>Date Of Signing</h3>
+             </div>
+
+             <div class="row">
+
+
+                 <div class="col-md-6">
+                     <label class="form-label" for="signing-date">Select Date Of Signing *</label>
+                     <input type="date" name="signing-date" id="signing-date" class="form-control" required>
+                 </div>
+
+                 <div class="col-md-6">
+                     <input type="number" hidden="true" value="{{ player_id }}" name="id">
+                      <label for="time-frame" class="form-label">Choose Time Frame (Yrs) *</label>
+                    <select  required id="time-frame" name="time_frame" class="form-control">
+                        {% for yr in time_frames %}
+                        <option value="{{ yr }}">{{ yr }}</option>
+                        {% endfor %}
+                    </select>
+
+                 </div>
+
+
+             </div>
+
+            <div class="row mt-3">
+                <div class="col-md-6">
+                    <label for="excel" class="form-label">Add Excel File *</label>
+                     <div class="file-upload-wrapper">
+                      <input type="file" id="excel"  accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+                             required name="excel" class="file-upload" />
+
+                    </div>
+                 </div>
+                <div class="col-md-6">
+                    <label for="league" class="form-label">Select League *</label>
+                    <select  required id="league" name="league" class="form-control">
+                        {% for lg in leagues %}
+                        <option value="{{ lg }}">{{ lg }}</option>
+                        {% endfor %}
+                    </select>
+
+                </div>
+             </div>
+
+            <div class="row mt-3">
+                <div class="col-md-12 col">
+                    <label for="position" class="form-label">Select Position *</label>
+                    <select  required id="position" name="position" class="form-control">
+                        {% for pos in positions %}
+                        <option value="{{ pos }}">{{ pos }}</option>
+                        {% endfor %}
+                    </select>
+
+                </div>
+            </div>
+
+
+
+            <div class="row mt-3">
+                <div class="col text-center">
+                    <input type="submit" class="btn btn-primary" value="Select Player Name">
+                </div>
+            </div>
+         </form>
+      </div>
+
+
+   </body>
+</html>
