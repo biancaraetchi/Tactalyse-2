@@ -1,0 +1,181 @@
+{% include 'header.html' %}
+   
+      <div class="container">
+         <form enctype = "multipart/form-data" action="{{ url_for("player_controller.generate_graphs") }}"  method="post">
+             <div class="progress row mt-3">
+              <div class="progress-bar" style="width:66%"></div>
+            </div>
+             <div class="row mt-3">
+                 <h3>Add Player Details</h3>
+                <div class="alert alert-info">
+                    Player names are extracted from the league excel sheet provided in the previous page.
+                </div>
+             </div>
+
+             <div class="row">
+                 <div class="col-md-4">
+                    <label for="nameList" class="form-label">Name *</label>
+                    <input type="text" hidden="true" name="id" value="{{ id }}">
+                    <input class="form-control" list="nameOptions" id="nameList" required name="name" placeholder="Type to search...">
+                    <datalist id="nameOptions">
+                         {% for name in names %}
+                        <option value="{{ name }}">{{ name }}</option>
+                        {% endfor %}
+                    </datalist>
+
+                 </div>
+                <div class="col-md-4">
+                    <label for="league" class="form-label">League *</label>
+                    <input type="text" required id="league" name="league" class="form-control">
+
+                 </div>
+
+                <div class="col-md-4">
+                    <label for="position" class="form-label">Position *</label>
+                    <input type="text" required id="position" name="position" class="form-control" disabled value="{{position}}">
+                    <input type="text" required name="position" hidden="true" value="{{position}}">
+                    <input type="text" required name="league_file_name" hidden="true" value="{{filename}}">
+                 </div>
+
+             </div>
+
+              <div class="row">
+                <div class="col">
+                    <label for="season" class="form-label">Select Season *</label>
+                    <select  required id="season" name="season" class="form-control">
+                        {% for sess in seasons %}
+                        <option value="{{ sess }}">{{ sess }}</option>
+                        {% endfor %}
+                    </select>
+
+                </div>
+
+                 <div class="col">
+                    <label for="height" class="form-label">Height *</label>
+                    <input type="text" required id="height" name="height" class="form-control">
+
+                 </div>
+
+                  <div class="col">
+                       <label for="dob" class="form-label">DOB *</label>
+                         <input type="date" id="dob" name="dob" class="form-control" required>
+
+                  </div>
+
+              </div>
+
+             <div class="row">
+                 <div class="col">
+                     <label for="agent" class="form-label">Agent *</label>
+                    <input type="text" required id="agent" name="agent" class="form-control">
+                 </div>
+                 <div class="col">
+                     <label for="club" class="form-label">Club *</label>
+                    <input class="form-control" list="clubs" name="club" id="club">
+                    <datalist id="clubs">
+                        <option value="">
+                    </datalist>
+                 </div>
+
+                 <div class="col">
+                     <label for="country" class="form-label">Country *</label>
+                    <input class="form-control" list="country" name="country" id="country">
+                    <datalist id="country">
+                        <option value="">
+                    </datalist>
+                 </div>
+
+             </div>
+
+            <div class="row">
+
+
+                 <div class="col">
+                     <label class="form-label" for="signing-date">Select Start Date Tactalyse *</label>
+                     <input type="date" name="signing-date" id="signing-date" class="form-control" required>
+                 </div>
+
+
+                 <div class="col">
+                     <label class="form-label" for="end-date">Select End Date Tactalyse *</label>
+                     <input type="date" name="end-date" id="end-date" class="form-control" required>
+                 </div>
+
+
+                 <div class="col">
+                      <label for="time-frame" class="form-label">Choose Time Frame (Yrs) *</label>
+                    <select  required id="time-frame" name="time_frame" class="form-control">
+                        {% for yr in time_frames %}
+                        <option value="{{ yr }}">{{ yr }}</option>
+                        {% endfor %}
+                    </select>
+
+                 </div>
+
+
+             </div>
+
+            <div>
+
+            <div class="row mt-3">
+                <div class="col-md-6">
+                    <label for="excel" class="form-label">Add Player Excel File *</label>
+                     <div class="file-upload-wrapper">
+                      <input type="file" id="excel"  accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+                             required name="excel" class="file-upload" />
+
+                     </div>
+                 </div>
+
+                 <div class="col-md-6">
+                     <label for="profile-pic" class="form-label">Add Profile Picture *</label>
+                     <div class="file-upload-wrapper">
+                      <input type="file" id="profile-pic"  accept="image/png, image/jpeg" required name="profile-pic" class="file-upload" />
+                 </div>
+
+            </div>
+                <div class="row mt-5">
+                    <div class="form-check col">
+                      <input class="form-check-input" type="checkbox" id="check1" name="compare"
+                             value="compare" >
+                      <label class="form-check-label">Compare 2 Players</label>
+                    </div>
+                </div>
+                <div class="row mt-3" id="compare-box" style="display: none;">
+                    <div class="col-md-6">
+                    <label for="nameList2" class="form-label">Player 2 Name *</label>
+                    <input class="form-control" list="nameOptions2" id="nameList2" required name="name2"
+                           placeholder="Type to search...">
+                    <datalist id="nameOptions2">
+                         {% for name in names %}
+                        <option value="{{ name }}">{{ name }}</option>
+                        {% endfor %}
+                    </datalist>
+
+                 </div>
+                    <div class="col-md-6">
+                        <label for="excel" class="form-label">Add Player 2 Excel File *</label>
+                         <div class="file-upload-wrapper">
+                          <input type="file" id="excel"  accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+                                 required name="excel2" class="file-upload" />
+
+                         </div>
+                     </div>
+                </div>
+
+            <div class="row mt-3">
+                <div class="col text-center">
+                    <input type="submit" class="btn btn-primary" value="Generate Report">
+                </div>
+            </div>
+         </form>
+      </div>
+
+        <script>
+
+            $("#check1").click(function(){
+              $("#compare-box").toggle();
+            });
+        </script>
+   </body>
+</html>

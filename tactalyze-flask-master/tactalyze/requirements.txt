@@ -1,0 +1,13 @@
+numpy
+pandas
+matplotlib
+fpdf2
+openpyxl
+flask
+python-dotenv
+flask-sqlalchemy
+pymysql
+werkzeug
+flask_simplelogin
+gunicorn
+gevent
