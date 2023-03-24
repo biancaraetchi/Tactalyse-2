@@ -1,6 +1,7 @@
-from graphs.abstract_graph import Graph
+from graph_generator.graphs.abstract_graph import Graph
 import matplotlib.pyplot as plt
 import numpy as np
+import io
 
 
 class DefaultGraph(Graph):
@@ -19,4 +20,15 @@ class DefaultGraph(Graph):
         ax.grid(True)
 
         ax.set_title("A line plot on a polar axis", va='bottom')
-        plt.show()
+        ax.set_ylim([0, 2])
+        ax.set_xlim([0, 2*np.pi])
+
+        # Save the plot to a file
+        buffer = io.BytesIO()
+        plt.savefig(buffer, format='png')
+        buffer.seek(0)
+        image_png = buffer.getvalue()
+        buffer.close()
+
+        # Return the image as bytes
+        return image_png
