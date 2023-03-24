@@ -1,5 +1,4 @@
 from graph_generator.factories.polar_plot_factory import PolarPlotFactory
-from graph_generator.graphs.abstract_graph import Graph
 import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
 import io
