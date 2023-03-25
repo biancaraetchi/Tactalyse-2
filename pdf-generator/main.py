@@ -4,14 +4,14 @@ class PDF(FPDF):
 
     player_name = "K. Kvaratskhelia"
     player_position = "Winger"
-    player_height = ""
-    player_DOB = ""   
-    player_agent = ""
-    player_age = ""
-    player_country = ""
-    player_agent = ""
-    player_club = ""
-    player_league = ""
+    player_height = "temp1"
+    player_DOB = "13/03/1997"   
+    player_agent = "temp2"
+    player_age = "22"
+    player_country = "temp4"
+    player_agent = "temp5"
+    player_club = "temp6"
+    player_league = "temp7"
 
     def header(self):
         # Banner
@@ -19,7 +19,7 @@ class PDF(FPDF):
         # Logo 1
         self.image('images/Logo_Tactalyse.png', 4, 2, 25)
         # Logo 2
-        self.image('images/Logo_Tactalyse_Stats.png', 87, 7, 115)
+        self.image('images/Logo_Tactalyse_Stats.png', 50, 7, 115)
         # Background
         self.image("images/BackgroundClean.png", x=0, y=30, w=self.w, h=self.h)
         # Arial bold 15
@@ -70,6 +70,55 @@ class PDF(FPDF):
         self.cell(0, 14, "Stats Report for " + self.player_name, 0, 1, 'C', False)
         self.ln(4)
 
+    def print_player_basic_info(self):
+        self.image('images/placeholder_player_photo.jpg', 50, 60, 115)
+        self.set_font('Arial', 'B', 14)
+        self.set_text_color(195, 37, 37)
+
+        # First column 
+        self.set_xy(48, 140.0)
+        self.cell(0, 20, 'POSITION: ', ln = 1)
+        self.set_xy(78, 140.0)
+        self.cell(0, 20, pdf.player_position, ln = 1)
+
+        self.set_xy(48, 150.0)
+        self.cell(0, 20, 'HEIGHT: ', ln = 1)
+        self.set_xy(78, 150.0)
+        self.cell(0, 20, pdf.player_height, ln = 1)
+
+        self.set_xy(48, 160.0)
+        self.cell(0, 20, 'DOB: ', ln = 1)
+        self.set_xy(78, 160.0)
+        self.cell(0, 20, pdf.player_DOB, ln = 1)
+
+        self.set_xy(48, 170.0)
+        self.cell(0, 20, 'AGENT: ', ln = 1)
+        self.set_xy(78, 170.0)
+        self.cell(0, 20, pdf.player_agent, ln =1)
+
+        # Second column
+        self.set_xy(120, 140.0)
+        self.cell(0, 20, 'AGE: ', ln = 1)
+        self.set_xy(150, 140.0)
+        self.cell(0, 20, pdf.player_age, ln =1)
+
+        self.set_xy(120, 150.0)
+        self.cell(0, 20, 'CLUB: ', ln = 1)
+        self.set_xy(150, 150.0)
+        self.cell(0, 20, pdf.player_club, ln =1)
+
+        self.set_xy(120, 160.0)
+        self.cell(0, 20, 'LEAGUE: ', ln = 1)
+        self.set_xy(150, 160.0)
+        self.cell(0, 20, pdf.player_league, ln =1)
+
+        self.set_xy(120, 170.0)
+        self.cell(0, 20, 'COUNTRY: ', ln = 1)
+        self.set_xy(150, 170.0)
+        self.cell(0, 20, pdf.player_country, ln =1)
+
+
+
 # Instantiation of inherited class
 pdf = PDF()
 pdf.alias_nb_pages()
@@ -79,7 +128,9 @@ pdf.set_fill_color(255, 230, 230)
 pdf.set_title(pdf.player_name)
 pdf.add_page()
 pdf.print_title()
-pdf.image('images/placeholder_player_photo.jpg', 50, 60, 115)
+pdf.print_player_basic_info()
+pdf.set_text_color(0, 0, 0)
+# pdf.image('images/placeholder_player_photo.jpg', 50, 60, 115)
 
 pdf.print_chapter('Stats Progression', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.')
 pdf.output(pdf.title + '.pdf', 'F')
