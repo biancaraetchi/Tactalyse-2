@@ -3,6 +3,14 @@ from fpdf import FPDF
 class PDF(FPDF):
 
     player_name = "K. Kvaratskhelia"
+    player_position = "Winger"
+    player_height = ""
+    player_DOB = ""
+    player_age = ""
+    player_country = ""
+    player_agent = ""
+    player_club = ""
+    player_league = ""
 
     def header(self):
         # Banner
