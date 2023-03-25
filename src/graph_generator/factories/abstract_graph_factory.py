@@ -15,9 +15,9 @@ class AbstractGraphFactory(ABC):
         Creates a new graph instance based on the passed string parameter
 
         Parameters:
-            graph_type (str): The desired object type
+            graph_type (str): The desired graph type
 
         Return:
-            Graph: The object represented by obj_type
+            Graph: The graph object represented by graph_type
         """
         pass
