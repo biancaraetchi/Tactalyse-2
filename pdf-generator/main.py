@@ -5,7 +5,8 @@ class PDF(FPDF):
     player_name = "K. Kvaratskhelia"
     player_position = "Winger"
     player_height = ""
-    player_DOB = ""
+    player_DOB = ""   
+    player_agent = ""
     player_age = ""
     player_country = ""
     player_agent = ""
@@ -78,6 +79,7 @@ pdf.set_fill_color(255, 230, 230)
 pdf.set_title(pdf.player_name)
 pdf.add_page()
 pdf.print_title()
+pdf.image('images/placeholder_player_photo.jpg', 50, 60, 115)
 
 pdf.print_chapter('Stats Progression', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.')
 pdf.output(pdf.title + '.pdf', 'F')
