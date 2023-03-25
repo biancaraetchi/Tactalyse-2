@@ -71,9 +71,9 @@ class PDF(FPDF):
         self.ln(4)
 
     def print_player_basic_info(self):
+        #print player's image in the first page
         self.image('images/placeholder_player_photo.jpg', 50, 60, 115)
         self.set_font('Arial', 'B', 14)
-        self.set_text_color(195, 37, 37)
 
         # First column 
         self.set_xy(48, 140.0)
