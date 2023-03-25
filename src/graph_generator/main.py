@@ -1,7 +1,5 @@
 from graph_generator.factories.polar_plot_factory import PolarPlotFactory
 import matplotlib.pyplot as plt
-import matplotlib.image as mpimg
-import io
 
 
 if __name__ == '__main__':
