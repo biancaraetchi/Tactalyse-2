@@ -8,5 +8,6 @@ class LinePlotFactory(AbstractGraphFactory):
     def create_instance(self, graph_type):
         if graph_type != 'Default':
             print("To be implemented.")
+            return DefaultGraph()
         else:
             return DefaultGraph()
