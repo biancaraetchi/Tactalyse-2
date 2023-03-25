@@ -7,7 +7,7 @@ class Graph(ABC):
     """
 
     @abstractmethod
-    def draw(self, data) -> bytes:
+    def draw(self, data) -> any:
         """
         Draws the graph based on passed data
 
@@ -15,6 +15,6 @@ class Graph(ABC):
             data (DataFrame): Dataframe containing relevant data to plot
 
         Returns:
-            bytes: The image containing the graph in bytes
+            any: The image containing the graph
         """
         pass

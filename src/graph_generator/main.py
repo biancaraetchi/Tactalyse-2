@@ -12,10 +12,7 @@ if __name__ == '__main__':
     data = 0
 
     # Call the draw function and store the result in a variable
-    image_bytes = graph.draw(data)
-
-    # Load the image data using Matplotlib's imread function
-    image = mpimg.imread(io.BytesIO(image_bytes))
+    image = graph.draw(data)
 
     # Display the image using Matplotlib's imshow function
     plt.imshow(image)

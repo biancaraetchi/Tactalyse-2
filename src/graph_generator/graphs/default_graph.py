@@ -1,5 +1,6 @@
 from graph_generator.graphs.abstract_graph import Graph
 import matplotlib.pyplot as plt
+import matplotlib.image as mpimg
 import numpy as np
 import io
 
@@ -27,8 +28,11 @@ class DefaultGraph(Graph):
         buffer = io.BytesIO()
         plt.savefig(buffer, format='png')
         buffer.seek(0)
-        image_png = buffer.getvalue()
+        image_bytes = buffer.getvalue()
         buffer.close()
+
+        # Load the image data using Matplotlib's imread function
+        image_png = mpimg.imread(io.BytesIO(image_bytes))
 
         # Return the image as bytes
         return image_png
