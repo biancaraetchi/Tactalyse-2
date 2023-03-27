@@ -4,8 +4,6 @@ import os
 
 class PDF(FPDF):
 
-    # path = os.getcwd()
-
     player_name = "K. Kvaratskhelia"
     player_position = "Winger"
     player_height = "temp1"
@@ -151,7 +149,7 @@ pdf.add_page()
 pdf.print_title()
 pdf.print_player_basic_info()
 pdf.set_text_color(0, 0, 0)
-# pdf.image('images/placeholder_player_photo.jpg', 50, 60, 115)
+
 
 pdf.print_chapter('Stats Progression', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.')
 pdf.output(pdf.title + '.pdf', 'F')
