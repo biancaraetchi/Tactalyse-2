@@ -11,11 +11,13 @@ class PDF(FPDF):
     player_height = "temp1"
     player_DOB = "13/03/1997"   
     player_agent = "temp2"
-    player_age = "22"
+    player_age = "temp3"
     player_country = "temp4"
     player_agent = "temp5"
     player_club = "temp6"
     player_league = "temp7"
+    player_weight = "temp8"
+    player_foot = "temp9"
 
     def header(self):
         # Banner
@@ -103,6 +105,11 @@ class PDF(FPDF):
         self.set_xy(start_x_pos + end_pos, start_y_pos + 30)
         self.cell(0, 20, pdf.player_agent, ln =1)
 
+        self.set_xy(start_x_pos, start_y_pos + 40)
+        self.cell(0, 20, 'WEIGHT: ', ln = 1)
+        self.set_xy(start_x_pos + end_pos, start_y_pos + 40)
+        self.cell(0, 20, pdf.player_weight, ln =1)
+
         # Second column
         start_x2_pos = 120.0
         start_y2_pos = 140.0
@@ -125,6 +132,11 @@ class PDF(FPDF):
         self.cell(0, 20, 'COUNTRY: ', ln = 1)
         self.set_xy(start_x2_pos + end_pos, start_y2_pos + 30)
         self.cell(0, 20, pdf.player_country, ln =1)
+
+        self.set_xy(start_x2_pos, start_y2_pos + 40)
+        self.cell(0, 20, 'FOOT: ', ln = 1)
+        self.set_xy(start_x2_pos + end_pos, start_y2_pos + 40)
+        self.cell(0, 20, pdf.player_foot, ln =1)
 
 
 
