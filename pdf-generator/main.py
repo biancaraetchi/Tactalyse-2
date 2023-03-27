@@ -1,6 +1,10 @@
 from fpdf import FPDF
+import os
+
 
 class PDF(FPDF):
+
+    # path = os.getcwd()
 
     player_name = "K. Kvaratskhelia"
     player_position = "Winger"
@@ -74,47 +78,52 @@ class PDF(FPDF):
         #print player's image in the first page
         self.image('images/placeholder_player_photo.jpg', 50, 60, 115)
         self.set_font('Arial', 'B', 14)
+        end_pos = 30
 
         # First column 
-        self.set_xy(48, 140.0)
+        start_x_pos = 50.0
+        start_y_pos = 140.0
+        self.set_xy(start_x_pos, start_y_pos)
         self.cell(0, 20, 'POSITION: ', ln = 1)
-        self.set_xy(78, 140.0)
+        self.set_xy(start_x_pos + end_pos, start_y_pos)
         self.cell(0, 20, pdf.player_position, ln = 1)
 
-        self.set_xy(48, 150.0)
+        self.set_xy(start_x_pos, start_y_pos + 10)
         self.cell(0, 20, 'HEIGHT: ', ln = 1)
-        self.set_xy(78, 150.0)
+        self.set_xy(start_x_pos + end_pos, start_y_pos + 10)
         self.cell(0, 20, pdf.player_height, ln = 1)
 
-        self.set_xy(48, 160.0)
+        self.set_xy(start_x_pos, start_y_pos + 20)
         self.cell(0, 20, 'DOB: ', ln = 1)
-        self.set_xy(78, 160.0)
+        self.set_xy(start_x_pos + end_pos, start_y_pos + 20)
         self.cell(0, 20, pdf.player_DOB, ln = 1)
 
-        self.set_xy(48, 170.0)
+        self.set_xy(start_x_pos, start_y_pos + 30)
         self.cell(0, 20, 'AGENT: ', ln = 1)
-        self.set_xy(78, 170.0)
+        self.set_xy(start_x_pos + end_pos, start_y_pos + 30)
         self.cell(0, 20, pdf.player_agent, ln =1)
 
         # Second column
-        self.set_xy(120, 140.0)
+        start_x2_pos = 120.0
+        start_y2_pos = 140.0
+        self.set_xy(start_x2_pos, start_y2_pos)
         self.cell(0, 20, 'AGE: ', ln = 1)
-        self.set_xy(150, 140.0)
+        self.set_xy(start_x2_pos + end_pos, start_y2_pos)
         self.cell(0, 20, pdf.player_age, ln =1)
 
-        self.set_xy(120, 150.0)
+        self.set_xy(start_x2_pos, start_y2_pos + 10)
         self.cell(0, 20, 'CLUB: ', ln = 1)
-        self.set_xy(150, 150.0)
+        self.set_xy(start_x2_pos + end_pos, start_y2_pos + 10)
         self.cell(0, 20, pdf.player_club, ln =1)
 
-        self.set_xy(120, 160.0)
+        self.set_xy(start_x2_pos, start_y2_pos + 20)
         self.cell(0, 20, 'LEAGUE: ', ln = 1)
-        self.set_xy(150, 160.0)
+        self.set_xy(start_x2_pos + end_pos, start_y2_pos + 20)
         self.cell(0, 20, pdf.player_league, ln =1)
 
-        self.set_xy(120, 170.0)
+        self.set_xy(start_x2_pos, start_y2_pos + 30)
         self.cell(0, 20, 'COUNTRY: ', ln = 1)
-        self.set_xy(150, 170.0)
+        self.set_xy(start_x2_pos + end_pos, start_y2_pos + 30)
         self.cell(0, 20, pdf.player_country, ln =1)
 
 
