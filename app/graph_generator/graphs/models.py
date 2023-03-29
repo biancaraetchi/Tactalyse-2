@@ -1,13 +1,16 @@
-from graph_generator.graphs.abstract_graph import Graph
+from graphs.abstract_models import Graph
 import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
 import numpy as np
 import io
 
 
-class DefaultGraph(Graph):
+class PolarPlot(Graph):
     """ Class representing a default Graph """
 
+    def __init__(self):
+        pass
+        
     def draw(self, data):
         print("hiii")
         r = np.arange(0, 2, 0.01)
