@@ -16,16 +16,19 @@ class PDF(FPDF):
     player_league = "temp7"
     player_weight = "temp8"
     player_foot = "temp9"
+    player_on_loan = "yes"
+    player_contract_date = "temp10"
+    player_num_matches = "10"
 
     def header(self):
         # Banner
         self.rect(-1, -1, 250, 30, 'DF')
         # Logo 1
-        self.image('images/Logo_Tactalyse.png', 4, 2, 25)
+        self.image('app/pdf_generator/pdf-generator/images/Logo_Tactalyse.png', 4, 2, 25)
         # Logo 2
-        self.image('images/Logo_Tactalyse_Stats.png', 50, 7, 115)
+        self.image('app/pdf_generator/pdf-generator/images/Logo_Tactalyse_Stats.png', 50, 7, 115)
         # Background
-        self.image("images/BackgroundClean.png", x=0, y=30, w=self.w, h=self.h)
+        self.image("app/pdf_generator/pdf-generator/images/BackgroundClean.png", x=0, y=30, w=self.w, h=self.h)
         # Arial bold 15
         self.set_font('Arial', 'B', 15)
         # Move to the right
@@ -76,65 +79,82 @@ class PDF(FPDF):
 
     #print player's image in the first page
     def print_player_basic_info(self):
-        self.image('images/placeholder_player_photo.jpg', 50, 60, 115)
+        self.image('app/pdf_generator/pdf-generator/images/placeholder_player_photo.jpg', 50, 60, 115)
         self.set_font('Arial', 'B', 14)
         end_pos = 30
 
         # First column 
         start_x_pos = 50.0
-        start_y_pos = 140.0
+        start_y_pos = 150.0
         self.set_xy(start_x_pos, start_y_pos)
         self.cell(0, 20, 'POSITION: ', ln = 1)
         self.set_xy(start_x_pos + end_pos, start_y_pos)
         self.cell(0, 20, pdf.player_position, ln = 1)
 
         self.set_xy(start_x_pos, start_y_pos + 10)
-        self.cell(0, 20, 'HEIGHT: ', ln = 1)
+        self.cell(0, 20, 'CLUB: ', ln = 1)
         self.set_xy(start_x_pos + end_pos, start_y_pos + 10)
-        self.cell(0, 20, pdf.player_height, ln = 1)
+        self.cell(0, 20, pdf.player_club, ln = 1)
 
         self.set_xy(start_x_pos, start_y_pos + 20)
-        self.cell(0, 20, 'DOB: ', ln = 1)
+        self.cell(0, 20, 'ON LOAN: ', ln = 1)
         self.set_xy(start_x_pos + end_pos, start_y_pos + 20)
-        self.cell(0, 20, pdf.player_DOB, ln = 1)
+        self.cell(0, 20, pdf.player_on_loan, ln = 1)
 
         self.set_xy(start_x_pos, start_y_pos + 30)
-        self.cell(0, 20, 'AGENT: ', ln = 1)
-        self.set_xy(start_x_pos + end_pos, start_y_pos + 30)
-        self.cell(0, 20, pdf.player_agent, ln =1)
+        self.cell(0, 20, 'CONTRACT EXPIRES ON: ', ln = 1)
+        self.set_xy(start_x_pos + end_pos + 35, start_y_pos + 30)
+        self.cell(0, 20, pdf.player_contract_date, ln =1)
 
-        self.set_xy(start_x_pos, start_y_pos + 40)
-        self.cell(0, 20, 'WEIGHT: ', ln = 1)
-        self.set_xy(start_x_pos + end_pos, start_y_pos + 40)
-        self.cell(0, 20, pdf.player_weight, ln =1)
+        self.set_xy(start_x_pos, start_y_pos + 60)
+        self.cell(0, 20, 'COUNTRY: ', ln = 1)
+        self.set_xy(start_x_pos + end_pos, start_y_pos + 60)
+        self.cell(0, 20, pdf.player_country, ln =1)
+
+        self.set_xy(start_x_pos, start_y_pos + 70)
+        self.cell(0, 20, 'HEIGHT: ', ln = 1)
+        self.set_xy(start_x_pos + end_pos, start_y_pos + 70)
+        self.cell(0, 20, pdf.player_height + "cm", ln =1)
+
+        self.set_xy(start_x_pos, start_y_pos +80)
+        self.cell(0, 20, 'DOB: ', ln = 1)
+        self.set_xy(start_x_pos + end_pos, start_y_pos + 80)
+        self.cell(0, 20, pdf.player_DOB, ln =1)
+
 
         # Second column
         start_x2_pos = 120.0
-        start_y2_pos = 140.0
+        start_y2_pos = 150.0
         self.set_xy(start_x2_pos, start_y2_pos)
-        self.cell(0, 20, 'AGE: ', ln = 1)
-        self.set_xy(start_x2_pos + end_pos, start_y2_pos)
-        self.cell(0, 20, pdf.player_age, ln =1)
-
-        self.set_xy(start_x2_pos, start_y2_pos + 10)
-        self.cell(0, 20, 'CLUB: ', ln = 1)
-        self.set_xy(start_x2_pos + end_pos, start_y2_pos + 10)
-        self.cell(0, 20, pdf.player_club, ln =1)
-
-        self.set_xy(start_x2_pos, start_y2_pos + 20)
         self.cell(0, 20, 'LEAGUE: ', ln = 1)
-        self.set_xy(start_x2_pos + end_pos, start_y2_pos + 20)
+        self.set_xy(start_x2_pos + end_pos, start_y2_pos)
         self.cell(0, 20, pdf.player_league, ln =1)
 
-        self.set_xy(start_x2_pos, start_y2_pos + 30)
-        self.cell(0, 20, 'COUNTRY: ', ln = 1)
-        self.set_xy(start_x2_pos + end_pos, start_y2_pos + 30)
-        self.cell(0, 20, pdf.player_country, ln =1)
+        self.set_xy(start_x2_pos, start_y2_pos + 10)
+        self.cell(0, 20, 'AGENT: ', ln = 1)
+        self.set_xy(start_x2_pos + end_pos, start_y2_pos + 10)
+        self.cell(0, 20, pdf.player_agent, ln =1)
 
-        self.set_xy(start_x2_pos, start_y2_pos + 40)
+        self.set_xy(start_x2_pos, start_y2_pos + 20)
+        self.cell(0, 20, '#MATCHES: ', ln = 1)
+        self.set_xy(start_x2_pos + end_pos, start_y2_pos + 20)
+        self.cell(0, 20, pdf.player_num_matches, ln =1)
+
+        self.set_xy(start_x2_pos, start_y2_pos + 60)
+        self.cell(0, 20, 'AGE: ', ln = 1)
+        self.set_xy(start_x2_pos + end_pos, start_y2_pos + 60)
+        self.cell(0, 20, pdf.player_age, ln =1)
+
+        self.set_xy(start_x2_pos, start_y2_pos + 70)
+        self.cell(0, 20, 'WEIGHT: ', ln = 1)
+        self.set_xy(start_x2_pos + end_pos, start_y2_pos + 70)
+        self.cell(0, 20, pdf.player_weight + "kg", ln =1)
+
+        self.set_xy(start_x2_pos, start_y2_pos + 80)
         self.cell(0, 20, 'FOOT: ', ln = 1)
-        self.set_xy(start_x2_pos + end_pos, start_y2_pos + 40)
+        self.set_xy(start_x2_pos + end_pos, start_y2_pos + 80)
         self.cell(0, 20, pdf.player_foot, ln =1)
+
 
 
 
