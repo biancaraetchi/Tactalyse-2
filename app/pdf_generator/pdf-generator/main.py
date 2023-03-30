@@ -167,7 +167,6 @@ pdf.set_title(pdf.player_name)
 pdf.add_page()
 pdf.print_title()
 pdf.print_player_basic_info()
-pdf.set_text_color(0, 0, 0)
 
 
 pdf.print_chapter('Stats Progression', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.')
