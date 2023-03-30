@@ -76,7 +76,7 @@ class PDF(FPDF):
         self.cell(0, 14, "Stats Report for " + self.player_name, 0, 1, 'C', False)
         self.ln(4)
 
-    #print player's image and baisc information in the first page
+    #print player's image and basic information in the first page
     def print_player_basic_info(self):
         self.image('app/pdf_generator/pdf-generator/images/placeholder_player_photo.jpg', 50, 60, 115)
         self.set_font('Arial', 'B', 14)
