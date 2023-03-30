@@ -77,7 +77,7 @@ class PDF(FPDF):
         self.cell(0, 14, "Stats Report for " + self.player_name, 0, 1, 'C', False)
         self.ln(4)
 
-    #print player's image in the first page
+    #print player's image and basic information in the first page
     def print_player_basic_info(self):
         self.image('app/pdf_generator/pdf-generator/resources/images/placeholder_player_photo.jpg', 50, 60, 115)
         self.set_font('Arial', 'B', 14)
@@ -170,7 +170,6 @@ pdf.set_title(pdf.player_name)
 pdf.add_page()
 pdf.print_title()
 pdf.print_player_basic_info()
-pdf.set_text_color(0, 0, 0)
 
 
 pdf.print_chapter('Stats Progression', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.')
