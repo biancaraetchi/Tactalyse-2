@@ -1,4 +1,10 @@
 
+def get_columns(df, position):
+    """
+    Extracts the columns from the 
+    """
+    return
+
 def position_dictionary():
     """
     Creates a collection of all position codes, with their associated general position.

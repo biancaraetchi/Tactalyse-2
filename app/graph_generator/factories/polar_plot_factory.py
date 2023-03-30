@@ -1,5 +1,5 @@
-from graph_generator.factories.abstract_graph_factory import AbstractGraphFactory
-from graph_generator.graphs.default_graph import DefaultGraph
+from factories.abstract_graph_factory import AbstractGraphFactory
+from graphs.models import PolarPlot
 
 
 class PolarPlotFactory(AbstractGraphFactory):
