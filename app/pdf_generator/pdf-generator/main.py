@@ -1,6 +1,6 @@
 from fpdf import FPDF
+import pandas as pd
 import os
-
 
 class PDF(FPDF):
 
@@ -24,11 +24,11 @@ class PDF(FPDF):
         # Banner
         self.rect(-1, -1, 250, 30, 'DF')
         # Logo 1
-        self.image('app/pdf_generator/pdf-generator/images/Logo_Tactalyse.png', 4, 2, 25)
+        self.image('app/pdf_generator/pdf-generator/resources/images/Logo_Tactalyse.png', 4, 2, 25)
         # Logo 2
-        self.image('app/pdf_generator/pdf-generator/images/Logo_Tactalyse_Stats.png', 50, 7, 115)
+        self.image('app/pdf_generator/pdf-generator/resources/images/Logo_Tactalyse_Stats.png', 50, 7, 115)
         # Background
-        self.image("app/pdf_generator/pdf-generator/images/BackgroundClean.png", x=0, y=30, w=self.w, h=self.h)
+        self.image("app/pdf_generator/pdf-generator/resources/images/BackgroundClean.png", x=0, y=30, w=self.w, h=self.h)
         # Arial bold 15
         self.set_font('Arial', 'B', 15)
         # Move to the right
@@ -79,7 +79,7 @@ class PDF(FPDF):
 
     #print player's image in the first page
     def print_player_basic_info(self):
-        self.image('app/pdf_generator/pdf-generator/images/placeholder_player_photo.jpg', 50, 60, 115)
+        self.image('app/pdf_generator/pdf-generator/resources/images/placeholder_player_photo.jpg', 50, 60, 115)
         self.set_font('Arial', 'B', 14)
         end_pos = 30
 
@@ -156,6 +156,8 @@ class PDF(FPDF):
         self.cell(0, 20, pdf.player_foot, ln =1)
 
 
+pd.read_csv('app/pdf_generator/pdf-generator/resources/test_data/ENG2', header=0, names=0)
+#league_dataframe = league_data('app/pdf_generator/pdf-generator/resources/test_data/ENG2.xlsx', 'A. Masina')
 
 
 # Instantiation of inherited class
