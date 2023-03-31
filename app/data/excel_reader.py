@@ -1,8 +1,11 @@
 import pandas as pd
 
+
 class ExcelReader:
-    def read_file(file):
-        return pd.read_csv(file, header=0, names=0)
+
+    def read_file(self, file):
+        return pd.read_excel(file)
+
 
 def player_data(player_file):
     """

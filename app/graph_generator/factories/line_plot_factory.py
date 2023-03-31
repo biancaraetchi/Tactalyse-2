@@ -1,5 +1,5 @@
-from factories.abstract_graph_factory import AbstractGraphFactory
-from graphs.default_graph import DefaultGraph
+from graph_generator.factories.abstract_graph_factory import AbstractGraphFactory
+from graph_generator.graphs.models import PolarPlot
 
 
 class LinePlotFactory(AbstractGraphFactory):
@@ -8,6 +8,6 @@ class LinePlotFactory(AbstractGraphFactory):
     def create_instance(self, graph_type):
         if graph_type != 'Default':
             print("To be implemented.")
-            return DefaultGraph()
+            return PolarPlot()
         else:
-            return DefaultGraph()
+            return PolarPlot()

@@ -1,9 +1,11 @@
 
+
 def get_columns(df, position):
     """
     Extracts the columns from the 
     """
-    return
+    return df.columns
+
 
 def position_dictionary():
     """
@@ -26,10 +28,10 @@ def position_dictionary():
     return pos_dict
 
 
-def main_position(player, pos_dict):
+def main_position(position):
     """
     Returns the general position corresponding to a player's main position in string form.
     """
 
-    position = player['Main Position']
+    pos_dict = position_dictionary()
     return pos_dict.get(position)
