@@ -1,4 +1,8 @@
 from flask import Flask, request, Response
+from controller.data_service import *
+from controller.graph_service import *
+from controller.pdf_service import *
+import matplotlib.pyplot as plt
 app = Flask(__name__)
 
 
@@ -26,10 +30,13 @@ def generate_pdf():
         response_text = "Successfully called endpoint."
         code = 200
 
-    # pass everything to graphs
-    # pass everything to pdfs
+    league_df, player_df = read_files_standard(league_file, player_file)
+    columns = get_column_names(player_df)
+    main_pos = get_main_position(league_df, player_name)
 
-    response = Response(response_text, status=code, mimetype='application/json')
+    plot = create_polar_plot(main_pos, player_df, columns)
+
+    response = Response(plot, status=code, mimetype='application/json')
 
     return response
 

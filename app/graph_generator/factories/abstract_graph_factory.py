@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from graphs.abstract_models import Graph
+from graph_generator.graphs.abstract_models import Graph
 
 
 class AbstractGraphFactory(ABC):

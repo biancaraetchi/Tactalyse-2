@@ -1,4 +1,4 @@
-from graphs.abstract_models import Graph
+from graph_generator.graphs.abstract_models import Graph
 import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
 import numpy as np
@@ -7,11 +7,13 @@ import io
 
 class PolarPlot(Graph):
     """ Class representing a default Graph """
+    __position = ''
 
-    def __init__(self):
-        pass
+    def __init__(self, player_pos=None):
+        if player_pos:
+            self.__position = player_pos
         
-    def draw(self, data):
+    def draw(self, data, column_names):
         print("hiii")
         r = np.arange(0, 2, 0.01)
         theta = 2 * np.pi * r
@@ -23,7 +25,7 @@ class PolarPlot(Graph):
         ax.set_rlabel_position(-22.5)  # Move radial labels away from plotted line
         ax.grid(True)
 
-        ax.set_title("A line plot on a polar axis", va='bottom')
+        ax.set_title("A template polar plot for position " + self.__position, va='bottom')
         ax.set_ylim([0, 2])
         ax.set_xlim([0, 2*np.pi])
 
