@@ -9,4 +9,9 @@
 /.idea/
 /.vscode/
 /src/
-/.DS_Store
+/__pycache__/
+/bin/
+/share/
+/site-packages/
+*.cfg
+/lib/
