@@ -6,6 +6,7 @@ from app.controller.pdf_service import *
 import matplotlib.pyplot as plt
 app = Flask(__name__)
 
+
 @app.route('/pdf', methods=["POST"])
 def generate_pdf():
     payload = request.get_json()

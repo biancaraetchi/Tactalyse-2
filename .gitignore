@@ -15,3 +15,4 @@
 /site-packages/
 *.cfg
 /lib/
+/venv
