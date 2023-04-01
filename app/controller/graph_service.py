@@ -4,6 +4,6 @@ import matplotlib.pyplot as plt
 
 def create_polar_plot(player_pos, player_df, columns):
     factory = PolarPlotFactory()
-    plot = factory.create_instance(player_pos)
-    png = plot.draw(player_df, columns)
-    return png
+    plot_obj = factory.create_instance(player_pos)
+    plot = plot_obj.draw(player_df, columns)
+    return plot

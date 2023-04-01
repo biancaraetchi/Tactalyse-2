@@ -1,7 +1,9 @@
 from controller.graph_service import create_polar_plot
 from controller.data_service import read_files_standard, get_column_names, get_main_position
 from controller.pdf_service import *
-import matplotlib.pyplot as plt
+import os
+import matplotlib
+matplotlib.use('TkAgg')
 
 
 def generate_pdf():
@@ -15,12 +17,17 @@ def generate_pdf():
 
     plot = create_polar_plot(main_pos, player_df, columns)
 
-    create_pdf(league_df, player_name, main_pos, plot)
+    pdf_bytes = create_pdf(league_df, player_name, main_pos, plot)
 
+    # Save the PDF to a file
+    with open("test.pdf", "wb") as f:
+        f.write(pdf_bytes)
 
-    # Display the image using Matplotlib's imshow function
-    plt.imshow(plot)
-    plt.show()
+    # Open the PDF file using the default PDF viewer
+    if os.name == 'nt':  # For Windows
+        os.startfile("test.pdf")
+    else:  # For macOS and Linux
+        os.system("open test.pdf")
 
 
 generate_pdf()

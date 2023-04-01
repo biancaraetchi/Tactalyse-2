@@ -3,7 +3,8 @@ from flask import Flask, request, Response
 from app.controller.data_service import *
 from app.controller.graph_service import *
 from app.controller.pdf_service import *
-import matplotlib.pyplot as plt
+import matplotlib
+matplotlib.use('TkAgg')
 app = Flask(__name__)
 
 
