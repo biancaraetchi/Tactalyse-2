@@ -93,7 +93,7 @@ class PDF(FPDF):
         self.cell(0, 14, "Stats Report for " + self.__player_name, 0, 1, 'C', False)
         self.ln(4)
 
-    def set_player_info_col1(self):
+    def print_player_info_col1(self):
         end_pos = 30
         start_x_pos = 50.0
         start_y_pos = 150.0
@@ -133,7 +133,7 @@ class PDF(FPDF):
         self.set_xy(start_x_pos + end_pos, start_y_pos + 80)
         self.cell(0, 20, self.__player_foot, ln =1)
 
-    def set_player_info_col2(self):
+    def print_player_info_col2(self):
         end_pos = 30
         start_x2_pos = 120.0
         start_y2_pos = 150.0
@@ -169,8 +169,8 @@ class PDF(FPDF):
         self.set_font('Arial', 'B', 14)
 
         # First column
-        self.set_player_info_col1()
-        self.set_player_info_col2()
+        self.print_player_info_col1()
+        self.print_player_info_col2()
 
     def print_plot(self, plot):
         img = Image.open(io.BytesIO(plot))

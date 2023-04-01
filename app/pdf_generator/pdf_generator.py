@@ -1,4 +1,4 @@
-from pdf_generator.pdf import PDF
+from pdf_generator.PDF import PDF
 
 
 def generate_basic_pdf(league_df, player_name, main_pos, plot):
