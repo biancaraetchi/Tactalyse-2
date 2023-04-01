@@ -2,9 +2,11 @@ from fpdf import FPDF
 import pandas as pd
 import os
 
+from fpdf import FPDF
+
 class PDF(FPDF):
 
-    player_name = "K. Kvaratskhelia"
+    player_name = "A. Masina"
     player_position = "Winger"
     player_height = "temp1"
     player_DOB = "13/03/1997"   
@@ -89,37 +91,37 @@ class PDF(FPDF):
         self.set_xy(start_x_pos, start_y_pos)
         self.cell(0, 20, 'POSITION: ', ln = 1)
         self.set_xy(start_x_pos + end_pos, start_y_pos)
-        self.cell(0, 20, pdf.player_position, ln = 1)
+        self.cell(0, 20, self.player_position, ln = 1)
 
         self.set_xy(start_x_pos, start_y_pos + 10)
         self.cell(0, 20, 'CLUB: ', ln = 1)
         self.set_xy(start_x_pos + end_pos, start_y_pos + 10)
-        self.cell(0, 20, pdf.player_club, ln = 1)
+        self.cell(0, 20, self.player_club, ln = 1)
 
         self.set_xy(start_x_pos, start_y_pos + 20)
         self.cell(0, 20, 'ON LOAN: ', ln = 1)
         self.set_xy(start_x_pos + end_pos, start_y_pos + 20)
-        self.cell(0, 20, pdf.player_on_loan, ln = 1)
+        self.cell(0, 20, self.player_on_loan, ln = 1)
 
         self.set_xy(start_x_pos, start_y_pos + 30)
         self.cell(0, 20, 'CONTRACT EXPIRES ON: ', ln = 1)
         self.set_xy(start_x_pos + end_pos + 35, start_y_pos + 30)
-        self.cell(0, 20, pdf.player_contract_date, ln =1)
+        self.cell(0, 20, self.player_contract_date, ln =1)
 
         self.set_xy(start_x_pos, start_y_pos + 60)
         self.cell(0, 20, 'COUNTRY: ', ln = 1)
         self.set_xy(start_x_pos + end_pos, start_y_pos + 60)
-        self.cell(0, 20, pdf.player_country, ln =1)
+        self.cell(0, 20, self.player_country, ln =1)
 
         self.set_xy(start_x_pos, start_y_pos + 70)
         self.cell(0, 20, 'HEIGHT: ', ln = 1)
         self.set_xy(start_x_pos + end_pos, start_y_pos + 70)
-        self.cell(0, 20, pdf.player_height + "cm", ln =1)
+        self.cell(0, 20, self.player_height + "cm", ln =1)
 
         self.set_xy(start_x_pos, start_y_pos +80)
         self.cell(0, 20, 'DOB: ', ln = 1)
         self.set_xy(start_x_pos + end_pos, start_y_pos + 80)
-        self.cell(0, 20, pdf.player_DOB, ln =1)
+        self.cell(0, 20, self.player_DOB, ln =1)
 
 
         # Second column
@@ -128,49 +130,29 @@ class PDF(FPDF):
         self.set_xy(start_x2_pos, start_y2_pos)
         self.cell(0, 20, 'LEAGUE: ', ln = 1)
         self.set_xy(start_x2_pos + end_pos, start_y2_pos)
-        self.cell(0, 20, pdf.player_league, ln =1)
+        self.cell(0, 20, self.player_league, ln =1)
 
         self.set_xy(start_x2_pos, start_y2_pos + 10)
         self.cell(0, 20, 'AGENT: ', ln = 1)
         self.set_xy(start_x2_pos + end_pos, start_y2_pos + 10)
-        self.cell(0, 20, pdf.player_agent, ln =1)
+        self.cell(0, 20, self.player_agent, ln =1)
 
         self.set_xy(start_x2_pos, start_y2_pos + 20)
         self.cell(0, 20, '#MATCHES: ', ln = 1)
         self.set_xy(start_x2_pos + end_pos, start_y2_pos + 20)
-        self.cell(0, 20, pdf.player_num_matches, ln =1)
+        self.cell(0, 20, self.player_num_matches, ln =1)
 
         self.set_xy(start_x2_pos, start_y2_pos + 60)
         self.cell(0, 20, 'AGE: ', ln = 1)
         self.set_xy(start_x2_pos + end_pos, start_y2_pos + 60)
-        self.cell(0, 20, pdf.player_age, ln =1)
+        self.cell(0, 20, self.player_age, ln =1)
 
         self.set_xy(start_x2_pos, start_y2_pos + 70)
         self.cell(0, 20, 'WEIGHT: ', ln = 1)
         self.set_xy(start_x2_pos + end_pos, start_y2_pos + 70)
-        self.cell(0, 20, pdf.player_weight + "kg", ln =1)
+        self.cell(0, 20, self.player_weight + "kg", ln =1)
 
         self.set_xy(start_x2_pos, start_y2_pos + 80)
         self.cell(0, 20, 'FOOT: ', ln = 1)
         self.set_xy(start_x2_pos + end_pos, start_y2_pos + 80)
-        self.cell(0, 20, pdf.player_foot, ln =1)
-
-
-pd.read_csv('app/pdf_generator/pdf-generator/resources/test_data/ENG2', header=0, names=0)
-#league_dataframe = league_data('app/pdf_generator/pdf-generator/resources/test_data/ENG2.xlsx', 'A. Masina')
-
-
-# Instantiation of inherited class
-pdf = PDF()
-pdf.alias_nb_pages()
-pdf.set_font('Arial', '', 12)
-pdf.set_draw_color(250, 51, 10)
-pdf.set_fill_color(255, 230, 230)
-pdf.set_title(pdf.player_name)
-pdf.add_page()
-pdf.print_title()
-pdf.print_player_basic_info()
-
-
-pdf.print_chapter('Stats Progression', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.')
-pdf.output(pdf.title + '.pdf', 'F')
+        self.cell(0, 20, self.player_foot, ln =1)

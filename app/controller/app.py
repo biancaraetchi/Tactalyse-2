@@ -1,10 +1,10 @@
 from flask import Flask, request, Response
-from controller.data_service import *
-from controller.graph_service import *
-from controller.pdf_service import *
+
+from app.controller.data_service import *
+from app.controller.graph_service import *
+from app.controller.pdf_service import *
 import matplotlib.pyplot as plt
 app = Flask(__name__)
-
 
 @app.route('/pdf', methods=["POST"])
 def generate_pdf():

@@ -1,5 +1,6 @@
 from controller.graph_service import create_polar_plot
 from controller.data_service import read_files_standard, get_column_names, get_main_position
+from controller.pdf_service import *
 import matplotlib.pyplot as plt
 
 
@@ -13,6 +14,9 @@ def generate_pdf():
     main_pos = get_main_position(league_df, player_name)
 
     plot = create_polar_plot(main_pos, player_df, columns)
+
+    create_pdf(league_df, player_name, main_pos, plot)
+
 
     # Display the image using Matplotlib's imshow function
     plt.imshow(plot)
