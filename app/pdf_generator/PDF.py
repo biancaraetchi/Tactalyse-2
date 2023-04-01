@@ -40,11 +40,11 @@ class PDF(FPDF):
         # Banner
         self.rect(-1, -1, 250, 30, 'DF')
         # Logo 1
-        self.image('../pdf_generator/resources/images/Logo_Tactalyse.png', 4, 2, 25)
+        self.image('pdf_generator/resources/images/Logo_Tactalyse.png', 4, 2, 25)
         # Logo 2
-        self.image('../pdf_generator/resources/images/Logo_Tactalyse_Stats.png', 50, 7, 115)
+        self.image('pdf_generator/resources/images/Logo_Tactalyse_Stats.png', 50, 7, 115)
         # Background
-        self.image("../pdf_generator/resources/images/BackgroundClean.png", x=0, y=30, w=self.w, h=self.h)
+        self.image("pdf_generator/resources/images/BackgroundClean.png", x=0, y=30, w=self.w, h=self.h)
         # Arial bold 15
         self.set_font('Arial', 'B', 15)
         # Move to the right
@@ -165,7 +165,7 @@ class PDF(FPDF):
 
     # print player's image and basic information in the first page
     def print_basic_player_info(self):
-        self.image('../pdf_generator/resources/images/placeholder_player_photo.jpg', 50, 60, 115)
+        self.image('pdf_generator/resources/images/placeholder_player_photo.jpg', 50, 60, 115)
         self.set_font('Arial', 'B', 14)
 
         # First column
