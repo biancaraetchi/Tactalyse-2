@@ -5,6 +5,7 @@ class Graph(ABC):
     """
     Abstract class representing a graph and its functionality
     """
+
     @abstractmethod
     def __init__(self):
         """

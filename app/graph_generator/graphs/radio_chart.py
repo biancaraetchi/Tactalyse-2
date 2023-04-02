@@ -1,7 +1,9 @@
-from .abstract_models import Graph
+import io
+
 import matplotlib.pyplot as plt
 import numpy as np
-import io
+
+from .abstract_models import Graph
 
 
 class RadioChart(Graph):
@@ -11,8 +13,9 @@ class RadioChart(Graph):
     def __init__(self, player_pos=None):
         if player_pos:
             self.__position = player_pos
-        
+
     def draw(self, data, column_names):
+        player = data['Player']
         # create a list of the values for each category
         data = data[column_names]
         values = data.iloc[0].tolist()
@@ -32,6 +35,7 @@ class RadioChart(Graph):
         ax.set_xticks(angles[:-1])
         ax.set_xticklabels(column_names)
         ax.yaxis.grid(True)
+        ax.set_title('Radar chart for ' + player + ', a ' + self.__position)
 
         # plot the values on the radar chart
         ax.plot(angles, values, linewidth=1, linestyle='solid')
@@ -42,4 +46,3 @@ class RadioChart(Graph):
         plt.savefig(buffer, format='png')
         buffer.seek(0)
         return buffer.getvalue()
-
