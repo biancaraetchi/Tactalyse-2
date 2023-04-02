@@ -16,3 +16,4 @@
 *.cfg
 /lib/
 /venv/
+.DS_Store
