@@ -1,4 +1,4 @@
-import pandas as pd
+from .excel_reader import league_data
 
 
 def get_columns(position):
@@ -50,3 +50,11 @@ def main_position(player_row):
 
     pos_dict = position_dictionary()
     return pos_dict.get(first_position)
+
+
+def radio_chart_data(league_file, player_name):
+    league_df = league_data(league_file, player_name)
+    player_row = extract_player(league_df, player_name)
+    main_pos = main_position(player_row)
+    columns = get_columns(main_pos)
+    return player_row, columns, main_pos

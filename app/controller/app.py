@@ -1,5 +1,5 @@
 from flask import Flask, request, Response, make_response
-from .data_service import read_files_standard, get_main_position, get_column_names
+from .data_service import get_radio_chart_data
 from .graph_service import create_polar_plot
 from .pdf_service import create_pdf
 app = Flask(__name__)
@@ -51,13 +51,11 @@ def key_value_process(files, form):
 
 
 def pass_data(league_file, player_file, player_name, start_date, end_date):
-    league_df, player_df = read_files_standard(league_file, player_file)
-    columns = get_column_names(player_df)
-    main_pos = get_main_position(league_df, player_name)
+    player_row, columns, main_pos = get_radio_chart_data(league_file, player_name)
 
-    plot = create_polar_plot(main_pos, player_df, columns)
+    plot = create_polar_plot(None, player_row, columns)
 
-    pdf_bytes = create_pdf(league_df, player_name, main_pos, plot)
+    pdf_bytes = create_pdf(player_row, player_name, main_pos, plot)
 
     response = make_response(pdf_bytes)
     response.headers.set('Content-Type', 'application/pdf')

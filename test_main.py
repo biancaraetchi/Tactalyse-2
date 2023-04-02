@@ -1,5 +1,5 @@
 from app.controller.graph_service import create_polar_plot
-from app.controller.data_service import read_files_standard, get_column_names, get_main_position, get_player_row
+from app.controller.data_service import get_radio_chart_data
 from app.controller.pdf_service import create_pdf
 import os
 import matplotlib
@@ -12,16 +12,11 @@ def generate_pdf():
     player_file = "app/pdf_generator/resources/test_data/Player stats T. Cleverley.xlsx"
     player_name = "T. Cleverley"
 
-    league_df, player_df = read_files_standard(league_file, player_file)
-    player_row = get_player_row(league_df, player_name)
-    main_pos = get_main_position(player_row)
-    print(main_pos)
-    columns = get_column_names(main_pos)
-    print(columns)
+    player_row, columns, main_pos = get_radio_chart_data(league_file, player_name)
 
-    plot = create_polar_plot(main_pos, player_row, columns)
+    plot = create_polar_plot(None, player_row, columns)
 
-    pdf_bytes = create_pdf(league_df, player_name, main_pos, plot)
+    pdf_bytes = create_pdf(player_row, player_name, main_pos, plot)
 
     # Save the PDF to a file
     with open("test.pdf", "wb") as f:
