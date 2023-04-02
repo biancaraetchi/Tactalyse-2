@@ -1,4 +1,4 @@
-from graph_generator.graphs.abstract_models import Graph
+from ..graphs.abstract_models import Graph
 import matplotlib.pyplot as plt
 import numpy as np
 import io

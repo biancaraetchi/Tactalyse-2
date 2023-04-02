@@ -1,8 +1,7 @@
 from flask import Flask, request, Response, make_response
-
-from controller.data_service import read_files_standard, get_main_position, get_column_names
-from controller.graph_service import create_polar_plot
-from controller.pdf_service import create_pdf
+from .data_service import read_files_standard, get_main_position, get_column_names
+from .graph_service import create_polar_plot
+from .pdf_service import create_pdf
 app = Flask(__name__)
 
 

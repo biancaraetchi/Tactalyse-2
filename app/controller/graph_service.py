@@ -1,4 +1,4 @@
-from graph_generator.factories.polar_plot_factory import PolarPlotFactory
+from ..graph_generator.factories.polar_plot_factory import PolarPlotFactory
 import matplotlib.pyplot as plt
 
 

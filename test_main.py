@@ -1,14 +1,15 @@
-from controller.graph_service import create_polar_plot
-from controller.data_service import read_files_standard, get_column_names, get_main_position
-from controller.pdf_service import *
+from app.controller.graph_service import create_polar_plot
+from app.controller.data_service import read_files_standard, get_column_names, get_main_position
+from app.controller.pdf_service import create_pdf
 import os
 import matplotlib
 matplotlib.use('TkAgg')
 
 
 def generate_pdf():
-    league_file = "../ENG2.xlsx"
-    player_file = "../T._Cleverley.xlsx"
+
+    league_file = "app/pdf_generator/resources/test_data/ENG2.xlsx"
+    player_file = "app/pdf_generator/resources/test_data/Player stats T. Cleverley.xlsx"
     player_name = "T. Cleverley"
 
     league_df, player_df = read_files_standard(league_file, player_file)
@@ -30,4 +31,5 @@ def generate_pdf():
         os.system("open test.pdf")
 
 
-generate_pdf()
+if __name__ == "__main__":
+    generate_pdf()
