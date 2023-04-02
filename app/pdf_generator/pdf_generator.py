@@ -4,8 +4,7 @@ from .PDF import PDF
 def generate_basic_pdf(league_df, player_name, main_pos, plot):
     pdf = PDF()
 
-    pdf.set_personal_info(player_name, league_df)
-    pdf.set_football_info(player_name, league_df, main_pos)
+    pdf.set_info(player_name, league_df, main_pos)
 
     pdf.alias_nb_pages()
     pdf.set_font('Arial', '', 12)
