@@ -1,5 +1,5 @@
 from ..factories.abstract_graph_factory import AbstractGraphFactory
-from ..graphs.models import PolarPlot
+from ..graphs.PolarPlot import PolarPlot
 
 
 class LinePlotFactory(AbstractGraphFactory):
