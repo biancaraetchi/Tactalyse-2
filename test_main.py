@@ -14,7 +14,7 @@ def generate_pdf():
 
     player_row, columns, main_pos = get_radio_chart_data(league_file, player_name)
 
-    plot = create_radio_chart(None, player_row, columns)
+    plot = create_radio_chart(main_pos, player_row, columns)
 
     pdf_bytes = create_pdf(player_row, player_name, main_pos, plot)
 

@@ -15,8 +15,8 @@ def generate_basic_pdf(league_df, player_name, main_pos, plot):
 
     pdf.print_title()
     pdf.print_basic_player_info()
-    pdf.print_chapter('Polar Plot', 'This plot showcases general player statistics.')
+    pdf.print_chapter('Radar Chart', 'This graph showcases general player statistics.')
     pdf.print_plot(plot)
-    pdf.print_chapter('Line Plots', 'These plost showcase player statistics over time.')
+    pdf.print_chapter('Line Plots', 'These plots showcase player statistics over time.')
     pdf.print_plot(plot)
     return pdf.output(dest='S')

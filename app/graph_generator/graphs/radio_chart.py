@@ -15,7 +15,7 @@ class RadioChart(Graph):
             self.__position = player_pos
 
     def draw(self, data, column_names):
-        player = data['Player']
+        player = data.iloc[0]['Player']
         # create a list of the values for each category
         data = data[column_names]
         values = data.iloc[0].tolist()
