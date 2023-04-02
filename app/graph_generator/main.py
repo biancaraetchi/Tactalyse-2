@@ -1,5 +1,5 @@
-from factories.polar_plot_factory import PolarPlotFactory
-from graphs.PolarPlot import PolarPlot
+from factories.radio_chart_factory import PolarPlotFactory
+from graphs.RadioChart import PolarPlot
 import matplotlib.pyplot as plt
 
 # Bianca - I'm not sure we need factories for this project...

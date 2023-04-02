@@ -1,5 +1,6 @@
 from ..data.excel_reader import ExcelReader
 from ..data.preprocessing import get_columns, main_position
+from ..data.preprocessing import extract_player
 
 
 def read_files_standard(league_file, player_file):
@@ -9,11 +10,13 @@ def read_files_standard(league_file, player_file):
     return league_df, player_df
 
 
-def get_main_position(league_df, player_name):
-    player_positions = league_df.loc[league_df['Player'] == player_name]['Position'].iloc[0]
-    first_position = player_positions.split(', ')[0]
-    return main_position(first_position)
+def get_player_row(league_df, player_name):
+    return extract_player(league_df, player_name)
 
 
-def get_column_names(dataframe):
-    return get_columns(dataframe, None)
+def get_main_position(player_row):
+    return main_position(player_row)
+
+
+def get_column_names(player_pos):
+    return get_columns(player_pos)

@@ -1,5 +1,5 @@
 from app.controller.graph_service import create_polar_plot
-from app.controller.data_service import read_files_standard, get_column_names, get_main_position
+from app.controller.data_service import read_files_standard, get_column_names, get_main_position, get_player_row
 from app.controller.pdf_service import create_pdf
 import os
 import matplotlib
@@ -13,10 +13,13 @@ def generate_pdf():
     player_name = "T. Cleverley"
 
     league_df, player_df = read_files_standard(league_file, player_file)
-    columns = get_column_names(player_df)
-    main_pos = get_main_position(league_df, player_name)
+    player_row = get_player_row(league_df, player_name)
+    main_pos = get_main_position(player_row)
+    print(main_pos)
+    columns = get_column_names(main_pos)
+    print(columns)
 
-    plot = create_polar_plot(main_pos, player_df, columns)
+    plot = create_polar_plot(main_pos, player_row, columns)
 
     pdf_bytes = create_pdf(league_df, player_name, main_pos, plot)
 
