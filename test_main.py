@@ -1,4 +1,4 @@
-from app.controller.graph_service import create_polar_plot
+from app.controller.graph_service import create_radio_chart
 from app.controller.data_service import get_radio_chart_data
 from app.controller.pdf_service import create_pdf
 import os
@@ -14,7 +14,7 @@ def generate_pdf():
 
     player_row, columns, main_pos = get_radio_chart_data(league_file, player_name)
 
-    plot = create_polar_plot(None, player_row, columns)
+    plot = create_radio_chart(None, player_row, columns)
 
     pdf_bytes = create_pdf(player_row, player_name, main_pos, plot)
 

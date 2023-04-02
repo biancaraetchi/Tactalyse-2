@@ -1,4 +1,4 @@
-from .PDF import PDF
+from .pdf import PDF
 
 
 def generate_basic_pdf(league_df, player_name, main_pos, plot):
@@ -20,4 +20,3 @@ def generate_basic_pdf(league_df, player_name, main_pos, plot):
     pdf.print_chapter('Line Plots', 'These plost showcase player statistics over time.')
     pdf.print_plot(plot)
     return pdf.output(dest='S')
-    
