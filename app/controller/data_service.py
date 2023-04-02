@@ -1,5 +1,5 @@
-from data.excel_reader import ExcelReader
-from data.preprocessing import get_columns, main_position
+from ..data.excel_reader import ExcelReader
+from ..data.preprocessing import get_columns, main_position
 
 
 def read_files_standard(league_file, player_file):

@@ -1,7 +1,6 @@
-from fpdf import FPDF
-from pdf_generator import PDF_class
+from ..pdf_generator.pdf_generator import generate_basic_pdf
 
 
 def create_pdf(league_df, player_name, main_pos, plot):
-    return PDF_class.generate_pdf(league_df, player_name, main_pos, plot)
+    return generate_basic_pdf(league_df, player_name, main_pos, plot)
 
