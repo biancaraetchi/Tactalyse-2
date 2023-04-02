@@ -95,7 +95,7 @@ class PDF(FPDF):
 
     def print_player_info_col1(self):
         end_pos = 30
-        start_x_pos = 50.0
+        start_x_pos = 45.0
         start_y_pos = 150.0
         self.set_xy(start_x_pos, start_y_pos)
         self.cell(0, 20, 'POSITION: ', ln = 1)
@@ -135,7 +135,7 @@ class PDF(FPDF):
 
     def print_player_info_col2(self):
         end_pos = 30
-        start_x2_pos = 120.0
+        start_x2_pos = 125.0
         start_y2_pos = 150.0
 
         self.set_xy(start_x2_pos, start_y2_pos)
