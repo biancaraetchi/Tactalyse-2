@@ -1,5 +1,5 @@
 from ..factories.abstract_graph_factory import AbstractGraphFactory
-from ..graphs.models import PolarPlot
+from ..graphs.RadioChart import RadioChart
 
 
 class LinePlotFactory(AbstractGraphFactory):
@@ -8,6 +8,6 @@ class LinePlotFactory(AbstractGraphFactory):
     def create_instance(self, graph_type):
         if graph_type != 'Default':
             print("To be implemented.")
-            return PolarPlot()
+            return RadioChart()
         else:
-            return PolarPlot()
+            return RadioChart()

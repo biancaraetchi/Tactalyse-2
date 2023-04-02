@@ -1,13 +1,13 @@
 from ..factories.abstract_graph_factory import AbstractGraphFactory
-from ..graphs.models import PolarPlot
+from ..graphs.RadioChart import RadioChart
 
 
-class PolarPlotFactory(AbstractGraphFactory):
+class RadioChartFactory(AbstractGraphFactory):
     """ Class representing a factory for polar plots of each player position """
 
     def create_instance(self, graph_type):
         if graph_type != 'Default':
             print("To be implemented.")
-            return PolarPlot(graph_type)
+            return RadioChart(graph_type)
         else:
-            return PolarPlot()
+            return RadioChart()
