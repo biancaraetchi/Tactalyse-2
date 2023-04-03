@@ -1,6 +1,5 @@
 from ..factories.abstract_graph_factory import AbstractGraphFactory
-from ..graphs.LinePlot import LinePlot
-from ..graphs.radio_chart import RadioChart
+from ..graphs.line_plot import LinePlot
 
 
 class LinePlotFactory(AbstractGraphFactory):

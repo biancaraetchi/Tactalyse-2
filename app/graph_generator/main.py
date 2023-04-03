@@ -1,5 +1,7 @@
 import matplotlib.pyplot as plt
+
 from graphs.radio_chart import PolarPlot
+
 if __name__ == '__main__':
     """ Temporary main function for testing purposes """
 

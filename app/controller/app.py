@@ -1,7 +1,7 @@
 from flask import Flask, request, Response, make_response
 
-from .data_service import get_radio_chart_data
-from .graph_service import create_radio_chart
+from .data_service import get_league_data, get_player_data
+from .graph_service import create_radio_chart, create_line_plot
 from .pdf_service import create_pdf
 
 app = Flask(__name__)
@@ -88,11 +88,13 @@ def pass_data(league_file, player_file, player_name, start_date, end_date):
     :param end_date: End date of Tactalyse's services for the player.
     :return: A response containing the generated PDF in byte representation.
     """
-    player_row, columns, main_pos = get_radio_chart_data(league_file, player_name)
+    player_row, columns_radio_chart, main_pos_long, main_pos = get_league_data(league_file, player_name)
+    player_data, columns_line_plot = get_player_data(player_file, main_pos)
 
-    radar_chart = create_radio_chart(main_pos, player_row, columns)
+    radar_chart = create_radio_chart(main_pos_long, player_row, columns_radio_chart)
+    line_plot = create_line_plot(None, player_data, columns_line_plot)
 
-    pdf_bytes = create_pdf(player_row, player_name, main_pos, radar_chart)
+    pdf_bytes = create_pdf(player_row, player_name, main_pos_long, radar_chart, line_plot)
 
     response = make_response(pdf_bytes)
     response.headers.set('Content-Type', 'application/pdf')

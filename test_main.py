@@ -1,7 +1,6 @@
 from app.controller.graph_service import create_line_plot
 from app.controller.graph_service import create_radio_chart
-from app.controller.data_service import get_radio_chart_data
-from app.controller.data_service import get_line_plot_data
+from app.controller.data_service import get_league_data, get_player_data
 from app.controller.pdf_service import create_pdf
 import os
 import matplotlib
@@ -14,14 +13,13 @@ def generate_pdf():
     player_file = "app/pdf_generator/resources/test_data/Player stats T. Cleverley.xlsx"
     player_name = "T. Cleverley"
 
-    player_row, columns, main_pos, main_pos_line = get_radio_chart_data(league_file, player_name)
-    player_file_data, columns_line_plot = get_line_plot_data(player_file, main_pos_line)
+    player_row, columns_radio_chart, main_pos_long, main_pos = get_league_data(league_file, player_name)
+    player_data, columns_line_plot = get_player_data(player_file, main_pos)
 
-    plot = create_radio_chart(None, player_row, columns)
-    line_plot = create_line_plot(None, player_file_data, columns_line_plot)
-    plot = create_radio_chart(main_pos, player_row, columns)
+    radar_chart = create_radio_chart(main_pos_long, player_row, columns_radio_chart)
+    line_plot = create_line_plot(None, player_data, columns_line_plot)
 
-    pdf_bytes = create_pdf(player_row, player_name, main_pos, plot, line_plot)
+    pdf_bytes = create_pdf(player_row, player_name, main_pos_long, radar_chart, line_plot)
 
     # Save the PDF to a file
     with open("test.pdf", "wb") as f:

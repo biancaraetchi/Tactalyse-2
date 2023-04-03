@@ -14,8 +14,14 @@ class ExcelReader:
         :return: A Pandas dataframe containing all data in the Excel file, including headers.
         """
         return pd.read_excel(file)
-    
+
     def player_data(self, player_file):
+        """
+        Function for extracting the match data of a football player from an Excel file.
+
+        :param player_file: The Excel file containing match data.
+        :return: A Pandas dataframe containing all data in the Excel file, including headers.
+        """
         return self.read_file(player_file)
 
     def league_data(self, league_file, player_name):
