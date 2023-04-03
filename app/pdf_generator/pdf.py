@@ -1,11 +1,12 @@
-from fpdf import FPDF
-from PIL import Image
-from .Player import Player
 import io
+
+from PIL import Image
+from fpdf import FPDF
+
+from .player import Player
 
 
 class PDF(FPDF):
-
     player = Player()
 
     def set_info(self, player_name, league_df, main_pos):
@@ -72,62 +73,59 @@ class PDF(FPDF):
     def print_player_info_label(self, start_x_pos, start_y_pos, end_pos, label, y_offset):
         self.set_text_color(255, 77, 77)
         self.set_xy(start_x_pos, start_y_pos + y_offset)
-        self.cell(0, 20, label, ln = 1)
+        self.cell(0, 20, label, ln=1)
         self.set_text_color(0, 0, 0)
         self.set_xy(start_x_pos + end_pos, start_y_pos + y_offset)
 
-
     def print_player_info_col1(self):
-
         start_x_pos = 45.0
         start_y_pos = 150.0
         end_pos = 30
 
         self.print_player_info_label(start_x_pos, start_y_pos, end_pos, 'POSITION: ', 0)
-        self.cell(0, 20, self.player.get_player_position(), ln = 1)
+        self.cell(0, 20, self.player.get_player_position(), ln=1)
 
         self.print_player_info_label(start_x_pos, start_y_pos, end_pos, 'CLUB: ', 10)
-        self.cell(0, 20, self.player.get_player_club(), ln = 1)
+        self.cell(0, 20, self.player.get_player_club(), ln=1)
 
         self.print_player_info_label(start_x_pos, start_y_pos, end_pos, 'ON LOAN: ', 20)
-        self.cell(0, 20, self.player.get_player_on_loan(), ln = 1)
+        self.cell(0, 20, self.player.get_player_on_loan(), ln=1)
 
         self.print_player_info_label(start_x_pos, start_y_pos, end_pos, 'CONTRACT EXPIRES ON: ', 30)
         self.set_xy(start_x_pos + end_pos + 35, start_y_pos + 30)
-        self.cell(0, 20, self.player.get_player_contract_date(), ln =1)
+        self.cell(0, 20, self.player.get_player_contract_date(), ln=1)
 
         self.print_player_info_label(start_x_pos, start_y_pos, end_pos, 'COUNTRY: ', 60)
-        self.cell(0, 20, self.player.get_player_country(), ln =1)
+        self.cell(0, 20, self.player.get_player_country(), ln=1)
 
         self.print_player_info_label(start_x_pos, start_y_pos, end_pos, 'HEIGHT: ', 70)
-        self.cell(0, 20, self.player.get_player_height() + "cm", ln =1)
+        self.cell(0, 20, self.player.get_player_height() + "cm", ln=1)
 
         self.print_player_info_label(start_x_pos, start_y_pos, end_pos, 'FOOT: ', 80)
-        self.cell(0, 20, self.player.get_player_foot(), ln =1)
+        self.cell(0, 20, self.player.get_player_foot(), ln=1)
 
     def print_player_info_col2(self):
-
         start_x2_pos = 125.0
         start_y2_pos = 150.0
         end_pos = 30
 
         self.print_player_info_label(start_x2_pos, start_y2_pos, end_pos, 'LEAGUE: ', 0)
-        self.cell(0, 20, self.player.get_player_league(), ln =1)
+        self.cell(0, 20, self.player.get_player_league(), ln=1)
 
         self.print_player_info_label(start_x2_pos, start_y2_pos, end_pos, '#MATCHES: ', 10)
-        self.cell(0, 20, self.player.get_player_num_matches(), ln =1)
+        self.cell(0, 20, self.player.get_player_num_matches(), ln=1)
 
         # There's no information about the agent in the excel files
         # (might be necessary to have that passed from the frontend?)
 
-        #self.print_player_info_label(start_x2_pos, start_y2_pos, end_pos, 'AGENT: ', 20)
-        #self.cell(0, 20, self.__player_agent, ln =1)
+        # self.print_player_info_label(start_x2_pos, start_y2_pos, end_pos, 'AGENT: ', 20)
+        # self.cell(0, 20, self.__player_agent, ln =1)
 
         self.print_player_info_label(start_x2_pos, start_y2_pos, end_pos, 'AGE: ', 60)
-        self.cell(0, 20, self.player.get_player_age(), ln =1)
+        self.cell(0, 20, self.player.get_player_age(), ln=1)
 
         self.print_player_info_label(start_x2_pos, start_y2_pos, end_pos, 'WEIGHT: ', 70)
-        self.cell(0, 20, self.player.get_player_weight() + "kg", ln =1)
+        self.cell(0, 20, self.player.get_player_weight() + "kg", ln=1)
 
     # print player's image and basic information in the first page
     def print_basic_player_info(self):

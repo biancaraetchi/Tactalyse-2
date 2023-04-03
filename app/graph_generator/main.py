@@ -1,7 +1,5 @@
-from factories.radio_chart_factory import PolarPlotFactory
-from graphs.RadioChart import PolarPlot
 import matplotlib.pyplot as plt
-
+from graphs.radio_chart import PolarPlot
 if __name__ == '__main__':
     """ Temporary main function for testing purposes """
 
@@ -16,5 +14,3 @@ if __name__ == '__main__':
     # Display the image using Matplotlib's imshow function
     plt.imshow(image)
     plt.show()
-
-

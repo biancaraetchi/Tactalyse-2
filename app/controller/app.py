@@ -1,12 +1,26 @@
 from flask import Flask, request, Response, make_response
+
 from .data_service import get_radio_chart_data
-from .graph_service import create_polar_plot
+from .graph_service import create_radio_chart
 from .pdf_service import create_pdf
+
 app = Flask(__name__)
 
 
 @app.route('/pdf', methods=["POST"])
 def generate_pdf():
+    """
+    API endpoint for generating a football report based on query parameters.
+    The following parameters must be included in the request:
+    - league-file: an Excel file containing football league data.
+    - player-file: an Excel file containing a player's match data.
+    - player-name: a string representing the name of the player. Must exist within the league file.
+    Optional parameters include:
+    - start-date: start date of Tactalyse's services for the player.
+    - end-date: end date of Tactalyse's services for the player.
+
+    :return: A response either containing an error message, or the generated PDF in byte representation.
+    """
     if request.is_json:
         return json_process(request.get_json())
     else:
@@ -14,6 +28,12 @@ def generate_pdf():
 
 
 def json_process(payload):
+    """
+    Function that handles a json-formatted request to the PDF generator API endpoint.
+
+    :param payload: The json payload of the request.
+    :return: A response either containing an error message, or the generated PDF in byte representation.
+    """
     if payload is None:
         return Response("Error: invalid JSON payload.", 400, mimetype='application/json')
 
@@ -34,6 +54,13 @@ def json_process(payload):
 
 
 def key_value_process(files, form):
+    """
+    Function that handles a request to the PDF generator API endpoint if it is of another format than json.
+
+    :param files: The files included in the API request.
+    :param form: The other key-value pairs included in the API request.
+    :return: A response either containing an error message, or the generated PDF in byte representation.
+    """
     if 'league-file' not in files:
         return Response("Error: league file was not sent.", 400, mimetype='application/json')
     elif 'player-file' not in files:
@@ -51,11 +78,21 @@ def key_value_process(files, form):
 
 
 def pass_data(league_file, player_file, player_name, start_date, end_date):
+    """
+    Function that passes the received data to the appropriate services, and generates a PDF.
+
+    :param league_file: Excel file containing football league data.
+    :param player_file: Excel file containing player match data.
+    :param player_name: Name of the player to generate a report for.
+    :param start_date: Start date of Tactalyse's services for the player.
+    :param end_date: End date of Tactalyse's services for the player.
+    :return: A response containing the generated PDF in byte representation.
+    """
     player_row, columns, main_pos = get_radio_chart_data(league_file, player_name)
 
-    plot = create_polar_plot(None, player_row, columns)
+    radar_chart = create_radio_chart(main_pos, player_row, columns)
 
-    pdf_bytes = create_pdf(player_row, player_name, main_pos, plot)
+    pdf_bytes = create_pdf(player_row, player_name, main_pos, radar_chart)
 
     response = make_response(pdf_bytes)
     response.headers.set('Content-Type', 'application/pdf')
