@@ -2,10 +2,6 @@ from factories.radio_chart_factory import PolarPlotFactory
 from graphs.RadioChart import PolarPlot
 import matplotlib.pyplot as plt
 
-# Bianca - I'm not sure we need factories for this project...
-# generating a whole app for every instance of a plot seems like overkill, if I understand correctly how they work
-
-
 if __name__ == '__main__':
     """ Temporary main function for testing purposes """
 
