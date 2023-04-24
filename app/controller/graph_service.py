@@ -1,5 +1,5 @@
 from ..graph_generator.factories.line_plot_factory import LinePlotFactory
-from ..graph_generator.factories.radio_chart_factory import RadioChartFactory
+from ..graph_generator.factories.radar_chart_factory import RadarChartFactory
 
 
 def create_radio_chart(main_pos, player_row, columns):
@@ -11,7 +11,7 @@ def create_radio_chart(main_pos, player_row, columns):
     :param columns: List of columns to use from the league dataframe.
     :return: The radio chart drawn based on passed parameters, in byte form.
     """
-    factory = RadioChartFactory()
+    factory = RadarChartFactory()
     plot_obj = factory.create_instance(main_pos)
     plot = plot_obj.draw(player_row, columns)
     return plot

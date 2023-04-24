@@ -2,6 +2,7 @@ from app.controller.graph_service import create_line_plot
 from app.controller.graph_service import create_radio_chart
 from app.controller.data_service import get_league_data, get_player_data
 from app.controller.pdf_service import create_pdf
+from placeholder_graphs import generate_placeholders
 import os
 import matplotlib
 matplotlib.use('TkAgg')
@@ -33,4 +34,4 @@ def generate_pdf():
 
 
 if __name__ == "__main__":
-    generate_pdf()
+    generate_placeholders()

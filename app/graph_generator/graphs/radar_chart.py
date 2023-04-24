@@ -2,11 +2,12 @@ import io
 
 import matplotlib.pyplot as plt
 import numpy as np
+from math import ceil
 
 from .abstract_models import Graph
 
 
-class RadioChart(Graph):
+class RadarChart(Graph):
     """ Class representing a default Graph """
     __position = ''
 
@@ -31,7 +32,8 @@ class RadioChart(Graph):
         ax.set_theta_offset(np.pi / 2)
         ax.set_theta_direction(-1)
         ax.spines['polar'].set_visible(False)
-        ax.set_ylim(0, 6)
+        max_val = max(values)
+        ax.set_ylim(0, ceil(max_val / 10) * 10)
         ax.set_xticks(angles[:-1])
         ax.set_xticklabels(column_names)
         ax.yaxis.grid(True)
