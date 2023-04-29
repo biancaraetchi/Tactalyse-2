@@ -38,44 +38,45 @@ class LinePlot(Graph):
 
         return labels, locations, start_years
 
+    # def draw(self, data, column_names):
+    #     date = data["Date"]
+    #     labels, locations, start_years = self.get_xlabels(date)
+    #     data = data[column_names]
+    #     fig = plt.figure()
+    #     ax = plt.axes()
+    #     ax.plot(date, data["Interceptions"], marker='o')
+    #     plt.title("Interceptions per 90 minutes")
+    #     ax.set_xticks(locations, labels)
+    #     mean = np.mean(data["Interceptions"])
+    #     plt.axhline(y=mean, linestyle="dashed", label="Mean")
+    #     for i in start_years:
+    #         plt.axvline(x=i, linestyle="dashed", color='g')
+    #     plt.legend()
+    #     buffer = io.BytesIO()
+    #     plt.savefig(buffer, format='png')
+    #     buffer.seek(0)
+    #     return buffer.getvalue()
+
     def draw(self, data, column_names):
+        temp_start_date = 20
+        temp_end_date = 144
         date = data["Date"]
         labels, locations, start_years = self.get_xlabels(date)
         data = data[column_names]
-        fig = plt.figure()
-        ax = plt.axes()
-        ax.plot(date, data["Interceptions"], marker='o')
-        plt.title("Interceptions per 90 minutes")
-        ax.set_xticks(locations, labels)
+        fig, ax = plt.subplots()
+        sns.lineplot(x=date, y=data["Interceptions"], marker = 'o', ax = ax)
+        ax.set(title="Interceptions per 90 minutes", xticks = locations, xticklabels = labels)
         mean = np.mean(data["Interceptions"])
-        plt.axhline(y=mean, linestyle="dashed", label="Mean")
+        # ax.axhline(y = mean, linestyle="dashed", label = "Mean", color = "black")
+        sns.lineplot(x=date,  y=mean, ax=ax, linestyle="solid", label="Mean", color = "black")
         for i in start_years:
-            plt.axvline(x=i, linestyle="dashed", color='g')
-        plt.legend()
+            ax.axvline(x=i, linestyle="dashed", color='g')
+            print(i)
+        ax.axvline(x = temp_start_date, linestyle = "dashed", label="Tactalyse start & end date", color = 'r')
+        ax.axvline(x = temp_end_date, linestyle = "dashed", color = 'r')
+        ax.legend()
         buffer = io.BytesIO()
-        plt.savefig(buffer, format='png')
+        plt.savefig(buffer, format = 'png')
         buffer.seek(0)
         return buffer.getvalue()
-
-    # def draw(self, data, column_names):
-    #     temp_start_date =  16/17
-    #     temp_end_date = 20/21
-    #     date = date["Date"]
-    #     labels, locations, start_years = self.get_xlabels(date)
-    #     data = data[column_names]
-    #     fig, ax = plt.subplots()
-    #     sns.lineplot(x=date, y=data["Interceptions"], marker = 'o', ax = ax)
-    #     ax.set(title="Interceptions per 90 minutes", xticks = locations, xticklabes = labels)
-    #     mean = np.mean(data["Interceptions"])
-    #     # ax.axhline(y = mean, linestyle="dashed", label = "Mean", color = "black")
-    #     sns.lineplot(x=date,  y=mean, ax=ax, linestyle="dashed", label="Mean", color = "black")
-    #     for i in start_years:
-    #         ax.axvline(x=i, linestyle="dashed", color='g')
-    #     ax.axvline(x = temp_start_date, linestyle = "dashed", color = 'r')
-    #     ax.axvline(x = temp_end_date, linestyle = "dashed", color = 'r')
-    #     ax.legend()
-    #     buffer = io.BytesIO()
-    #     plt.savefig(buffer, format = 'png')
-    #     buffer.seek(0)
-    #     return buffer.getvalue()
 
