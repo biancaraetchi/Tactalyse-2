@@ -1,6 +1,9 @@
 from ..data.preprocessing import extract_league_data
 from ..data.preprocessing import extract_player_data
+from ..data.preprocessing import extract_all_league_data
 
+def get_all_league_data(league_file):
+    return extract_all_league_data(league_file)
 
 def get_league_data(league_file, player_name):
     """

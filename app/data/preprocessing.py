@@ -1,5 +1,7 @@
 from .excel_reader import ExcelReader
 
+def get_columns_bar_plots(position):
+    pass
 
 def get_columns_radio_chart(position):
     """
@@ -120,6 +122,10 @@ def main_position(player_row):
     first_position = player_positions.split(', ')[0]
     return first_position
 
+def extract_all_league_data(league_file):
+    reader = ExcelReader()
+    league_df = reader.all_league_data(league_file)
+    return league_df
 
 def extract_league_data(league_file, player_name):
     """
@@ -137,6 +143,7 @@ def extract_league_data(league_file, player_name):
     main_pos_long = position_dictionary().get(main_pos)
     main_pos = shortened_dictionary().get(main_pos)
     columns = get_columns_radio_chart(main_pos)
+
     return player_row, columns, main_pos_long, main_pos
 
 

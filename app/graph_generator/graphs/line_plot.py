@@ -64,6 +64,7 @@ class LinePlot(Graph):
         labels, locations, start_years = self.get_xlabels(date)
         data = data[column_names]
         fig, ax = plt.subplots()
+        ax.clear()
         sns.lineplot(x=date, y=data["Interceptions"], marker = 'o', ax = ax)
         ax.set(title="Interceptions per 90 minutes", xticks = locations, xticklabels = labels)
         mean = np.mean(data["Interceptions"])
