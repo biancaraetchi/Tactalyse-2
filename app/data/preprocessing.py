@@ -136,7 +136,7 @@ def extract_league_data(league_file, player_name):
     main_pos = main_position(player_row)
     main_pos_long = position_dictionary().get(main_pos)
     main_pos = shortened_dictionary().get(main_pos)
-    columns = get_columns_radio_chart(main_pos_long)
+    columns = get_columns_radio_chart(main_pos)
     return player_row, columns, main_pos_long, main_pos
 
 
