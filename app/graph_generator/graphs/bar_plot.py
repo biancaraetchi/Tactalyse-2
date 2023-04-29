@@ -21,11 +21,13 @@ class BarPlot(Graph):
         
         
     def draw(self, data, stat):
-    
 
+        player_value = data.loc[data['Player'] == self.__player_name].iloc[0][stat]
+        avg = 0
 
-        player_vs_avg_data = {' ': [self.__player_name, 'League average'], stat: [9, 6]}       
+        player_vs_avg_data = {' ': [self.__player_name, 'League average'], stat: [player_value, avg]}       
         df = pd.DataFrame(player_vs_avg_data)
+        
         plt.subplot().clear()
         sns.barplot(x=" ", y=stat, data=df, orient=self.__orientation)
         buffer = io.BytesIO()
