@@ -5,6 +5,7 @@ class Graph(ABC):
     """
     Abstract class representing a graph and its functionality
     """
+
     @abstractmethod
     def __init__(self):
         """
@@ -13,15 +14,11 @@ class Graph(ABC):
         pass
 
     @abstractmethod
-    def draw(self, data, column_names) -> any:
+    def draw(self, param_map) -> any:
         """
         Draws the graph based on passed data
 
-        Parameters:
-            data (DataFrame): Dataframe containing relevant data to plot
-            column_names: array of co
-
-        Returns:
-            any: The image containing the graph
+        :param param_map: Map containing key/value pairs for all parameters needed for drawing the graph.
+        :return: Image containing the drawn graph in byte form.
         """
         pass

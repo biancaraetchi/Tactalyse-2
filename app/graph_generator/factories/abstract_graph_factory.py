@@ -1,4 +1,5 @@
 from abc import ABC, abstractmethod
+
 from ..graphs.abstract_models import Graph
 
 
@@ -14,10 +15,7 @@ class AbstractGraphFactory(ABC):
         """
         Creates a new graph instance based on the passed string parameter
 
-        Parameters:
-            graph_type (str): The desired graph type
-
-        Return:
-            Graph: The graph object represented by graph_type
+        :param graph_type: Type of graph to instantiate from the factory.
+        :return: The graph object represented by the factory and graph_type.
         """
         pass
