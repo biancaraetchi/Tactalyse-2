@@ -19,7 +19,7 @@ def generate_pdf():
 
     radar_chart = create_radio_chart(main_pos_long, player_row, columns_radio_chart)
     line_plot = create_line_plot(None, player_data, columns_line_plot)
-    bar_plot = create_bar_plot(player_name, main_pos_long, league_df, player_row, "Goals", 'v')
+    bar_plot = create_bar_plot(player_name, main_pos, league_df, player_row, "Goals", 'v')
 
     pdf_bytes = create_pdf(player_row, player_name, main_pos_long, radar_chart, line_plot, bar_plot)
 

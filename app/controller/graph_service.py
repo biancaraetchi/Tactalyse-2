@@ -43,7 +43,7 @@ def create_bar_plot(player_name, main_pos, league_df, player_league_row_df, colu
     :return: The bar plot drawn based on passed parameters, in byte form.
     """
     factory = BarPlotFactory()
-    plot_obj = factory.create_instance(player_name, main_pos, orientation)
+    plot_obj = factory.create_instance(player_name, main_pos, 'PlayerVsAvg', orientation)
     plot = plot_obj.draw(league_df, columns)
     
     return plot

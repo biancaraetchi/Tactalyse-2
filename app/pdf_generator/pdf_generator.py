@@ -32,6 +32,6 @@ def generate_basic_pdf(league_df, player_name, main_pos, plot, line_plot, bar_pl
     pdf.print_plot(plot)
     pdf.print_chapter('Line Plots', 'These plots showcase player statistics over time.')
     pdf.print_plot(line_plot)
-    pdf.print_chapter('Bar Plots', 'These plots showcase PLACEHOLDER')
+    pdf.print_chapter('Bar Plots', 'These plots showcase player statistics compared to those of players in the same position within the league.')
     pdf.print_plot(bar_plot)
     return pdf.output(dest='S')

@@ -140,6 +140,8 @@ def extract_league_data(league_file, player_name):
     league_df = reader.league_data(league_file, player_name)
     player_row = extract_player(league_df, player_name)
     main_pos = main_position(player_row)
+    
+
     main_pos_long = position_dictionary().get(main_pos)
     main_pos = shortened_dictionary().get(main_pos)
     columns = get_columns_radio_chart(main_pos)
