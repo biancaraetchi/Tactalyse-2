@@ -15,7 +15,6 @@ class PDFGenerator(ABC):
         self._pdf.add_page()
 
     def print_plots(self, line_plots, bar_plots):
-
         self._pdf.print_chapter('Line Plots', 'These plots showcase player statistics over time.')
         for plot in line_plots:
             self._pdf.print_plot(plot)

@@ -1,9 +1,7 @@
 import io
 import matplotlib.pyplot as plt
-import numpy as np
 import seaborn as sns
 import pandas as pd
-from ...data import preprocessor
 from .abstract_models import Graph
 
 
@@ -14,15 +12,17 @@ class BarPlot(Graph):
     __player_name = ''
 
 
-    def __init__(self, player_name, player_pos, graph_type, orientation='v'):
-        if player_pos:
-            self.__position = player_pos
-            self.__orientation = orientation
-            self.__player_name = player_name
+    def __init__(self, param_map):
+        if 'player_pos' in param_map and not param_map['player_pos'] is None:
+            self.__position = param_map.get('player_pos')
+            self.__orientation = param_map.get('orientation')
+            self.__player_name = param_map.get('player_name')
         
         
-    def draw(self, data, stat):
+    def draw(self, param_map):
 
+        data = param_map.get('league_data')
+        stat = param_map.get('stats')
         player_value = data.loc[data['Player'] == self.__player_name].iloc[0][stat]
 
         stat_df = data.loc[data['Main position'] == self.__position].loc[:,[stat]]
@@ -45,3 +45,11 @@ class BarPlot(Graph):
         plt.savefig(buffer, format='png')
         buffer.seek(0)
         return buffer.getvalue()
+
+    def draw_all(self, param_map):
+        stats = param_map.get('stats')
+        plots = []
+        for stat in stats:
+            param_map['stats'] = stat
+            plots.append(self.draw(param_map))
+        return plots

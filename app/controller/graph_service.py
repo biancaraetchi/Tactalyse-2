@@ -3,48 +3,43 @@ from ..graph_generator.factories.radar_chart_factory import RadarChartFactory
 from ..graph_generator.factories.bar_plot_factory import BarPlotFactory
 
 
-def create_radar_chart(main_pos, player_row, columns):
+def create_radar_chart(radar_map):
     """
     Function that retrieves a drawn radio chart for further use.
 
-    :param main_pos: Main position of the player whose stats to graph.
-    :param player_row: Dataframe containing league data of the player whose stats to graph.
-    :param columns: List of columns to use from the league dataframe.
+    :param radar_map:
     :return: The radio chart drawn based on passed parameters, in byte form.
     """
     factory = RadarChartFactory()
-    plot_obj = factory.create_instance(main_pos)
-    plot = plot_obj.draw(player_row, columns)
+    param_map = {'type': 'Default', 'params': radar_map}
+    plot_obj = factory.create_instance(param_map)
+    plot = plot_obj.draw(radar_map)
     return plot
 
 
-def create_line_plot(main_pos, player_df, columns):
+def create_line_plots(line_map):
     """
     Function that retrieves a drawn line plot for further use.
 
-    :param main_pos: Main position of the player whose stats to graph.
-    :param player_df: Dataframe containing match data of the player whose stats to graph.
-    :param columns: List of columns to use from the player dataframe.
+    :param line_map:
     :return: The line plot drawn based on passed parameters, in byte form.
     """
     factory = LinePlotFactory()
-    plot_obj = factory.create_instance(main_pos)
-    plot = plot_obj.draw(player_df, columns)
-    return plot
+    param_map = {'type': 'Default', 'params': line_map}
+    plot_obj = factory.create_instance(param_map)
+    plots = plot_obj.draw_all(line_map)
+    return plots
 
 
-def create_bar_plot(player_name, main_pos, league_df, player_league_row_df, columns, orientation):
+def create_bar_plots(bar_map):
     """
     Function that retrieves a drawn bar plot for further use.
 
-    :param main_pos: Main position of the player whose stats to graph.
-    :param pl_league_df: Dataframe containing data of the league the player plays in.
-
-    :param columns: List of columns to use from the league dataframe.
+    :param bar_map:
     :return: The bar plot drawn based on passed parameters, in byte form.
     """
     factory = BarPlotFactory()
-    plot_obj = factory.create_instance(player_name, main_pos, 'PlayerVsAvg', orientation)
-    plot = plot_obj.draw(league_df, columns)
-    
-    return plot
+    param_map = {'type': 'Default', 'params': bar_map}
+    plot_obj = factory.create_instance(param_map)
+    plots = plot_obj.draw_all(bar_map)
+    return plots

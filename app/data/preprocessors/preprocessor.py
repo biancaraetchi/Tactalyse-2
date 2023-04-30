@@ -1,4 +1,4 @@
-from .excel_reader import ExcelReader
+from app.data.excel_reader import ExcelReader
 
 
 class Preprocessor:
@@ -93,3 +93,18 @@ class Preprocessor:
         player_positions = player_row['Position'].iloc[0]
         first_position = player_positions.split(', ')[0]
         return first_position
+
+    def in_league(self, league_file, player_name):
+        """
+        Function that checks if the player is included in the league file
+
+        :param league_file:
+        :param player_name:
+        :return: True if they're in the league file, false if not
+        """
+
+        league_df = ExcelReader().all_league_data(league_file)
+        if player_name in league_df['Player'].values:
+            return True
+        else:
+            return False

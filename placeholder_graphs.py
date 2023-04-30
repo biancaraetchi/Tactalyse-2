@@ -1,7 +1,7 @@
 from app.controller.graph_service import create_radar_chart
 from app.data.excel_reader import ExcelReader
-from app.data.preprocessor import Preprocessor
-from app.data.radar_data import get_columns_radar_chart
+from app.data.preprocessors.preprocessor import Preprocessor
+from app.data.preprocessors.radar_processor import RadarProcessor
 
 processor = Preprocessor()
 
@@ -9,12 +9,9 @@ processor = Preprocessor()
 def create_graph(leaguefile, playername):
     reader = ExcelReader()
     league = reader.league_data(leaguefile, playername)
-    main_pos = processor.main_position(league)
-    main_pos_long = processor.position_dictionary().get(main_pos)
-    main_pos = processor.shortened_dictionary().get(main_pos)
-    columns = get_columns_radar_chart(main_pos)
+    radar_map = {}
 
-    radar_chart = create_radar_chart(main_pos_long, league, columns)
+    radar_chart = create_radar_chart(radar_map)
     f = open('placeholders/bot_'+playername+'.png', 'wb')
     f.write(radar_chart)
     f.close()

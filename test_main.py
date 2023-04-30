@@ -1,8 +1,7 @@
 from app.controller.graph_service import *
-from app.controller.data_service import get_bar_data, get_line_data, get_radar_data
+from app.controller.data_service import get_bar_data, get_line_data, get_radar_data,get_pdf_data
 from app.controller.pdf_service import create_pdf
-from app.data.preprocessor import Preprocessor
-from placeholder_graphs import generate_placeholders
+from app.data.preprocessors.preprocessor import Preprocessor
 import os
 import matplotlib
 
@@ -13,20 +12,24 @@ def generate_pdf():
     league_file = "app/pdf_generator/resources/test_data/ENG2.xlsx"
     player_file = "app/pdf_generator/resources/test_data/Player stats T. Cleverley.xlsx"
     player_name = "T. Cleverley"
-    processor = Preprocessor()
+    compare_name = None
+    compare_file = None
+    start_date = None
+    end_date = None
 
-    league_df = get_bar_data(league_file)
-    player_row, columns_radio_chart, main_pos_long, main_pos = get_radar_data(processor, league_file, player_name)
-    player_data, columns_line_plot = get_line_data(player_file, main_pos)
+    radar_map = get_radar_data(league_file, player_name, compare_name)
+    line_map = get_line_data(league_file, player_file, player_name, compare_file, compare_name, start_date, end_date)
+    bar_map = get_bar_data(league_file, player_name)
 
-    radar_chart = create_radar_chart(main_pos_long, player_row, columns_radio_chart)
-    line_plot = create_line_plot(None, player_data, columns_line_plot)
-    bar_plot = create_bar_plot(player_name, main_pos, league_df, player_row, "Goals", 'v')
+    # Pass the maps to get lists containing plots in byte form from the graph_generator module
+    radar_chart = create_radar_chart(radar_map)
+    line_plots = create_line_plots(line_map)
+    bar_plots = create_bar_plots(bar_map)
 
-    params = {"league_df": league_df, "player_name": player_name, "main_pos": main_pos_long, "line_plots": [line_plot,
-                                                                                                            line_plot],
-              "bar_plots": [bar_plot, bar_plot, bar_plot]}
-    pdf_bytes = create_pdf(params)
+    # Get a parameter map with relevant data for generating a PDF from the data module, and pass it to the pdf_generator
+    # module along with the graphs
+    pdf_map = get_pdf_data(league_file, player_name, compare_name, line_plots, bar_plots)
+    pdf_bytes = create_pdf(pdf_map)
 
     # Save the PDF to a file
     with open("test.pdf", "wb") as f:
