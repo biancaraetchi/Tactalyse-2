@@ -5,11 +5,11 @@ from app.data.preprocessor import Preprocessor
 from placeholder_graphs import generate_placeholders
 import os
 import matplotlib
+
 matplotlib.use('TkAgg')
 
 
 def generate_pdf():
-
     league_file = "app/pdf_generator/resources/test_data/ENG2.xlsx"
     player_file = "app/pdf_generator/resources/test_data/Player stats T. Cleverley.xlsx"
     player_name = "T. Cleverley"
@@ -23,7 +23,10 @@ def generate_pdf():
     line_plot = create_line_plot(None, player_data, columns_line_plot)
     bar_plot = create_bar_plot(player_name, main_pos, league_df, player_row, "Goals", 'v')
 
-    pdf_bytes = create_pdf(player_row, player_name, main_pos_long, radar_chart, line_plot, bar_plot)
+    params = {"league_df": league_df, "player_name": player_name, "main_pos": main_pos_long, "line_plots": [line_plot,
+                                                                                                            line_plot],
+              "bar_plots": [bar_plot, bar_plot, bar_plot]}
+    pdf_bytes = create_pdf(params)
 
     # Save the PDF to a file
     with open("test.pdf", "wb") as f:

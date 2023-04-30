@@ -11,13 +11,16 @@ class PDF(FPDF):
     Its layout is defined by the class attributes and their values.
     It is a subclass of the already existing FPDF class within the FDPF library.
     Some methods therefore already existed within FPDF and have been overwritten. 
-    :attribute __player is an instance of the Player class and represents the current player 
+    :attribute __player: is an instance of the Player class and represents the current player
     for whom the pdf displays info
-    :attribute __font defines the main font used throughout the pdf
+    :attribute __font: defines the main font used throughout the pdf
     """
-
-    __player = Player()
-    __font = 'Arial'
+    def __init__(self):
+        super().__init__()
+        self.__player = Player()
+        self.__compare = Player()
+        self.__font = 'Arial'
+        self.__current_y = 70
 
     def set_info(self, player_name, league_df, main_pos):
         """
@@ -29,6 +32,17 @@ class PDF(FPDF):
         """
         self.__player.set_personal_info(player_name, league_df)
         self.__player.set_football_info(player_name, league_df, main_pos)
+
+    def set_compare_info(self, player_name, league_df, main_pos):
+        """
+        Function that sets the information within the compare object attribute by calling the Player
+        class set methods.
+        :param player_name: the name of the player that is being compared to
+        :param league_df: dataframe obtained from the league excel file through Pandas
+        :param main_pos: the compared player's main position within the team
+        """
+        self.__compare.set_personal_info(player_name, league_df)
+        self.__compare.set_football_info(player_name, league_df, main_pos)
 
     def header(self):
         """
@@ -127,7 +141,7 @@ class PDF(FPDF):
         self.set_xy(start_x_pos + end_pos, start_y_pos + y_offset)
         self.cell(0, 20, value, ln=1)
 
-    def print_player_info_col1(self):
+    def print_player_info_col1(self, player):
         """
         Function that defines the layout of the first column of the player's information.
         The absolute position and the offset values for the labels within the A4 sheet of the pdf 
@@ -137,21 +151,21 @@ class PDF(FPDF):
         start_y_pos = 150.0
         end_pos = 30
 
-        self.print_player_info_label(start_x_pos, start_y_pos, end_pos, 'POSITION: ', 0, self.__player.get_player_position())
+        self.print_player_info_label(start_x_pos, start_y_pos, end_pos, 'POSITION: ', 0, player.get_player_position())
 
-        self.print_player_info_label(start_x_pos, start_y_pos, end_pos, 'CLUB: ', 10, self.__player.get_player_club())
+        self.print_player_info_label(start_x_pos, start_y_pos, end_pos, 'CLUB: ', 10, player.get_player_club())
 
-        self.print_player_info_label(start_x_pos, start_y_pos, end_pos, 'ON LOAN: ', 20, self.__player.get_player_on_loan())
+        self.print_player_info_label(start_x_pos, start_y_pos, end_pos, 'ON LOAN: ', 20, player.get_player_on_loan())
 
-        self.print_player_info_label(start_x_pos, start_y_pos, end_pos + 35, 'CONTRACT EXPIRES ON: ', 30, self.__player.get_player_contract_date())
+        self.print_player_info_label(start_x_pos, start_y_pos, end_pos + 35, 'CONTRACT EXPIRES ON: ', 30, player.get_player_contract_date())
 
-        self.print_player_info_label(start_x_pos, start_y_pos, end_pos, 'COUNTRY: ', 60, self.__player.get_player_country())
+        self.print_player_info_label(start_x_pos, start_y_pos, end_pos, 'COUNTRY: ', 60, player.get_player_country())
 
-        self.print_player_info_label(start_x_pos, start_y_pos, end_pos, 'HEIGHT: ', 70, self.__player.get_player_height())
+        self.print_player_info_label(start_x_pos, start_y_pos, end_pos, 'HEIGHT: ', 70, player.get_player_height())
 
-        self.print_player_info_label(start_x_pos, start_y_pos, end_pos, 'FOOT: ', 80, self.__player.get_player_foot())
+        self.print_player_info_label(start_x_pos, start_y_pos, end_pos, 'FOOT: ', 80, player.get_player_foot())
 
-    def print_player_info_col2(self):
+    def print_player_info_col2(self, player):
         """
         Function that defines the layout of the second column of the player's information.
         The absolute position and the offset values for the labels within the A4 sheet of the pdf 
@@ -161,27 +175,48 @@ class PDF(FPDF):
         start_y2_pos = 150.0
         end_pos = 30
 
-        self.print_player_info_label(start_x2_pos, start_y2_pos, end_pos, 'LEAGUE: ', 0, self.__player.get_player_league())
+        self.print_player_info_label(start_x2_pos, start_y2_pos, end_pos, 'LEAGUE: ', 0, player.get_player_league())
 
-        self.print_player_info_label(start_x2_pos, start_y2_pos, end_pos, '#MATCHES: ', 10, self.__player.get_player_num_matches())
+        self.print_player_info_label(start_x2_pos, start_y2_pos, end_pos, '#MATCHES: ', 10, player.get_player_num_matches())
 
-        self.print_player_info_label(start_x2_pos, start_y2_pos, end_pos, 'AGE: ', 60, self.__player.get_player_age())
+        self.print_player_info_label(start_x2_pos, start_y2_pos, end_pos, 'AGE: ', 60, player.get_player_age())
 
-        self.print_player_info_label(start_x2_pos, start_y2_pos, end_pos, 'WEIGHT: ', 70, self.__player.get_player_weight())
-
-    def print_basic_player_info(self):
-        """
-        Function that prints player's image and basic information in the first page
-        """
-        self.image('app/pdf_generator/resources/images/placeholder_player_photo.jpg', 50, 60, 115)
-        self.set_font(self.__font, 'B', 14)
-        self.print_player_info_col1()
-        self.print_player_info_col2()
+        self.print_player_info_label(start_x2_pos, start_y2_pos, end_pos, 'WEIGHT: ', 70, player.get_player_weight())
 
     def print_plot(self, plot):
         """
         Function that prints a given plot onto the pdf
         """
         img = Image.open(io.BytesIO(plot))
-        self.image(img, 50, 70, 115)
+
+        if self.__current_y + 80 > self.h:
+            print("im adding a page")
+            self.add_page()
+            self.__current_y = 40
+
+        # Print the image at the current y position
+        self.image(img, 50, self.__current_y, 115, 80)
+
+        # Update the current y position to be below the current image
+        self.__current_y += 80 + 10
+
+    @property
+    def font(self):
+        return self.__font
+
+    @property
+    def player(self):
+        return self.__player
+
+    @property
+    def compare(self):
+        return self.__compare
+
+    @property
+    def current_y(self):
+        return self.__current_y
+
+    @current_y.setter
+    def current_y(self, value):
+        self.__current_y = value
 

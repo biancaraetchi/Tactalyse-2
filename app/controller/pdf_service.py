@@ -1,7 +1,7 @@
-from ..pdf_generator.pdf_generator import generate_basic_pdf
+from app.pdf_generator.generators.standard_pdf import StandardPDF
 
 
-def create_pdf(league_df, player_name, main_pos, radar_chart, line_plot, bar_plot):
+def create_pdf(param_map):
     """
     Function that retrieves a generated football analysis report for further use.
 
@@ -12,4 +12,5 @@ def create_pdf(league_df, player_name, main_pos, radar_chart, line_plot, bar_plo
     :param line_plot: Line plot to be added to the PDF.
     :return: The PDF generated based on passed parameters and plots, in byte form.
     """
-    return generate_basic_pdf(league_df, player_name, main_pos, radar_chart, line_plot, bar_plot)
+    generator = StandardPDF()
+    return generator.generate_pdf(param_map)
