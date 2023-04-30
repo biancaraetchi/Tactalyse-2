@@ -35,7 +35,12 @@ class BarPlot(Graph):
         else:
             avg = 0
         
-        player_vs_avg_data = {' ': [self.__player_name, self.__position_name + ' league average'], stat: [player_value, avg]}       
+        if (self.__orientation == 'v'):
+            avg_column_name = self.__position_name + ' \nleague average'
+        else:
+            avg_column_name = self.__position_name.replace(' ', '\n') + ' \nleague \naverage'
+
+        player_vs_avg_data = {' ': [self.__player_name, avg_column_name], stat: [player_value, avg]}       
         df = pd.DataFrame(player_vs_avg_data)
         
         plt.subplot().clear()
@@ -43,6 +48,8 @@ class BarPlot(Graph):
             sns.barplot(x=" ", y=stat, data=df, orient=self.__orientation)
         else:
             sns.barplot(x=stat, y=" ", data=df, orient=self.__orientation)
+
+        plt.tight_layout()
 
         ax = plt.gca()
         if (self.__orientation == 'v'):
