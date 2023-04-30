@@ -3,7 +3,7 @@ from ..graph_generator.factories.radar_chart_factory import RadarChartFactory
 from ..graph_generator.factories.bar_plot_factory import BarPlotFactory
 
 
-def create_radio_chart(main_pos, player_row, columns):
+def create_radar_chart(main_pos, player_row, columns):
     """
     Function that retrieves a drawn radio chart for further use.
 
@@ -31,6 +31,7 @@ def create_line_plot(main_pos, player_df, columns):
     plot_obj = factory.create_instance(main_pos)
     plot = plot_obj.draw(player_df, columns)
     return plot
+
 
 def create_bar_plot(player_name, main_pos, league_df, player_league_row_df, columns, orientation):
     """

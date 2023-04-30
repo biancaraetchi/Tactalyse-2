@@ -1,17 +1,20 @@
-from app.controller.graph_service import create_radio_chart
+from app.controller.graph_service import create_radar_chart
 from app.data.excel_reader import ExcelReader
-from app.data.preprocessing import main_position, position_dictionary, shortened_dictionary, get_columns_radio_chart
+from app.data.preprocessor import Preprocessor
+from app.data.radar_data import get_columns_radar_chart
+
+processor = Preprocessor()
 
 
 def create_graph(leaguefile, playername):
     reader = ExcelReader()
     league = reader.league_data(leaguefile, playername)
-    main_pos = main_position(league)
-    main_pos_long = position_dictionary().get(main_pos)
-    main_pos = shortened_dictionary().get(main_pos)
-    columns = get_columns_radio_chart(main_pos)
+    main_pos = processor.main_position(league)
+    main_pos_long = processor.position_dictionary().get(main_pos)
+    main_pos = processor.shortened_dictionary().get(main_pos)
+    columns = get_columns_radar_chart(main_pos)
 
-    radar_chart = create_radio_chart(main_pos_long, league, columns)
+    radar_chart = create_radar_chart(main_pos_long, league, columns)
     f = open('placeholders/bot_'+playername+'.png', 'wb')
     f.write(radar_chart)
     f.close()

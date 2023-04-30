@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import seaborn as sns
 import pandas as pd
-from ...data import preprocessing
+from ...data import preprocessor
 from .abstract_models import Graph
 
 

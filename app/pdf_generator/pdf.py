@@ -127,8 +127,6 @@ class PDF(FPDF):
         self.set_xy(start_x_pos + end_pos, start_y_pos + y_offset)
         self.cell(0, 20, value, ln=1)
 
-
-
     def print_player_info_col1(self):
         """
         Function that defines the layout of the first column of the player's information.
@@ -186,3 +184,4 @@ class PDF(FPDF):
         """
         img = Image.open(io.BytesIO(plot))
         self.image(img, 50, 70, 115)
+
