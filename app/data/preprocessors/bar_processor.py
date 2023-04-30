@@ -12,6 +12,7 @@ class BarProcessor(Preprocessor):
         bar_map = {"league_data": league_df}
         player_row = reader.league_data(league_file, player_name)
         main_pos = self.main_position(player_row)
+        bar_map.update({"main_pos": main_pos})
         player_pos = self.position_dictionary().get(main_pos)
         bar_map.update({"player_pos": player_pos})
         stats = self.get_columns_bar_plots(player_pos)

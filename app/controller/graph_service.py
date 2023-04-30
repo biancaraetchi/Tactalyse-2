@@ -31,7 +31,7 @@ def create_line_plots(line_map):
     return plots
 
 
-def create_bar_plots(bar_map):
+def create_bar_plots(bar_map, orientation):
     """
     Function that retrieves a drawn bar plot for further use.
 
@@ -40,6 +40,7 @@ def create_bar_plots(bar_map):
     """
     factory = BarPlotFactory()
     param_map = {'type': 'Default', 'params': bar_map}
+    bar_map.update({"orientation": orientation})
     plot_obj = factory.create_instance(param_map)
     plots = plot_obj.draw_all(bar_map)
     return plots
