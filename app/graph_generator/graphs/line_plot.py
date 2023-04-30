@@ -68,11 +68,9 @@ class LinePlot(Graph):
         sns.lineplot(x=date, y=data["Interceptions"], marker = 'o', ax = ax)
         ax.set(title="Interceptions per 90 minutes", xticks = locations, xticklabels = labels)
         mean = np.mean(data["Interceptions"])
-        # ax.axhline(y = mean, linestyle="dashed", label = "Mean", color = "black")
         sns.lineplot(x=date,  y=mean, ax=ax, linestyle="solid", label="Mean", color = "black")
         for i in start_years:
             ax.axvline(x=i, linestyle="dashed", color='g')
-            print(i)
         ax.axvline(x = temp_start_date, linestyle = "dashed", label="Tactalyse start & end date", color = 'r')
         ax.axvline(x = temp_end_date, linestyle = "dashed", color = 'r')
         ax.legend()
