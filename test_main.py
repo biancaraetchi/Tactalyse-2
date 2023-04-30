@@ -5,6 +5,7 @@ from app.data.preprocessor import Preprocessor
 from placeholder_graphs import generate_placeholders
 import os
 import matplotlib
+import pandas as pd
 
 matplotlib.use('TkAgg')
 
@@ -22,10 +23,14 @@ def generate_pdf():
     radar_chart = create_radar_chart(main_pos_long, player_row, columns_radio_chart)
     line_plot = create_line_plot(None, player_data, columns_line_plot)
     bar_plot = create_bar_plot(player_name, main_pos, league_df, player_row, "Goals", 'v')
+    wtv = {'Interceptions': [1, 2, 4, 2, 6, 3], 'Passes': [3, 4, 2, 7, 4, 2]}
+    wtvdf = pd.DataFrame(data=wtv)
+    scatter_plot= create_scatter_plot(wtvdf)
+
 
     params = {"league_df": league_df, "player_name": player_name, "main_pos": main_pos_long, "line_plots": [line_plot,
                                                                                                             line_plot],
-              "bar_plots": [bar_plot, bar_plot, bar_plot]}
+              "bar_plots": [bar_plot, bar_plot, bar_plot], "scatter_plots":[scatter_plot, scatter_plot]}
     pdf_bytes = create_pdf(params)
 
     # Save the PDF to a file
