@@ -1,5 +1,5 @@
-from .preprocessor import Preprocessor
 from app.data.excel_reader import ExcelReader
+from .preprocessor import Preprocessor
 
 
 class PDFProcessor(Preprocessor):

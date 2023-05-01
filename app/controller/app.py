@@ -93,7 +93,8 @@ def pass_data(league_file, player_file, player_name, start_date, end_date, compa
     :return: A response containing the generated PDF in byte representation.
     """
     if compare_name and not both_in_league(league_file, player_name, compare_name):
-        return Response("Error: The second player name was not found in the league file.", 400, mimetype='application/json')
+        return Response("Error: The second player name was not found in the league file.", 400,
+                        mimetype='application/json')
     # Get parameter maps with relevant data for generating plots from the data module
     radar_map = get_radar_data(league_file, player_name, compare_name)
     line_map = get_line_data(league_file, player_file, player_name, compare_file, compare_name, start_date, end_date)

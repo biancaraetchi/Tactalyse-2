@@ -1,8 +1,8 @@
 import io
+from math import ceil
 
 import matplotlib.pyplot as plt
 import numpy as np
-from math import ceil
 
 from .abstract_models import Graph
 

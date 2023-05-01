@@ -27,7 +27,8 @@ class Preprocessor:
         pos_dict.update(dict.fromkeys(['GK'], 'Goalkeeper'))
         pos_dict.update(dict.fromkeys(['LB', 'LB5', 'LWB', 'RB', 'RB5', 'RWB'], 'Full Back'))
         pos_dict.update(dict.fromkeys(['RCB', 'RCB3', 'CB', 'LCB', 'LCB3'], 'Center Back'))
-        pos_dict.update(dict.fromkeys(['DMF', 'LCMF', 'RCMF', 'LDMF', 'RDMF', 'LCMF3', 'RCMF3'], 'Defensive Midfielder'))
+        pos_dict.update(
+            dict.fromkeys(['DMF', 'LCMF', 'RCMF', 'LDMF', 'RDMF', 'LCMF3', 'RCMF3'], 'Defensive Midfielder'))
         pos_dict.update(dict.fromkeys(['AMF', 'LAMF', 'RAMF'], 'Attacking Midfielder'))
         pos_dict.update(dict.fromkeys(['CF', 'LCF', 'RCF'], 'Striker'))
 
@@ -61,26 +62,26 @@ class Preprocessor:
         """
 
         cat_dict = dict.fromkeys(['GK'], ['Long passes per 90', 'Interceptions per 90',
-                                                         'Defensive duels per 90', 'Shots blocked per 90',
-                                                         'Sliding tackles per 90', 'Dribbles per 90'])
+                                          'Defensive duels per 90', 'Shots blocked per 90',
+                                          'Sliding tackles per 90', 'Dribbles per 90'])
         cat_dict.update(dict.fromkeys(['FB'], ['Goals per 90', 'Interceptions per 90',
-                                                         'Defensive duels per 90', 'Fouls per 90',
-                                                         'Crosses per 90', 'Dribbles per 90']))
+                                               'Defensive duels per 90', 'Fouls per 90',
+                                               'Crosses per 90', 'Dribbles per 90']))
         cat_dict.update(dict.fromkeys(['CB'], ['Goals per 90', 'Interceptions per 90',
-                                                         'Defensive duels per 90', 'Fouls per 90',
-                                                         'Crosses per 90', 'Dribbles per 90']))
+                                               'Defensive duels per 90', 'Fouls per 90',
+                                               'Crosses per 90', 'Dribbles per 90']))
         cat_dict.update(dict.fromkeys(['DM'], ['Goals per 90', 'Interceptions per 90',
-                                                         'Defensive duels per 90', 'Fouls per 90',
-                                                         'Crosses per 90', 'Dribbles per 90']))
+                                               'Defensive duels per 90', 'Fouls per 90',
+                                               'Crosses per 90', 'Dribbles per 90']))
         cat_dict.update(dict.fromkeys(['AM'], ['Progressive runs per 90', 'Assists per 90',
-                                                         'Offensive duels per 90', 'Fouls per 90',
-                                                         'Goals per 90', 'Dribbles per 90']))
+                                               'Offensive duels per 90', 'Fouls per 90',
+                                               'Goals per 90', 'Dribbles per 90']))
         cat_dict.update(dict.fromkeys(['WI'], ['Progressive runs per 90', 'Assists per 90',
-                                                         'Offensive duels per 90', 'Fouls per 90',
-                                                         'Goals per 90', 'Dribbles per 90']))
+                                               'Offensive duels per 90', 'Fouls per 90',
+                                               'Goals per 90', 'Dribbles per 90']))
         cat_dict.update(dict.fromkeys(['ST'], ['Progressive runs per 90', 'Shots per 90',
-                                                         'Offensive duels per 90', 'Fouls per 90',
-                                                         'Goals per 90', 'Dribbles per 90']))
+                                               'Offensive duels per 90', 'Fouls per 90',
+                                               'Goals per 90', 'Dribbles per 90']))
         return cat_dict
 
     def main_position(self, player_row):

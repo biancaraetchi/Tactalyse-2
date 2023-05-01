@@ -1,5 +1,5 @@
-from app.pdf_generator.generators.standard_pdf import StandardPDF
 from app.pdf_generator.generators.comparison_pdf import ComparisonPDF
+from app.pdf_generator.generators.standard_pdf import StandardPDF
 
 
 def create_pdf(param_map):

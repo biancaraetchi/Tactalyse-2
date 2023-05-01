@@ -1,6 +1,8 @@
 import io
+
 import matplotlib.pyplot as plt
 import seaborn as sns
+
 from .abstract_models import Graph
 
 

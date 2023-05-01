@@ -39,7 +39,7 @@ class ExcelReader:
         except KeyError:
             player = pd.empty()
         return player
-    
+
     def all_league_data(self, league_file):
         dataframe = self.read_file(league_file)
         return dataframe

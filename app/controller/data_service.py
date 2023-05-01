@@ -1,8 +1,8 @@
-from app.data.preprocessors.line_processor import LineProcessor
-from app.data.preprocessors.radar_processor import RadarProcessor
 from app.data.preprocessors.bar_processor import BarProcessor
+from app.data.preprocessors.line_processor import LineProcessor
 from app.data.preprocessors.pdf_processor import PDFProcessor
 from app.data.preprocessors.preprocessor import Preprocessor
+from app.data.preprocessors.radar_processor import RadarProcessor
 from app.data.preprocessors.scatter_processor import ScatterProcessor
 
 
@@ -43,7 +43,8 @@ def get_line_data(league_file, player_file, player_name, compare_file, compare_n
              order. (player_data, columns_line_plot)
     """
     processor = LineProcessor()
-    return processor.extract_line_data(league_file, player_file, player_name, compare_file, compare_name, start_date, end_date)
+    return processor.extract_line_data(league_file, player_file, player_name, compare_file, compare_name, start_date,
+                                       end_date)
 
 
 def get_scatter_data(player_file, player_name):

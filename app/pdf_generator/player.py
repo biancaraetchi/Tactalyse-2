@@ -1,6 +1,4 @@
-
 class Player:
-
     """
     Class that represents the player for which the statistics/graphs/pdf are being processed.
     All the player's personal and football-related information is stored as attributes.
@@ -56,7 +54,6 @@ class Player:
         self.__player_on_loan = league_df.loc[league_df['Player'] == player_name, 'On loan'].values[0]
         self.__player_contract_date = league_df.loc[league_df['Player'] == player_name, 'Contract expires'].values[0]
         self.__player_num_matches = str(league_df.loc[league_df['Player'] == player_name, 'Matches played'].values[0])
-
 
     # Getter functions for the class attributes
 

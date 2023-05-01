@@ -1,11 +1,12 @@
 import io
+
 from PIL import Image
 from fpdf import FPDF
+
 from .player import Player
 
 
 class PDF(FPDF):
-
     """
     Class representing the pdf for the player who the client has asked a report of.
     Its layout is defined by the class attributes and their values.
@@ -15,6 +16,7 @@ class PDF(FPDF):
     for whom the pdf displays info
     :attribute __font: defines the main font used throughout the pdf
     """
+
     def __init__(self):
         super().__init__()
         self.__player = Player()
@@ -159,7 +161,8 @@ class PDF(FPDF):
 
         self.print_player_info_label(start_x_pos, start_y_pos, end_pos, 'ON LOAN: ', 20, player.get_player_on_loan())
 
-        self.print_player_info_label(start_x_pos, start_y_pos, end_pos + 35, 'CONTRACT EXPIRES ON: ', 30, player.get_player_contract_date())
+        self.print_player_info_label(start_x_pos, start_y_pos, end_pos + 35, 'CONTRACT EXPIRES ON: ', 30,
+                                     player.get_player_contract_date())
 
         self.print_player_info_label(start_x_pos, start_y_pos, end_pos, 'COUNTRY: ', 60, player.get_player_country())
 
@@ -179,7 +182,8 @@ class PDF(FPDF):
 
         self.print_player_info_label(start_x2_pos, start_y2_pos, end_pos, 'LEAGUE: ', 0, player.get_player_league())
 
-        self.print_player_info_label(start_x2_pos, start_y2_pos, end_pos, '#MATCHES: ', 10, player.get_player_num_matches())
+        self.print_player_info_label(start_x2_pos, start_y2_pos, end_pos, '#MATCHES: ', 10,
+                                     player.get_player_num_matches())
 
         self.print_player_info_label(start_x2_pos, start_y2_pos, end_pos, 'AGE: ', 60, player.get_player_age())
 
@@ -236,4 +240,3 @@ class PDF(FPDF):
     @current_y.setter
     def current_y(self, value):
         self.__current_y = value
-

@@ -1,6 +1,6 @@
+from ..graph_generator.factories.bar_plot_factory import BarPlotFactory
 from ..graph_generator.factories.line_plot_factory import LinePlotFactory
 from ..graph_generator.factories.radar_chart_factory import RadarChartFactory
-from ..graph_generator.factories.bar_plot_factory import BarPlotFactory
 from ..graph_generator.factories.scatter_plot_factory import ScatterPlotFactory
 
 

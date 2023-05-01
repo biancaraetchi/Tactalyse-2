@@ -1,4 +1,5 @@
 from abc import ABC, abstractmethod
+
 from app.pdf_generator.pdf import PDF
 
 
@@ -43,7 +44,6 @@ class PDFGenerator(ABC):
         for plot in scatter_plots:
             self._pdf.print_plot(plot)
         self._pdf.current_y = 70
-
 
     @abstractmethod
     def print_player_info(self):

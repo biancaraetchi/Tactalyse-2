@@ -16,7 +16,8 @@ class LineProcessor(Preprocessor):
         stats_necessary = stats_necessary[stats_necessary[player_pos] == 1.0]
         return stats_necessary['Attribute']
 
-    def extract_line_data(self, league_file, player_file, player_name, compare_file, compare_name, start_date, end_date):
+    def extract_line_data(self, league_file, player_file, player_name, compare_file, compare_name, start_date,
+                          end_date):
         """
         Function that extracts all required data from the passed player match data Excel file.
 
