@@ -45,22 +45,26 @@ class BarPlot(Graph):
         plt.subplot().clear()
         if (self.__orientation == 'v'):
             sns.barplot(x=" ", y=stat, data=df, orient=self.__orientation)
+            plt.ylabel(stat, fontsize=14)
         else:
             sns.barplot(x=stat, y=" ", data=df, orient=self.__orientation)
+            plt.xlabel(stat, fontsize=14)
 
         plt.tight_layout()
 
         ax = plt.gca()
         if (self.__orientation == 'v'):
             for p in ax.patches:
-                ax.text(p.get_x() + p.get_width() / 2, p.get_height(), "%0.2f" % float(p.get_height()), fontsize=11,
+                ax.text(p.get_x() + p.get_width() / 2, p.get_height(), "%0.2f" % float(p.get_height()), fontsize=12,
                         fontweight='bold', color='black', ha='center', va='bottom',
                         bbox=dict(facecolor='white', edgecolor='black', boxstyle='round,pad=0.2'))
         else:
             for p in ax.patches:
-                ax.text(p.get_width(), p.get_y() + p.get_height() / 2, "%0.2f" % float(p.get_width()), fontsize=11,
+                ax.text(p.get_width(), p.get_y() + p.get_height() / 2, "%0.2f" % float(p.get_width()), fontsize=12,
                         fontweight='bold', color='black', ha='center', va='bottom',
                         bbox=dict(facecolor='white', edgecolor='black', boxstyle='round,pad=0.2'))
+
+        ax.tick_params(axis='both', which='major', labelsize=14)
 
         buffer = io.BytesIO()
         plt.savefig(buffer, format='png')
