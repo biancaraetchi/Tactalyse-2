@@ -102,11 +102,11 @@ def pass_data(league_file, player_file, player_name, start_date, end_date, compa
     # Pass the maps to get lists containing plots in byte form from the graph_generator module
     radar_chart = create_radar_chart(radar_map)
     line_plots = create_line_plots(line_map)
-    bar_plots = create_bar_plots(bar_map)
+    bar_plots = create_bar_plots(bar_map, 'v')
 
     # Get a parameter map with relevant data for generating a PDF from the data module, and pass it to the pdf_generator
     # module along with the graphs
-    pdf_map = get_pdf_data(league_file, player_name, compare_name, line_plots, bar_plots)
+    pdf_map = get_pdf_data(league_file, player_name, compare_name, line_plots, bar_plots, None)
     pdf_bytes = create_pdf(pdf_map)
 
     response = make_response(pdf_bytes)
