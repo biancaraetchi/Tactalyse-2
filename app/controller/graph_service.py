@@ -46,6 +46,11 @@ def create_bar_plots(bar_map, orientation):
     plots = plot_obj.draw_all(bar_map)
     return plots
 
+def create_main_stats_bar_plot(bar_map):
+    factory = BarPlotFactory()
+    param_map = {'type': 'main_stats', 'params': bar_map}
+    plot_obj = factory.create_instance(param_map)
+    return plot_obj.draw(bar_map)
 
 def create_scatter_plot(scatter_map):
     """

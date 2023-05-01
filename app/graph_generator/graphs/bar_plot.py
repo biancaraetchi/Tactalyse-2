@@ -7,13 +7,17 @@ import seaborn as sns
 
 from .abstract_models import Graph
 
-
-class BarPlot(Graph):
+class BarPlotBase(Graph):
     __main_pos = ''
     __position_name = ''
     __orientation = 'v'
     __player_name = ''
 
+    def draw(self, param_map):
+        pass
+
+class BarPlot(BarPlotBase):
+    
     def __init__(self, param_map):
         if 'player_pos' in param_map and not param_map['player_pos'] is None:
             self.__position_name = param_map.get('player_pos')
@@ -78,3 +82,29 @@ class BarPlot(Graph):
             param_map['stats'] = stat
             plots.append(self.draw(param_map))
         return plots
+
+class MainStatsBarPlot(BarPlotBase):
+
+    def __init__(self, param_map):
+        if 'player_pos' in param_map and not param_map['player_pos'] is None:
+            self.__position_name = param_map.get('player_pos')
+            self.__main_pos = param_map.get('main_pos')
+            self.__player_name = param_map.get('player_name')
+
+    def draw(self, param_map):
+
+        #to be completed
+        matplotlib.use('agg')
+
+
+        plt.subplot().clear()
+
+
+        plt.tight_layout()
+
+
+
+        buffer = io.BytesIO()
+        plt.savefig(buffer, format='png')
+        buffer.seek(0)
+        return [buffer.getvalue()]

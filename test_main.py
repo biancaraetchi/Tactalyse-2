@@ -25,6 +25,8 @@ def generate_pdf():
     radar_chart = create_radar_chart(radar_map)
     line_plots = create_line_plots(line_map)
     bar_plots = create_bar_plots(bar_map, 'v')
+    main_stats_bar_plot = create_main_stats_bar_plot(bar_map)
+
     wtv = {'Interceptions': [1, 2, 4, 2, 6, 3], 'Passes': [3, 4, 2, 7, 4, 2]}
     wtvdf = pd.DataFrame(data=wtv)
     scatter_plot = create_scatter_plot(wtvdf)
