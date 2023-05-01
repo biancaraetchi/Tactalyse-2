@@ -55,7 +55,7 @@ def create_scatter_plot(scatter_map):
     :return: The bar plot drawn based on passed parameters, in byte form.
     """
     factory = ScatterPlotFactory()
-    plot_obj = factory.create_instance("wtv")
+    plot_obj = factory.create_instance("Default")
     plot = plot_obj.draw(scatter_map)
 
     return plot

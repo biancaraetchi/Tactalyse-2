@@ -28,7 +28,7 @@ class StandardPDF(PDFGenerator):
         scatter_plots = param_map["scatter_plots"]
 
         self._pdf.set_info(player_name, league_df, main_pos)
-        self.set_standard_variables(player_name)
+        self.set_standard_properties(player_name)
 
         self._pdf.print_title()
         self.print_player_info()
