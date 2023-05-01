@@ -4,10 +4,8 @@ from .preprocessor import Preprocessor
 
 class BarProcessor(Preprocessor):
     def get_columns_bar_plots(self, position):
-        preproc = Preprocessor()
-        short_position = preproc.shortened_dictionary().get(position)
-        return preproc.league_category_dictionary().get(short_position)
-
+        short_position = self.shortened_dictionary().get(position)
+        return self.league_category_dictionary().get(short_position)
 
     def extract_bar_data(self, league_file, player_name):
         reader = ExcelReader()

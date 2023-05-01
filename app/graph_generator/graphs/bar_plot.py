@@ -54,11 +54,13 @@ class BarPlot(Graph):
         ax = plt.gca()
         if (self.__orientation == 'v'):
             for p in ax.patches:
-                ax.text(p.get_x() + p.get_width()/2, p.get_height(), "%0.2f" % float(p.get_height()), fontsize=11, fontweight='bold', color='black', ha='center', va='bottom',
+                ax.text(p.get_x() + p.get_width()/2, p.get_height(), "%0.2f" % float(p.get_height()), fontsize=11,
+                        fontweight='bold', color='black', ha='center', va='bottom',
                         bbox=dict(facecolor='white', edgecolor='black', boxstyle='round,pad=0.2'))
         else:
             for p in ax.patches:
-                ax.text(p.get_width(), p.get_y() + p.get_height()/2, "%0.2f" % float(p.get_width()), fontsize=11, fontweight='bold', color='black', ha='center', va='bottom', 
+                ax.text(p.get_width(), p.get_y() + p.get_height()/2, "%0.2f" % float(p.get_width()), fontsize=11,
+                        fontweight='bold', color='black', ha='center', va='bottom',
                         bbox=dict(facecolor='white', edgecolor='black', boxstyle='round,pad=0.2'))
           
         buffer = io.BytesIO()

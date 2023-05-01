@@ -25,6 +25,7 @@ class StandardPDF(PDFGenerator):
         main_pos = param_map["main_pos"]
         line_plots = param_map["line_plots"]
         bar_plots = param_map["bar_plots"]
+        scatter_plots = param_map["scatter_plots"]
 
         self._pdf.set_info(player_name, league_df, main_pos)
         self.set_standard_variables(player_name)
@@ -32,6 +33,6 @@ class StandardPDF(PDFGenerator):
         self._pdf.print_title()
         self.print_player_info()
 
-        self.print_plots(line_plots, bar_plots)
+        self.print_plots(line_plots, bar_plots, scatter_plots)
 
         return self._pdf.output(dest='S')

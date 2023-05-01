@@ -3,6 +3,7 @@ from app.data.preprocessors.radar_processor import RadarProcessor
 from app.data.preprocessors.bar_processor import BarProcessor
 from app.data.preprocessors.pdf_processor import PDFProcessor
 from app.data.preprocessors.preprocessor import Preprocessor
+from app.data.preprocessors.scatter_processor import ScatterProcessor
 
 
 def get_bar_data(league_file, player_name):
@@ -45,7 +46,20 @@ def get_line_data(league_file, player_file, player_name, compare_file, compare_n
     return processor.extract_line_data(league_file, player_file, player_name, compare_file, compare_name, start_date, end_date)
 
 
-def get_pdf_data(league_data, player_name, compare_name, line_plots, bar_plots):
+def get_scatter_data(player_file, player_name):
+    """
+    Function that takes a football player's data along with required parameters, and extracts the relevant data for a
+    line plot.
+    :param player_file: Excel file containing a player's match data.
+    :param player_name: The abbreviated position of the player whose league data to extract.
+    :return: A dataframe containing the player's match data, and the columns to be displayed on the line plots, in that
+             order. (player_data, columns_line_plot)
+    """
+    processor = ScatterProcessor
+    return processor.extract_scatter_data(player_file, player_name)
+
+
+def get_pdf_data(league_data, player_name, compare_name, line_plots, bar_plots, scatter_plots):
     """
     Function that takes a football player's data along with required parameters, and extracts the relevant data for a
     pdf.
@@ -55,11 +69,12 @@ def get_pdf_data(league_data, player_name, compare_name, line_plots, bar_plots):
     :param compare_name: The name of the player to compare with and whose data to extract.
     :param line_plots:
     :param bar_plots:
+    :param scatter_plots:
     :return: A dataframe containing the player's match data, and the columns to be displayed on the line plots, in that
              order. (player_data, columns_line_plot)
     """
     processor = PDFProcessor()
-    return processor.params_to_map(league_data, player_name, compare_name, line_plots, bar_plots)
+    return processor.params_to_map(league_data, player_name, compare_name, line_plots, bar_plots, scatter_plots)
 
 
 def both_in_league(league_file, player_name, compare_name):

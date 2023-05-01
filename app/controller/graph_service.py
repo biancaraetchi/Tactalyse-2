@@ -1,6 +1,7 @@
 from ..graph_generator.factories.line_plot_factory import LinePlotFactory
 from ..graph_generator.factories.radar_chart_factory import RadarChartFactory
 from ..graph_generator.factories.bar_plot_factory import BarPlotFactory
+from ..graph_generator.factories.scatter_plot_factory import ScatterPlotFactory
 
 
 def create_radar_chart(radar_map):
@@ -44,3 +45,17 @@ def create_bar_plots(bar_map, orientation):
     plot_obj = factory.create_instance(param_map)
     plots = plot_obj.draw_all(bar_map)
     return plots
+
+
+def create_scatter_plot(scatter_map):
+    """
+    Function that retrieves a drawn scatter plot for further use.
+
+    :param scatter_map:
+    :return: The bar plot drawn based on passed parameters, in byte form.
+    """
+    factory = ScatterPlotFactory()
+    plot_obj = factory.create_instance("wtv")
+    plot = plot_obj.draw(scatter_map)
+
+    return plot

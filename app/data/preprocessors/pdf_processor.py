@@ -3,7 +3,7 @@ from app.data.excel_reader import ExcelReader
 
 
 class PDFProcessor(Preprocessor):
-    def params_to_map(self, league_file, player_name, compare_name, line_plots, bar_plots):
+    def params_to_map(self, league_file, player_name, compare_name, line_plots, bar_plots, scatter_plots):
         reader = ExcelReader()
         league_df = reader.league_data(league_file, player_name)
         pdf_map = {'league_data': league_df}
@@ -26,5 +26,6 @@ class PDFProcessor(Preprocessor):
 
         pdf_map.update({'line_plots': line_plots})
         pdf_map.update({'bar_plots': bar_plots})
+        pdf_map.update({'scatter_plots': scatter_plots})
 
         return pdf_map
