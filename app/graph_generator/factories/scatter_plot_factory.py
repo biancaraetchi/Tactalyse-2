@@ -1,13 +1,13 @@
 from ..factories.abstract_graph_factory import AbstractGraphFactory
-from ..graphs.scatter_plot import ScattterPlot
+from ..graphs.scatter_plot import ScatterPlot
 
 
 class ScatterPlotFactory(AbstractGraphFactory):
-    """ Class representing a factory for bar plots"""
+    """ Class representing a factory for scatter plots"""
 
     def create_instance(self, graph_type):
         if graph_type != 'Default':
             print("To be implemented.")
-            return ScattterPlot()
+            return ScatterPlot()
         else:
-            return ScattterPlot()
+            return ScatterPlot()

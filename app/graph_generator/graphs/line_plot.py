@@ -57,17 +57,19 @@ class LinePlot(Graph):
     #     buffer.seek(0)
     #     return buffer.getvalue()
 
-    def draw(self, data, column_names):
+    def draw(self, param_map):
+        data = param_map.get('player_data')
+        column_name = param_map.get('columns')
         temp_start_date = 20
         temp_end_date = 144
         date = data["Date"]
         labels, locations, start_years = self.get_xlabels(date)
-        data = data[column_names]
+        data = data[column_name]
         fig, ax = plt.subplots()
         ax.clear()
-        sns.lineplot(x=date, y=data["Interceptions"], marker = 'o', ax = ax)
+        sns.lineplot(x=date, y=data, marker = 'o', ax = ax)
         ax.set(title="Interceptions per 90 minutes", xticks = locations, xticklabels = labels)
-        mean = np.mean(data["Interceptions"])
+        mean = np.mean(data)
         sns.lineplot(x=date,  y=mean, ax=ax, linestyle="solid", label="Mean", color = "black")
         for i in start_years:
             ax.axvline(x=i, linestyle="dashed", color='g')
@@ -77,5 +79,13 @@ class LinePlot(Graph):
         buffer = io.BytesIO()
         plt.savefig(buffer, format = 'png')
         buffer.seek(0)
+        plt.close()
         return buffer.getvalue()
 
+    def draw_all(self, param_map):
+        columns = param_map.get('columns')
+        plots = []
+        for column in columns:
+            param_map['columns'] = column
+            plots.append(self.draw(param_map))
+        return plots

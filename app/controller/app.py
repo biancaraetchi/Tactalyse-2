@@ -1,9 +1,8 @@
 from flask import Flask, request, Response, make_response
 
-from .data_service import get_radar_data, get_line_data, get_bar_data
-from .graph_service import create_radar_chart, create_line_plot
+from .data_service import get_radar_data, get_line_data, get_bar_data, get_pdf_data, both_in_league
+from .graph_service import create_bar_plots, create_line_plots, create_radar_chart
 from .pdf_service import create_pdf
-from ..data.preprocessor import Preprocessor
 
 app = Flask(__name__)
 
@@ -71,32 +70,44 @@ def key_value_process(files, form):
 
     league_file = files['league-file']
     player_file = files['player-file']
+    compare_file = files.get('compare-file')
     player_name = form['player-name']
+    compare_name = form.get('compare-name')
     start_date = form.get('start-date')
     end_date = form.get('end-date')
 
-    return pass_data(league_file, player_file, player_name, start_date, end_date)
+    return pass_data(league_file, player_file, player_name, start_date, end_date, compare_file, compare_name)
 
 
-def pass_data(league_file, player_file, player_name, start_date, end_date):
+def pass_data(league_file, player_file, player_name, start_date, end_date, compare_file, compare_name):
     """
     Function that passes the received data to the appropriate services, and generates a PDF.
 
     :param league_file: Excel file containing football league data.
-    :param player_file: Excel file containing player match data.
+    :param player_file: Excel file containing the player's match data.
     :param player_name: Name of the player to generate a report for.
     :param start_date: Start date of Tactalyse's services for the player.
     :param end_date: End date of Tactalyse's services for the player.
+    :param compare_file: Excel file containing match data for the player to compare with.
+    :param compare_name: Name of the player to compare with.
     :return: A response containing the generated PDF in byte representation.
     """
-    processor = Preprocessor()
-    player_row, columns_radio_chart, main_pos_long, main_pos = get_radar_data(processor, league_file, player_name)
-    player_data, columns_line_plot = get_line_data(player_file, main_pos)
+    if compare_name and not both_in_league(league_file, player_name, compare_name):
+        return Response("Error: The second player name was not found in the league file.", 400, mimetype='application/json')
+    # Get parameter maps with relevant data for generating plots from the data module
+    radar_map = get_radar_data(league_file, player_name, compare_name)
+    line_map = get_line_data(league_file, player_file, player_name, compare_file, compare_name, start_date, end_date)
+    bar_map = get_bar_data(league_file, player_name)
 
-    radar_chart = create_radar_chart(main_pos_long, player_row, columns_radio_chart)
-    line_plot = create_line_plot(None, player_data, columns_line_plot)
+    # Pass the maps to get lists containing plots in byte form from the graph_generator module
+    radar_chart = create_radar_chart(radar_map)
+    line_plots = create_line_plots(line_map)
+    bar_plots = create_bar_plots(bar_map)
 
-    pdf_bytes = create_pdf(player_row, player_name, main_pos_long, radar_chart, line_plot)
+    # Get a parameter map with relevant data for generating a PDF from the data module, and pass it to the pdf_generator
+    # module along with the graphs
+    pdf_map = get_pdf_data(league_file, player_name, compare_name, line_plots, bar_plots)
+    pdf_bytes = create_pdf(pdf_map)
 
     response = make_response(pdf_bytes)
     response.headers.set('Content-Type', 'application/pdf')

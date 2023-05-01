@@ -20,7 +20,7 @@ class StandardPDF(PDFGenerator):
         :param param_map: a map containing key/value pairs for every parameter required to generate the report.
         :return: the generated pdf as a stream output
         """
-        league_df = param_map["league_df"]
+        league_df = param_map["league_data"]
         player_name = param_map["player_name"]
         main_pos = param_map["main_pos"]
         line_plots = param_map["line_plots"]

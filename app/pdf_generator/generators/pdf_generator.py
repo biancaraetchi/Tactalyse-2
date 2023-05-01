@@ -15,26 +15,22 @@ class PDFGenerator(ABC):
         self._pdf.add_page()
 
     def print_plots(self, line_plots, bar_plots, scatter_plots):
-
         self._pdf.print_chapter('Line Plots', 'These plots showcase player statistics over time.')
         for plot in line_plots:
             self._pdf.print_plot(plot)
-        print("setting current_y to 70")
         self._pdf.current_y = 70
-        print(self._pdf.current_y)
 
-        print("printing bar plots")
         self._pdf.print_chapter('Bar Plots',
                                 'These plots showcase player statistics compared to those of players in the same position within the league.')
         for plot in bar_plots:
             self._pdf.print_plot(plot)
         self._pdf.current_y = 70
-        print("printing scatter plots")
         self._pdf.print_chapter('Scatter Plots',
                                 'These plots showcase data in scatter plots.')
         for plot in scatter_plots:
             self._pdf.print_plot(plot)
         self._pdf.current_y = 70
+
 
     @abstractmethod
     def print_player_info(self):

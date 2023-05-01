@@ -190,7 +190,6 @@ class PDF(FPDF):
         img = Image.open(io.BytesIO(plot))
 
         if self.__current_y + 80 > self.h:
-            print("im adding a page")
             self.add_page()
             self.__current_y = 40
 

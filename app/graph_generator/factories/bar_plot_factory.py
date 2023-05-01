@@ -5,9 +5,11 @@ from ..graphs.bar_plot import BarPlot
 class BarPlotFactory(AbstractGraphFactory):
     """ Class representing a factory for bar plots"""
 
-    def create_instance(self, player_name, main_pos, graph_type, orientation):
+    def create_instance(self, param_map):
+        graph_type = param_map.get('type')
+        params = param_map.get('params')
         if graph_type != 'Default':
             print("To be implemented.")
-            return BarPlot(player_name, main_pos, graph_type, orientation)
+            return BarPlot(params)
         else:
-            return BarPlot()
+            return BarPlot(params)

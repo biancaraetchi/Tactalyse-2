@@ -11,11 +11,11 @@ class AbstractGraphFactory(ABC):
     """
 
     @abstractmethod
-    def create_instance(self, graph_type) -> Graph:
+    def create_instance(self, param_map) -> Graph:
         """
         Creates a new graph instance based on the passed string parameter
 
-        :param graph_type: Type of graph to instantiate from the factory.
+        :param param_map: Map containing the type of graph to create, and the parameters needed for initialization.
         :return: The graph object represented by the factory and graph_type.
         """
         pass

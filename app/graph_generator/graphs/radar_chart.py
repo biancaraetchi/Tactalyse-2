@@ -15,7 +15,9 @@ class RadarChart(Graph):
         if player_pos:
             self.__position = player_pos
 
-    def draw(self, data, column_names):
+    def draw(self, param_map):
+        data = param_map.get('player_row')
+        column_names = param_map.get('columns')
         player = data.iloc[0]['Player']
         # create a list of the values for each category
         data = data[column_names]
