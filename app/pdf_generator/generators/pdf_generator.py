@@ -39,6 +39,7 @@ class PDFGenerator(ABC):
         for plot in bar_plots:
             self._pdf.print_plot(plot)
         self._pdf.current_y = 70
+
         self._pdf.print_chapter('Scatter Plots',
                                 'These plots showcase data in scatter plots.')
         for plot in scatter_plots:

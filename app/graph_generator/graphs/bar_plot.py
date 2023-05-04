@@ -1,11 +1,10 @@
 import io
-
 import matplotlib
 import matplotlib.pyplot as plt
 import pandas as pd
 import seaborn as sns
-
 from .abstract_models import Graph
+from PIL import Image, ImageDraw, ImageFont
 
 class BarPlotBase(Graph):
     __main_pos = ''
@@ -15,6 +14,7 @@ class BarPlotBase(Graph):
 
     def draw(self, param_map):
         pass
+
 
 class BarPlot(BarPlotBase):
     
@@ -33,7 +33,7 @@ class BarPlot(BarPlotBase):
 
         stat_df = data.loc[data['Main position'] == self.__main_pos].loc[:, [stat]]
         stat_list = stat_df[stat].tolist()
-        if not (len(stat_list) == 0):
+        if len(stat_list) != 0:
             avg = sum(stat_list) / len(stat_list)
         else:
             avg = 0
@@ -83,28 +83,68 @@ class BarPlot(BarPlotBase):
             plots.append(self.draw(param_map))
         return plots
 
-class MainStatsBarPlot(BarPlotBase):
+class MainStatsBarPlot(BarPlot):
 
     def __init__(self, param_map):
-        if 'player_pos' in param_map and not param_map['player_pos'] is None:
-            self.__position_name = param_map.get('player_pos')
-            self.__main_pos = param_map.get('main_pos')
-            self.__player_name = param_map.get('player_name')
-
-    def draw(self, param_map):
-
-        #to be completed
+        param_map.update({"orientation": 'h'})
+        super().__init__(param_map)
+        
+    def draw_clustered_bar_plot(self, param_map):
+        """
         matplotlib.use('agg')
-
+        
 
         plt.subplot().clear()
 
-
         plt.tight_layout()
 
-
+        
 
         buffer = io.BytesIO()
         plt.savefig(buffer, format='png')
         buffer.seek(0)
         return [buffer.getvalue()]
+        """
+        return super().draw(param_map)
+
+    def get_ranking(self, param_map):
+        return ''
+
+    def draw(self, param_map):
+        
+        """ --1 single image
+        first_bar_plot = super().draw(param_map)
+        clustered_bar_plot = self.draw_clustered_bar_plot(param_map)
+
+        image1 = Image.open(io.BytesIO(first_bar_plot))
+        image2 = Image.open(io.BytesIO(clustered_bar_plot))
+
+        new_width = 250
+        new_height = 250
+        image1 = image1.resize((new_width, new_height))
+        image2 = image2.resize((new_width, new_height))
+
+        width, height = image1.size
+        merged_image = Image.new('RGBA', (width*2, height))
+
+        merged_image.paste(image1, (0, 0))
+        merged_image.paste(image2, (width, 0))
+
+        buffer = io.BytesIO()
+        merged_image.save(buffer, format='png')
+        buffer.seek(0)
+        merged_image_bytes = buffer.getvalue()
+        return [merged_image_bytes]
+        """
+    
+        """ --2 separate images """
+        first_bar_plot = super().draw(param_map)
+        clustered_bar_plot = self.draw_clustered_bar_plot(param_map)
+        
+        return [first_bar_plot, clustered_bar_plot]
+        
+
+                
+        
+        
+        
