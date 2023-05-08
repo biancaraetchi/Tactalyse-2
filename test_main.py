@@ -1,5 +1,5 @@
 from app.controller.graph_service import *
-from app.controller.data_service import get_bar_data, get_line_data, get_radar_data,get_pdf_data
+from app.controller.data_service import get_bar_data, get_line_data, get_radar_data,get_pdf_data, get_scatter_data
 from app.controller.pdf_service import create_pdf
 import pandas as pd
 import os
