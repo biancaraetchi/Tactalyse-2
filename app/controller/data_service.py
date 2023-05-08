@@ -6,9 +6,9 @@ from app.data.preprocessors.radar_processor import RadarProcessor
 from app.data.preprocessors.scatter_processor import ScatterProcessor
 
 
-def get_bar_data(league_file, player_name):
+def get_bar_data(league_file, player_name, compare_name):
     processor = BarProcessor()
-    return processor.extract_bar_data(league_file, player_name)
+    return processor.extract_bar_data(league_file, player_name, compare_name)
 
 
 def get_radar_data(league_file, player_name, compare_name):
