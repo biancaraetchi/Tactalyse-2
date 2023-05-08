@@ -29,8 +29,8 @@ class BarPlot(BarPlotBase):
         matplotlib.use('agg')
         data = param_map.get('league_data')
         stat = param_map.get('stats')
+        
         player_value = data.loc[data['Player'] == self.__player_name].iloc[0][stat]
-
         stat_df = data.loc[data['Main position'] == self.__main_pos].loc[:, [stat]]
         stat_list = stat_df[stat].tolist()
         if len(stat_list) != 0:
@@ -88,59 +88,67 @@ class MainStatsBarPlot(BarPlot):
     def __init__(self, param_map):
         param_map.update({"orientation": 'h'})
         super().__init__(param_map)
+        self.__position_name = param_map.get('player_pos')
+        self.__main_pos = param_map.get('main_pos')
+        self.__player_name = param_map.get('player_name')
         
     def draw_clustered_bar_plot(self, param_map):
-        """
+        
         matplotlib.use('agg')
         
+        stats = param_map.get('stats')
+        data = param_map.get('league_data')
+        
+        player_value_list = []
+        avg_value_list = []
+    
+        for stat in stats:
+            player_value = data.loc[data['Player'] == self.__player_name].iloc[0][stat]
+            stat_df = data.loc[data['Main position'] == self.__main_pos].loc[:, [stat]]
+            stat_list = stat_df[stat].tolist()
+            if len(stat_list) != 0:
+                avg = sum(stat_list) / len(stat_list)
+            else:
+                avg = 0
+            player_value_list.append(player_value)
+            avg_value_list.append(avg)
 
         plt.subplot().clear()
+        player_vs_avg_data = {'Statistic': stats, self.__player_name: player_value_list, 'League Average' :avg_value_list}
+        df = pd.DataFrame(player_vs_avg_data)
+        df = pd.melt(df, id_vars=['Statistic'], value_vars=[self.__player_name, 'League Average'], var_name='Player/Avg Value', value_name='Value')
+        sns.barplot(x='Statistic', y='Value', hue='Player/Avg Value', data=df)
 
+        new_labels = []
+        for string in stats:
+            new_string = string.replace('per 90', '\nper 90')
+            new_labels.append(new_string)
+        plt.xticks(range(len(stats)), new_labels)
+        plt.xticks(fontsize=9)
         plt.tight_layout()
-
         
+        # TODO: aggiungi label
 
         buffer = io.BytesIO()
         plt.savefig(buffer, format='png')
         buffer.seek(0)
-        return [buffer.getvalue()]
-        """
-        return super().draw(param_map)
-
+        return buffer.getvalue()
+        
     def get_ranking(self, param_map):
+        # TODO
         return ''
 
     def draw(self, param_map):
         
-        """ --1 single image
+        stats = param_map.get('stats')
+        param_map['stats'] = stats[0]
+
         first_bar_plot = super().draw(param_map)
+        if len(stats) > 1:
+            stats.pop(0)
+        param_map['stats'] = stats
         clustered_bar_plot = self.draw_clustered_bar_plot(param_map)
 
-        image1 = Image.open(io.BytesIO(first_bar_plot))
-        image2 = Image.open(io.BytesIO(clustered_bar_plot))
-
-        new_width = 250
-        new_height = 250
-        image1 = image1.resize((new_width, new_height))
-        image2 = image2.resize((new_width, new_height))
-
-        width, height = image1.size
-        merged_image = Image.new('RGBA', (width*2, height))
-
-        merged_image.paste(image1, (0, 0))
-        merged_image.paste(image2, (width, 0))
-
-        buffer = io.BytesIO()
-        merged_image.save(buffer, format='png')
-        buffer.seek(0)
-        merged_image_bytes = buffer.getvalue()
-        return [merged_image_bytes]
-        """
-    
-        """ --2 separate images """
-        first_bar_plot = super().draw(param_map)
-        clustered_bar_plot = self.draw_clustered_bar_plot(param_map)
-        
         return [first_bar_plot, clustered_bar_plot]
         
 

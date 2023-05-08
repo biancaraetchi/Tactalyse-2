@@ -19,13 +19,14 @@ def generate_pdf():
 
     radar_map = get_radar_data(league_file, player_name, compare_name)
     line_map = get_line_data(league_file, player_file, player_name, compare_file, compare_name, start_date, end_date)
-    bar_map = get_bar_data(league_file, player_name)
+    bar_map_base = get_bar_data(league_file, player_name)
+    bar_map_main_stats = get_bar_data(league_file, player_name)
 
     # Pass the maps to get lists containing plots in byte form from the graph_generator module
     radar_chart = create_radar_chart(radar_map)
     line_plots = create_line_plots(line_map)
-    bar_plots = create_bar_plots(bar_map, 'v')
-    main_stats_bar_plot = create_main_stats_bar_plot(bar_map)
+    bar_plots = create_bar_plots(bar_map_base, 'v')
+    main_stats_bar_plot = create_main_stats_bar_plot(bar_map_main_stats)
 
     wtv = {'Interceptions': [1, 2, 4, 2, 6, 3], 'Passes': [3, 4, 2, 7, 4, 2]}
     wtvdf = pd.DataFrame(data=wtv)
