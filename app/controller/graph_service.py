@@ -52,15 +52,15 @@ def create_main_stats_bar_plot(bar_map):
     plot_obj = factory.create_instance(param_map)
     return plot_obj.draw(bar_map)
 
-def create_scatter_plots(scatter_map):
+def create_scatter_plot(scatter_map):
     """
     Function that retrieves a drawn scatter plot for further use.
 
     :param scatter_map:
-    :return: The scatter plot drawn based on passed parameters, in byte form.
+    :return: The bar plot drawn based on passed parameters, in byte form.
     """
     factory = ScatterPlotFactory()
     plot_obj = factory.create_instance("Default")
-    plot = plot_obj.draw_all(scatter_map)
+    plot = plot_obj.draw(scatter_map)
 
     return plot
