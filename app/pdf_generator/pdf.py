@@ -185,16 +185,14 @@ class PDF(FPDF):
 
         self.print_player_info_label(start_x_pos, start_y_pos, end_pos, 'CLUB: ', 10, player.get_player_club())
 
-        self.print_player_info_label(start_x_pos, start_y_pos, end_pos, 'ON LOAN: ', 20, player.get_player_on_loan())
-
-        self.print_player_info_label(start_x_pos, start_y_pos, end_pos + 35, 'CONTRACT EXPIRES ON: ', 30,
+        self.print_player_info_label(start_x_pos, start_y_pos, end_pos + 35, 'CONTRACT EXPIRES ON: ', 20,
                                      player.get_player_contract_date())
 
-        self.print_player_info_label(start_x_pos, start_y_pos, end_pos, 'COUNTRY: ', 60, player.get_player_country())
+        self.print_player_info_label(start_x_pos, start_y_pos, end_pos, 'COUNTRY: ', 50, player.get_player_country())
 
-        self.print_player_info_label(start_x_pos, start_y_pos, end_pos, 'HEIGHT: ', 70, player.get_player_height())
+        self.print_player_info_label(start_x_pos, start_y_pos, end_pos, 'HEIGHT: ', 60, player.get_player_height())
 
-        self.print_player_info_label(start_x_pos, start_y_pos, end_pos, 'FOOT: ', 80, player.get_player_foot())
+        self.print_player_info_label(start_x_pos, start_y_pos, end_pos, 'FOOT: ', 70, player.get_player_foot())
 
     def print_player_info_col2(self, player):
         """
@@ -211,9 +209,9 @@ class PDF(FPDF):
         self.print_player_info_label(start_x2_pos, start_y2_pos, end_pos, '#MATCHES: ', 10,
                                      player.get_player_num_matches())
 
-        self.print_player_info_label(start_x2_pos, start_y2_pos, end_pos, 'AGE: ', 60, player.get_player_age())
+        self.print_player_info_label(start_x2_pos, start_y2_pos, end_pos, 'AGE: ', 50, player.get_player_age())
 
-        self.print_player_info_label(start_x2_pos, start_y2_pos, end_pos, 'WEIGHT: ', 70, player.get_player_weight())
+        self.print_player_info_label(start_x2_pos, start_y2_pos, end_pos, 'WEIGHT: ', 60, player.get_player_weight())
 
     def print_comparison_info_col1(self, player, compare):
         """
