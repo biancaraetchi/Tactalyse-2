@@ -6,12 +6,12 @@ class ComparisonPDF(PDFGenerator):
         """
         Function that prints player's image and basic information in the first page
         """
-        self._pdf.image('app/pdf_generator/resources/images/placeholder_player_photo.jpg', 50, 60, 115)
+        self._pdf.image('app/pdf_generator/resources/images/placeholder_player_photo.jpg', 10, 60, 60)
+        self._pdf.image('app/pdf_generator/resources/images/placeholder_player_photo.jpg', 10, 140, 60)
         self._pdf.set_font(self._pdf.font, 'B', 14)
-        self._pdf.print_player_info_col1(self._pdf.__player)
-        self._pdf.print_player_info_col2(self._pdf.__player)
-        self._pdf.print_player_info_col1(self._pdf.__compare)
-        self._pdf.print_player_info_col2(self._pdf.__compare)
+        self._pdf.print_comparison_info_col1(self._pdf.player, self._pdf.compare)
+        self._pdf.print_comparison_info_col2(self._pdf.player, self._pdf.compare)
+        
 
     def generate_pdf(self, param_map):
         """
@@ -19,7 +19,7 @@ class ComparisonPDF(PDFGenerator):
         :param param_map: a map containing key/value pairs for every parameter required to generate the report.
         :return: the generated pdf as a stream output
         """
-        league_df = param_map["league_df"]
+        league_df = param_map["league_data"]
         player_name = param_map["player_name"]
         main_pos = param_map["main_pos"]
         compare_name = param_map["compare_name"]
@@ -32,9 +32,9 @@ class ComparisonPDF(PDFGenerator):
         self._pdf.set_info(compare_name, league_df, compare_pos)
         self.set_standard_properties(player_name)
 
-        self._pdf.print_title()
+        self._pdf.print_comparison_title()
         self.print_player_info()
 
-        self.print_plots(line_plots, bar_plots, scatter_plots)
+        # self.print_plots(line_plots, bar_plots, scatter_plots)
 
         return self._pdf.output(dest='S')
