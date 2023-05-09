@@ -4,7 +4,7 @@ from .pdf_generator import PDFGenerator
 class ComparisonPDF(PDFGenerator):
     def print_player_info(self):
         """
-        Function that prints player's image and basic information in the first page
+        Function that prints player's and compare player's image and basic information in the first page
         """
         self._pdf.image('app/pdf_generator/resources/images/placeholder_player_photo.jpg', 10, 60, 60)
         self._pdf.image('app/pdf_generator/resources/images/placeholder_player_photo.jpg', 10, 140, 60)

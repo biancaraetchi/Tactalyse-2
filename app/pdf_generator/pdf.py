@@ -154,7 +154,7 @@ class PDF(FPDF):
 
     def print_comparison_info_label(self, start_x_pos, start_y_pos, end_pos, label, y_offset, value):
         """
-        Function that displays a given player's information onto the current page
+        Function that displays a given player's and compare player's information onto the current page
         :param start_x_pos: the starting position of the player's information label on the x axis
         :param start_y_pos: the starting position of the player's information label on the y axis
         :param end_pos: the offset of the player's information label on the x axis
@@ -216,6 +216,11 @@ class PDF(FPDF):
         self.print_player_info_label(start_x2_pos, start_y2_pos, end_pos, 'WEIGHT: ', 70, player.get_player_weight())
 
     def print_comparison_info_col1(self, player, compare):
+        """
+        Function that defines the layout of the first column of the player's and compare player's information.
+        The absolute position and the offset values for the labels within the A4 sheet of the pdf 
+        are defined respectively by start_x2_pos, start_y2_pos and end_pos.
+        """
         start_x_pos = 73.0
         start_y_pos = 60.0
         end_pos = 30
@@ -257,7 +262,7 @@ class PDF(FPDF):
 
     def print_comparison_info_col2(self, player, compare):
         """
-        Function that defines the layout of the second column of the player's information.
+        Function that defines the layout of the second column of the player's and compare player's information.
         The absolute position and the offset values for the labels within the A4 sheet of the pdf 
         are defined respectively by start_x2_pos, start_y2_pos and end_pos.
         """
