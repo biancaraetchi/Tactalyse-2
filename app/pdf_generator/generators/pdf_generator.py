@@ -37,7 +37,11 @@ class PDFGenerator(ABC):
         self._pdf.print_chapter('Bar Plots',
                                 'These plots showcase player statistics compared to those of players in the same position within the league.')
         for plot in bar_plots:
-            self._pdf.print_plot(plot)
+            if type(plot) != list:
+                self._pdf.print_plot(plot)
+            else:
+                for plt in plot:
+                    self._pdf.print_plot(plt)
         self._pdf.current_y = 70
 
         self._pdf.print_chapter('Scatter Plots',
