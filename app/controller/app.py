@@ -112,7 +112,7 @@ def pass_data(league_file, player_file, player_name, start_date, end_date, compa
     pdf_map = get_pdf_data(league_file, player_name, compare_name, line_plots, main_stats_bar_plot, scatter_plots)
     pdf_bytes = create_pdf(pdf_map)
 
-    response = make_response(pdf_bytes)
+    response = make_response(bytes(pdf_bytes))
     response.headers.set('Content-Type', 'application/pdf')
     response.headers.set('Content-Disposition', 'attachment', filename=player_name + '.pdf')
     return response

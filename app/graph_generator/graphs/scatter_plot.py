@@ -26,6 +26,7 @@ class ScatterPlot(Graph):
         buffer = io.BytesIO()
         plt.savefig(buffer, format='png')
         buffer.seek(0)
+        plt.close()
         return buffer.getvalue()
     
     def draw_all(self, param_map):
