@@ -268,14 +268,14 @@ class PDF(FPDF):
         start_y2_pos = 60.0
         end_pos = 30
 
-        self.print_comparison_info_label(start_x2_pos, start_y2_pos, end_pos, 'LEAGUE: ', 0, compare.get_player_league())
+        self.print_comparison_info_label(start_x2_pos, start_y2_pos, end_pos, 'LEAGUE: ', 0, player.get_player_league())
 
         self.print_comparison_info_label(start_x2_pos, start_y2_pos, end_pos, '#MATCHES: ', 10,
-                                     compare.get_player_num_matches())
+                                     player.get_player_num_matches())
 
-        self.print_comparison_info_label(start_x2_pos, start_y2_pos, end_pos, 'AGE: ', 20, compare.get_player_age())
+        self.print_comparison_info_label(start_x2_pos, start_y2_pos, end_pos, 'AGE: ', 20, player.get_player_age())
 
-        self.print_comparison_info_label(start_x2_pos, start_y2_pos, end_pos, 'WEIGHT: ', 30, compare.get_player_weight())
+        self.print_comparison_info_label(start_x2_pos, start_y2_pos, end_pos, 'WEIGHT: ', 30, player.get_player_weight())
 
         ## Compare player's information section
 

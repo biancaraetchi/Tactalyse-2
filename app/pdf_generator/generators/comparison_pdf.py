@@ -35,6 +35,6 @@ class ComparisonPDF(PDFGenerator):
         self._pdf.print_comparison_title()
         self.print_player_info()
 
-        self.print_plots(line_plots, bar_plots, scatter_plots)
+        # self.print_plots(line_plots, bar_plots, scatter_plots)
 
         return self._pdf.output(dest='S')
