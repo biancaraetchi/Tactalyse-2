@@ -14,7 +14,9 @@ class ScatterPlot(Graph):
         if player_pos:
             self.__position = player_pos
 
-    def draw(self, column_numbers, data):
+    def draw(self, param_map):
+        column_numbers = param_map.get('columns')
+        data = param_map.get('player_data')
         fig, ax = plt.subplots()
         ax.clear()
         axis_titles=data.columns[column_numbers[0]].split("/")
@@ -28,8 +30,8 @@ class ScatterPlot(Graph):
     
     def draw_all(self, param_map):
         columns = param_map.get('columns')
-        data = param_map.get('player_data')
         plots = []
         for column in columns:
-            plots.append(self.draw(column, data))
+            param_map['columns'] = column
+            plots.append(self.draw(param_map))
         return plots

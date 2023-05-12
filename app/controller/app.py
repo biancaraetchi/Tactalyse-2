@@ -1,7 +1,9 @@
 from flask import Flask, request, Response, make_response
 
-from .data_service import get_radar_data, get_line_data, get_bar_data, get_pdf_data, both_in_league
-from .graph_service import create_bar_plots, create_line_plots, create_radar_chart
+from app.controller.data_service import get_bar_data, get_line_data, get_radar_data, get_pdf_data, get_scatter_data
+from app.controller.data_service import both_in_league
+from .graph_service import create_bar_plots, create_line_plots, create_radar_chart, create_main_stats_bar_plot
+from .graph_service import create_scatter_plots
 from .pdf_service import create_pdf
 
 app = Flask(__name__)
@@ -96,24 +98,23 @@ def pass_data(league_file, player_file, player_name, start_date, end_date, compa
         return Response("Error: The second player name was not found in the league file.", 400,
                         mimetype='application/json')
     # Get parameter maps with relevant data for generating plots from the data module
-    radar_map = get_radar_data(league_file, player_name, compare_name)
     line_map = get_line_data(league_file, player_file, player_name, compare_file, compare_name, start_date, end_date)
-    bar_map = get_bar_data(league_file, player_name)
+    bar_map_main_stats = get_bar_data(league_file, player_name, compare_name)
+    scatter_map = get_scatter_data(player_file)
 
     # Pass the maps to get lists containing plots in byte form from the graph_generator module
-    radar_chart = create_radar_chart(radar_map)
     line_plots = create_line_plots(line_map)
-    bar_plots = create_bar_plots(bar_map, 'v')
+    main_stats_bar_plot = create_main_stats_bar_plot(bar_map_main_stats)
+    scatter_plots = create_scatter_plots(scatter_map)
 
     # Get a parameter map with relevant data for generating a PDF from the data module, and pass it to the pdf_generator
     # module along with the graphs
-    pdf_map = get_pdf_data(league_file, player_name, compare_name, line_plots, bar_plots, None)
+    pdf_map = get_pdf_data(league_file, player_name, compare_name, line_plots, main_stats_bar_plot, scatter_plots)
     pdf_bytes = create_pdf(pdf_map)
 
     response = make_response(pdf_bytes)
     response.headers.set('Content-Type', 'application/pdf')
     response.headers.set('Content-Disposition', 'attachment', filename=player_name + '.pdf')
-
     return response
 
 
