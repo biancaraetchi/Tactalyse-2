@@ -30,6 +30,7 @@ class BarPlot(BarPlotBase):
             self.__player_name = param_map.get('player_name')
             self.__compare_name = param_map.get('compare_name')
     
+
     def print_value_labels(self, ax, font_size, orientation):
         if orientation == 'h':
             for p in ax.patches:
@@ -43,7 +44,7 @@ class BarPlot(BarPlotBase):
                         bbox=dict(facecolor='white', edgecolor='black', boxstyle='round,pad=0.2'))
 
 
-    def color_graph(self, ax, ydata, cmap):
+    def color_graph(self, ax, ydata, cmap, orientation):
         # set up the gradient for the cmap
         grad = np.atleast_2d(np.linspace(0,1,256))
         # reestablish the plot area
@@ -57,9 +58,11 @@ class BarPlot(BarPlotBase):
             bar.set_facecolor("none")
             x,y = bar.get_xy()
             w, h = bar.get_width(), bar.get_height()
-            grad = np.atleast_2d(np.linspace(0,1*w/max(ydata),256))
+            if orientation == 'h':
+                grad = np.atleast_2d(np.linspace(0,1*w/max(ydata),256))
+            else:
+                grad = np.atleast_2d(np.linspace(0,1*h/max(ydata),256)).T
             ax.imshow(grad, extent=[x,x+w,y,y+h], origin='lower', aspect="auto", norm=cm.colors.NoNorm(vmin=0,vmax=1), cmap=plt.get_cmap(cmap))
-
 
 
     def draw(self, param_map):
@@ -103,12 +106,14 @@ class BarPlot(BarPlotBase):
         self.print_value_labels(ax, 12, orientation=self.__orientation)
         ax.tick_params(axis='both', which='major', labelsize=14)
 
-        self.color_graph(ax, stat_df[stat], 'YlOrBr')
+        self.color_graph(ax, stat_df[stat], 'YlOrBr', self.__orientation)
         
         buffer = io.BytesIO()
         plt.savefig(buffer, format='png')
         buffer.seek(0)
+        plt.close()
         return buffer.getvalue()
+
 
     def draw_all(self, param_map):
         stats = param_map.get('stats')
@@ -121,16 +126,37 @@ class BarPlot(BarPlotBase):
 class MainStatsBarPlot(BarPlot):
 
     def __init__(self, param_map):
-        param_map.update({"orientation": 'h'})
+        param_map.update({"orientation": 'v'})
         super().__init__(param_map)
         self.__position_name = param_map.get('player_pos')
         self.__main_pos = param_map.get('main_pos')
         self.__player_name = param_map.get('player_name')
         self.__compare_name = param_map.get('compare_name')
         
-    def get_ranking(self, data):
-        return data.index[data['Player'] == self.__player_name][0]
-    
+
+    def get_ranking(self, data, name):
+        return data.index[data['Player'] == name][0]
+            
+
+    def get_best_stats(self, param_map, name, stats):
+        #stats = param_map.get('stats')
+        data = param_map.get('league_data')
+
+        rankings = []
+        for stat in stats:
+            data = data.sort_values(by=stat, ascending=False)
+            rankings.append((self.get_ranking(data.reset_index(), name), stat))
+
+        rankings.sort()
+        rankings = rankings[:3]
+        
+        best_stats = []
+        for x in rankings:
+            best_stats.append(x[1])
+
+        return best_stats
+        
+
     def draw_clustered_bar_plot(self, param_map):
         
         matplotlib.use('agg')
@@ -187,37 +213,44 @@ class MainStatsBarPlot(BarPlot):
         buffer = io.BytesIO()
         plt.savefig(buffer, format='png')
         buffer.seek(0)
+        plt.close()
         return buffer.getvalue()
     
-    def draw_leaderboard_bar_plot(self, param_map):
+
+    def draw_leaderboard_bar_plot(self, param_map, compared_player = False):
 
         stat = param_map.get('stats')
         data = param_map.get('league_data')
         data = data.sort_values(by=stat, ascending=False)
         data = data.reset_index()
-        ranking = self.get_ranking(data)
+        
+        if not compared_player:
+            ranking = self.get_ranking(data, self.__player_name) 
+        else:
+            ranking = self.get_ranking(data, self.__compare_name) 
 
         for i in range(len(data)):
             if i < ranking - 5 or i > ranking + 5:
                 data.drop(index=i, inplace = True)
 
         plt.subplot().clear()
-        palette = ['#FFD700' if x == 5 else '#FF471A' for x in range(len(data))]
-        sns.barplot(x=stat, y='Player', data=data, linewidth=0.0001, palette=palette)
+        #palette = ['#FFD700' if x == 5 else '#FF471A' for x in range(len(data))]
+        #sns.barplot(x=stat, y='Player', data=data, linewidth=0.0001, palette=palette)
+        sns.barplot(x=stat, y='Player', data=data, linewidth=0.0001)
         plt.xlim([0, max(data[stat]) + 1]) 
         plt.tight_layout()
         
         new_labels = []
         for string in data['Player']:
-            if string != self.__player_name:
+            if (string != self.__player_name and not compared_player) or (string != self.__compare_name and compared_player):
                 new_string = string
             else:
                 new_string = string + '\n(' + str(ranking) + '°)'
             new_labels.append(new_string)
         plt.yticks(range(len(data.iloc[:, 1])), new_labels)
 
-        plt.yticks(fontsize=9)
         ax = plt.gca()
+        plt.yticks(fontsize=9)
         labels = ax.get_yticklabels()
         labels[5].set_fontsize(11)
         labels[5].set_weight('bold')
@@ -227,10 +260,16 @@ class MainStatsBarPlot(BarPlot):
         plt.ylabel('Player', fontsize=0)
 
         self.print_value_labels(ax, 8, 'h')
+        self.color_graph(ax, data[stat], 'YlOrBr', 'h')
+
+        start = (5/6) * min(data[stat])
+        end = (6/5) * max(data[stat])
+        ax.set_xlim(start,end)
 
         buffer = io.BytesIO()
         plt.savefig(buffer, format='png')
         buffer.seek(0)
+        plt.close()
         return buffer.getvalue()
 
 
@@ -238,21 +277,29 @@ class MainStatsBarPlot(BarPlot):
         
         stats = param_map.get('stats')
 
+        basic_bar_plots = []
+        i = 0
+        for stat in stats:
+            param_map['stats'] = stats[i]
+            basic_bar_plots.append(super().draw(param_map))
+            i += 1
+
+        param_map['stats'] = stats
+        clustered_bar_plot = self.draw_clustered_bar_plot(param_map)
+
         leaderboard_bar_plots = []
-        best_stats_list = stats #to be changed
+        best_stats_list = self.get_best_stats(param_map, self.__player_name, stats)
         for stat in best_stats_list:
             param_map['stats'] = stat
             leaderboard_bar_plots.append(self.draw_leaderboard_bar_plot(param_map))
 
-        param_map['stats'] = stats[0]
-        first_bar_plot = super().draw(param_map)
-
-        if len(stats) > 1:
-            stats.pop(0)
-        param_map['stats'] = stats
-        clustered_bar_plot = self.draw_clustered_bar_plot(param_map)
-
-        return [first_bar_plot, clustered_bar_plot, leaderboard_bar_plots]
+        if self.__compare_name != None:
+            best_stats_list = self.get_best_stats(param_map, self.__compare_name, stats)
+            for stat in best_stats_list:
+                param_map['stats'] = stat
+                leaderboard_bar_plots.append(self.draw_leaderboard_bar_plot(param_map, True))
+    
+        return [basic_bar_plots, clustered_bar_plot, leaderboard_bar_plots]
     
 
 
