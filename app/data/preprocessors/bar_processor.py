@@ -11,7 +11,7 @@ class BarProcessor(Preprocessor):
         reader = ExcelReader()
         league_df = reader.all_league_data(league_file)
         bar_map = {"league_data": league_df}
-        player_row = reader.league_data(league_file, player_name)
+        player_row = reader.league_data(league_file, player_name, compare_name)
         main_pos = self.main_position(player_row)
         bar_map.update({"main_pos": main_pos})
         player_pos = self.position_dictionary().get(main_pos)

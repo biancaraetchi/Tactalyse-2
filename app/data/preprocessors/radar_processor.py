@@ -25,7 +25,7 @@ class RadarProcessor(Preprocessor):
                  (columns), main position of the passed player (main_pos_long), and the position abbreviated (main_pos).
         """
         reader = ExcelReader()
-        league_df = reader.league_data(league_file, player_name)
+        league_df = reader.league_data(league_file, player_name, compare_name)
 
         player_row = self.extract_player(league_df, player_name)
         radar_map = {'player_row': player_row}

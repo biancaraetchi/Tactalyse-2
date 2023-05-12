@@ -5,7 +5,7 @@ from .preprocessor import Preprocessor
 class PDFProcessor(Preprocessor):
     def params_to_map(self, league_file, player_name, compare_name, line_plots, bar_plots, scatter_plots):
         reader = ExcelReader()
-        league_df = reader.league_data(league_file, player_name)
+        league_df = reader.league_data(league_file, player_name, compare_name)
         pdf_map = {'league_data': league_df}
 
         pdf_map.update({'player_name': player_name})

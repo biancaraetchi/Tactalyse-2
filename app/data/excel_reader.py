@@ -24,7 +24,7 @@ class ExcelReader:
         """
         return self.read_file(player_file)
 
-    def league_data(self, league_file, player_name):
+    def league_data(self, league_file, player_name, compare_name):
         """
         Function for extracting the football league data of a single player from an Excel file.
 
@@ -35,7 +35,7 @@ class ExcelReader:
         """
         dataframe = self.read_file(league_file)
         try:
-            player = dataframe.loc[dataframe['Player'] == player_name]
+            player = dataframe.loc[dataframe['Player'].isin([player_name, compare_name])]
         except KeyError:
             player = pd.empty()
         return player

@@ -131,7 +131,7 @@ class PDF(FPDF):
     def print_comparison_title(self):
         self.set_font(self.__font, '', 22)
         self.ln(8)
-        self.cell(0, 14, "Comparison Report for " + self.__player.get_player_name() + " and " + self.__player.get_player_name(), 0, 1, 'C', False)
+        self.cell(0, 14, "Comparison Report for " + self.__player.get_player_name() + " and " + self.__compare.get_player_name(), 0, 1, 'C', False)
         self.ln(4)
 
     def print_player_info_label(self, start_x_pos, start_y_pos, end_pos, label, y_offset, value):
@@ -226,7 +226,7 @@ class PDF(FPDF):
         self.set_xy(start_x_pos, start_y_pos - 5)
         self.cell(0, 14, "" + self.__player.get_player_name(), 0, 1)
         self.set_xy(start_x_pos, start_y_pos + 75)
-        self.cell(0, 14, "" + self.__player.get_player_name(), 0, 1)
+        self.cell(0, 14, "" + self.__compare.get_player_name(), 0, 1)
 
         ## Main player's information section
 
@@ -245,18 +245,18 @@ class PDF(FPDF):
 
         ## Compare player's information section
 
-        self.print_comparison_info_label(start_x_pos, start_y_pos, end_pos, 'POSITION: ', 80, player.get_player_position())
+        self.print_comparison_info_label(start_x_pos, start_y_pos, end_pos, 'POSITION: ', 80, compare.get_player_position())
 
-        self.print_comparison_info_label(start_x_pos, start_y_pos, end_pos, 'CLUB: ', 90, player.get_player_club())
+        self.print_comparison_info_label(start_x_pos, start_y_pos, end_pos, 'CLUB: ', 90, compare.get_player_club())
 
-        self.print_comparison_info_label(start_x_pos, start_y_pos, end_pos, 'COUNTRY: ',100, player.get_player_country())
+        self.print_comparison_info_label(start_x_pos, start_y_pos, end_pos, 'COUNTRY: ',100, compare.get_player_country())
 
-        self.print_comparison_info_label(start_x_pos, start_y_pos, end_pos, 'HEIGHT: ', 110, player.get_player_height())
+        self.print_comparison_info_label(start_x_pos, start_y_pos, end_pos, 'HEIGHT: ', 110, compare.get_player_height())
 
-        self.print_comparison_info_label(start_x_pos, start_y_pos, end_pos, 'FOOT: ', 120, player.get_player_foot())
+        self.print_comparison_info_label(start_x_pos, start_y_pos, end_pos, 'FOOT: ', 120, compare.get_player_foot())
 
         self.print_comparison_info_label(start_x_pos, start_y_pos, end_pos + 25, 'CONTRACT EXPIRES ON: ', 130,
-                                     player.get_player_contract_date())
+                                     compare.get_player_contract_date())
 
     def print_comparison_info_col2(self, player, compare):
         """
@@ -268,25 +268,25 @@ class PDF(FPDF):
         start_y2_pos = 60.0
         end_pos = 30
 
-        self.print_comparison_info_label(start_x2_pos, start_y2_pos, end_pos, 'LEAGUE: ', 0, player.get_player_league())
+        self.print_comparison_info_label(start_x2_pos, start_y2_pos, end_pos, 'LEAGUE: ', 0, compare.get_player_league())
 
         self.print_comparison_info_label(start_x2_pos, start_y2_pos, end_pos, '#MATCHES: ', 10,
-                                     player.get_player_num_matches())
+                                     compare.get_player_num_matches())
 
-        self.print_comparison_info_label(start_x2_pos, start_y2_pos, end_pos, 'AGE: ', 20, player.get_player_age())
+        self.print_comparison_info_label(start_x2_pos, start_y2_pos, end_pos, 'AGE: ', 20, compare.get_player_age())
 
-        self.print_comparison_info_label(start_x2_pos, start_y2_pos, end_pos, 'WEIGHT: ', 30, player.get_player_weight())
+        self.print_comparison_info_label(start_x2_pos, start_y2_pos, end_pos, 'WEIGHT: ', 30, compare.get_player_weight())
 
         ## Compare player's information section
 
-        self.print_comparison_info_label(start_x2_pos, start_y2_pos, end_pos, 'LEAGUE: ', 80, player.get_player_league())
+        self.print_comparison_info_label(start_x2_pos, start_y2_pos, end_pos, 'LEAGUE: ', 80, compare.get_player_league())
 
         self.print_comparison_info_label(start_x2_pos, start_y2_pos, end_pos, '#MATCHES: ', 90,
-                                     player.get_player_num_matches())
+                                     compare.get_player_num_matches())
 
-        self.print_comparison_info_label(start_x2_pos, start_y2_pos, end_pos, 'AGE: ', 100, player.get_player_age())
+        self.print_comparison_info_label(start_x2_pos, start_y2_pos, end_pos, 'AGE: ', 100, compare.get_player_age())
 
-        self.print_comparison_info_label(start_x2_pos, start_y2_pos, end_pos, 'WEIGHT: ', 110, player.get_player_weight())
+        self.print_comparison_info_label(start_x2_pos, start_y2_pos, end_pos, 'WEIGHT: ', 110, compare.get_player_weight())
         
         
 

@@ -12,8 +12,8 @@ def generate_pdf():
     league_file = "app/pdf_generator/resources/test_data/ENG2.xlsx"
     player_file = "app/pdf_generator/resources/test_data/Player stats T. Cleverley.xlsx"
     player_name = "T. Cleverley"
-    compare_name = None
-    compare_file = None
+    compare_name = "I. Sarr"
+    compare_file = "app/pdf_generator/resources/test_data/Player stats I. Sarr.xlsx"
     start_date = None
     end_date = None
 
