@@ -27,7 +27,7 @@ class LineProcessor(Preprocessor):
         reader = ExcelReader()
         player_df = reader.player_data(player_file)
         line_map = {'player_data': player_df}
-        league_df = reader.league_data(league_file, player_name)
+        league_df = reader.league_data(league_file, player_name, compare_name)
 
         player_row = self.extract_player(league_df, player_name)
         main_pos = self.main_position(player_row)
