@@ -219,7 +219,7 @@ class PDF(FPDF):
         The absolute position and the offset values for the labels within the A4 sheet of the pdf 
         are defined respectively by start_x2_pos, start_y2_pos and end_pos.
         """
-        start_x_pos = 73.0
+        start_x_pos = 80.0
         start_y_pos = 60.0
         end_pos = 30
 
@@ -236,12 +236,14 @@ class PDF(FPDF):
 
         self.print_comparison_info_label(start_x_pos, start_y_pos, end_pos, 'COUNTRY: ', 20, player.get_player_country())
 
-        self.print_comparison_info_label(start_x_pos, start_y_pos, end_pos, 'HEIGHT: ', 30, player.get_player_height())
+        self.print_comparison_info_label(start_x_pos, start_y_pos, end_pos, 'LEAGUE: ', 30, player.get_player_league())
 
-        self.print_comparison_info_label(start_x_pos, start_y_pos, end_pos, 'FOOT: ', 40, player.get_player_foot())
+        # self.print_comparison_info_label(start_x_pos, start_y_pos, end_pos, 'HEIGHT: ', 30, player.get_player_height())
 
-        self.print_comparison_info_label(start_x_pos, start_y_pos, end_pos + 25, 'CONTRACT EXPIRES ON: ', 50,
-                                     player.get_player_contract_date())
+        # self.print_comparison_info_label(start_x_pos, start_y_pos, end_pos, 'FOOT: ', 40, player.get_player_foot())
+
+        # self.print_comparison_info_label(start_x_pos, start_y_pos, end_pos + 25, 'CONTRACT EXPIRES ON: ', 50,
+        #                              player.get_player_contract_date())
 
         ## Compare player's information section
 
@@ -251,42 +253,44 @@ class PDF(FPDF):
 
         self.print_comparison_info_label(start_x_pos, start_y_pos, end_pos, 'COUNTRY: ',100, compare.get_player_country())
 
-        self.print_comparison_info_label(start_x_pos, start_y_pos, end_pos, 'HEIGHT: ', 110, compare.get_player_height())
+        self.print_comparison_info_label(start_x_pos, start_y_pos, end_pos, 'LEAGUE: ', 110, compare.get_player_league())
 
-        self.print_comparison_info_label(start_x_pos, start_y_pos, end_pos, 'FOOT: ', 120, compare.get_player_foot())
+        # self.print_comparison_info_label(start_x_pos, start_y_pos, end_pos, 'HEIGHT: ', 110, compare.get_player_height())
 
-        self.print_comparison_info_label(start_x_pos, start_y_pos, end_pos + 25, 'CONTRACT EXPIRES ON: ', 130,
-                                     compare.get_player_contract_date())
+        # self.print_comparison_info_label(start_x_pos, start_y_pos, end_pos, 'FOOT: ', 120, compare.get_player_foot())
 
-    def print_comparison_info_col2(self, player, compare):
-        """
-        Function that defines the layout of the second column of the player's and compare player's information.
-        The absolute position and the offset values for the labels within the A4 sheet of the pdf 
-        are defined respectively by start_x2_pos, start_y2_pos and end_pos.
-        """
-        start_x2_pos = 155.0
-        start_y2_pos = 60.0
-        end_pos = 30
+        # self.print_comparison_info_label(start_x_pos, start_y_pos, end_pos + 25, 'CONTRACT EXPIRES ON: ', 130,
+        #                              compare.get_player_contract_date())
 
-        self.print_comparison_info_label(start_x2_pos, start_y2_pos, end_pos, 'LEAGUE: ', 0, player.get_player_league())
+    # def print_comparison_info_col2(self, player, compare):
+    #     """
+    #     Function that defines the layout of the second column of the player's and compare player's information.
+    #     The absolute position and the offset values for the labels within the A4 sheet of the pdf 
+    #     are defined respectively by start_x2_pos, start_y2_pos and end_pos.
+    #     """
+    #     start_x2_pos = 155.0
+    #     start_y2_pos = 60.0
+    #     end_pos = 30
 
-        self.print_comparison_info_label(start_x2_pos, start_y2_pos, end_pos, '#MATCHES: ', 10,
-                                     player.get_player_num_matches())
+    #     self.print_comparison_info_label(start_x2_pos, start_y2_pos, end_pos, 'LEAGUE: ', 0, player.get_player_league())
 
-        self.print_comparison_info_label(start_x2_pos, start_y2_pos, end_pos, 'AGE: ', 20, player.get_player_age())
+    #     self.print_comparison_info_label(start_x2_pos, start_y2_pos, end_pos, '#MATCHES: ', 10,
+    #                                  player.get_player_num_matches())
 
-        self.print_comparison_info_label(start_x2_pos, start_y2_pos, end_pos, 'WEIGHT: ', 30, player.get_player_weight())
+    #     self.print_comparison_info_label(start_x2_pos, start_y2_pos, end_pos, 'AGE: ', 20, player.get_player_age())
 
-        ## Compare player's information section
+    #     self.print_comparison_info_label(start_x2_pos, start_y2_pos, end_pos, 'WEIGHT: ', 30, player.get_player_weight())
 
-        self.print_comparison_info_label(start_x2_pos, start_y2_pos, end_pos, 'LEAGUE: ', 80, compare.get_player_league())
+    #     ## Compare player's information section
 
-        self.print_comparison_info_label(start_x2_pos, start_y2_pos, end_pos, '#MATCHES: ', 90,
-                                     compare.get_player_num_matches())
+    #     self.print_comparison_info_label(start_x2_pos, start_y2_pos, end_pos, 'LEAGUE: ', 80, compare.get_player_league())
 
-        self.print_comparison_info_label(start_x2_pos, start_y2_pos, end_pos, 'AGE: ', 100, compare.get_player_age())
+    #     self.print_comparison_info_label(start_x2_pos, start_y2_pos, end_pos, '#MATCHES: ', 90,
+    #                                  compare.get_player_num_matches())
 
-        self.print_comparison_info_label(start_x2_pos, start_y2_pos, end_pos, 'WEIGHT: ', 110, compare.get_player_weight())
+    #     self.print_comparison_info_label(start_x2_pos, start_y2_pos, end_pos, 'AGE: ', 100, compare.get_player_age())
+
+    #     self.print_comparison_info_label(start_x2_pos, start_y2_pos, end_pos, 'WEIGHT: ', 110, compare.get_player_weight())
         
         
 
