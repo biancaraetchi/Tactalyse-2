@@ -108,6 +108,12 @@ class BarPlot(BarPlotBase):
 
         self.color_graph(ax, stat_df[stat], 'YlOrBr', self.__orientation)
         
+        if self.__orientation == 'v':
+            for y in ax.get_yticks():
+                ax.axhline(y=y, linestyle='--', color='gray', alpha=0.5, zorder=-1)
+        else:
+            for x in ax.get_xticks():
+                ax.axvline(x=x, linestyle='--', color='gray', alpha=0.5, zorder=-1)
         buffer = io.BytesIO()
         plt.savefig(buffer, format='png')
         buffer.seek(0)
@@ -201,15 +207,19 @@ class MainStatsBarPlot(BarPlot):
 
         new_labels = []
         for string in stats:
-            new_string = string.replace('per 90', '\nper 90')
+            new_string = string.replace(' ', '\n').replace('90', '').replace('per', 'per 90')
             new_labels.append(new_string)
         plt.xticks(range(len(stats)), new_labels)
         plt.xticks(fontsize=9.3, fontweight='bold')
         plt.xlabel('Statistic', fontsize=0)
         plt.tight_layout()
         
-        self.print_value_labels(plt.gca(), 8, 'v')
+        ax = plt.gca()
+        self.print_value_labels(ax, 8, 'v')
 
+        self.color_graph(ax, data[stat], 'YlOrBr', 'v')
+        for y in ax.get_yticks():
+            ax.axhline(y=y, linestyle='--', color='gray', alpha=0.5, zorder=-1)
         buffer = io.BytesIO()
         plt.savefig(buffer, format='png')
         buffer.seek(0)
@@ -266,6 +276,8 @@ class MainStatsBarPlot(BarPlot):
         end = (6/5) * max(data[stat])
         ax.set_xlim(start,end)
 
+        for x in ax.get_xticks():
+            ax.axvline(x=x, linestyle='--', color='gray', alpha=0.5, zorder=-1)
         buffer = io.BytesIO()
         plt.savefig(buffer, format='png')
         buffer.seek(0)
