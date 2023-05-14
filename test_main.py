@@ -14,8 +14,8 @@ def generate_pdf():
     player_name = "T. Cleverley"
     compare_name = "I. Sarr"
     compare_file = "app/pdf_generator/resources/test_data/Player stats I. Sarr.xlsx"
-    start_date = None
-    end_date = None
+    start_date = "2016-09-25"
+    end_date = "2020-12-23"
 
     radar_map = get_radar_data(league_file, player_name, compare_name)
     line_map = get_line_data(league_file, player_file, player_name, compare_file, compare_name, start_date, end_date) 

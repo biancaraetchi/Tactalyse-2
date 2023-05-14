@@ -1,8 +1,11 @@
-from app.data.excel_reader import ExcelReader
+from ..excel_reader import ExcelReader
 from .preprocessor import Preprocessor
 
 
 class LineProcessor(Preprocessor):
+    def __init__(self):
+        self.__reader = ExcelReader()
+
     def get_columns_line_plots(self, player_pos):
         """
         Function that provides a list of headers to use for graphing the line plots.
@@ -17,22 +20,54 @@ class LineProcessor(Preprocessor):
         return stats_necessary['Attribute']
 
     def extract_line_data(self, league_file, player_file, player_name, compare_file, compare_name, start_date,
-                          end_date):
+                                       end_date):
         """
         Function that extracts all required data from the passed player match data Excel file.
 
-        :param player_file: Excel file containing the match data of a specific football player.
+        :param param_map:
         :return: DataFrame containing the player's match data (player_df), columns to use for graphing (columns).
         """
-        reader = ExcelReader()
-        player_df = reader.player_data(player_file)
-        line_map = {'player_data': player_df}
-        league_df = reader.league_data(league_file, player_name, compare_name)
+        line_map = {'type': "line"}
 
-        player_row = self.extract_player(league_df, player_name)
+        line_map = self.set_player(player_name, line_map)
+        line_map = self.set_compare(compare_name, compare_file, line_map)
+        line_map = self.set_player_data(player_name, player_file, league_file, line_map)
+        line_map = self.set_tactalyse_data(start_date, end_date, line_map)
+        line_map = self.set_stats(line_map.get('main_pos_short'), line_map)
+
+        return line_map
+
+    def set_player(self, player_name, line_map):
+        line_map.update({'player': player_name})
+        return line_map
+
+    def set_compare(self, compare, compare_file, line_map):
+        if not compare:
+            return line_map
+        line_map.update({'compare': compare})
+
+        compare_df = self.__reader.player_data(compare_file)
+        line_map.update({'compare_data': compare_df})
+        return line_map
+
+    def set_player_data(self, player_name, player_file, league_file, line_map):
+        player_df = self.__reader.player_data(player_file)
+        line_map.update({'player_data': player_df})
+
+        player_row = self.__reader.league_data(league_file, player_name)
         main_pos = self.main_position(player_row)
-        main_pos_short = self.shortened_dictionary().get(main_pos)
-        columns = self.get_columns_line_plots(main_pos_short)
-        line_map.update({'columns': columns})
+        line_map.update({'main_pos': main_pos})
 
+        main_pos_short = self.shortened_dictionary().get(main_pos)
+        line_map.update({'main_pos_short': main_pos_short})
+        return line_map
+
+    def set_tactalyse_data(self, start_date, end_date, line_map):
+        line_map.update({'start_date': start_date})
+        line_map.update({'end_date': end_date})
+        return line_map
+
+    def set_stats(self, player_pos, line_map):
+        columns = self.get_columns_line_plots(player_pos)
+        line_map.update({'columns': columns})
         return line_map

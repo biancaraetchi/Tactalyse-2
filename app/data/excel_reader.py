@@ -24,7 +24,7 @@ class ExcelReader:
         """
         return self.read_file(player_file)
 
-    def league_data(self, league_file, player_name, compare_name):
+    def league_data(self, league_file, player_name, compare_name=None):
         """
         Function for extracting the football league data of a single player from an Excel file.
 
