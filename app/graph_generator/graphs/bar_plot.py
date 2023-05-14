@@ -12,12 +12,23 @@ from PIL import Image, ImageDraw, ImageFont
 class BarPlotBase(Graph):
     __main_pos = ''
     __position_name = ''
+    __compare_pos = ''
     __orientation = 'v'
     __player_name = ''
     __compare_name = None
 
     def draw(self, param_map):
         pass
+
+    def are_comparable(self, cmp_name, pos, cmp_pos):
+        if cmp_name != None:
+            comparable_1 = ['Attacking Midfielder', 'Winger', 'Striker']
+            comparable_2 = ['Full Back', 'Center Back', 'Defensive Midfielder']
+            if ((pos in comparable_1 and cmp_pos in comparable_2) or 
+                (pos in comparable_2 and cmp_pos in comparable_1)):
+                return False
+        return True
+                
 
 
 class BarPlot(BarPlotBase):
@@ -29,6 +40,7 @@ class BarPlot(BarPlotBase):
             self.__orientation = param_map.get('orientation')
             self.__player_name = param_map.get('player_name')
             self.__compare_name = param_map.get('compare_name')
+            self.__compare_pos = param_map.get('compare_pos')
     
 
     def print_value_labels(self, ax, font_size, orientation):
@@ -130,6 +142,7 @@ class BarPlot(BarPlotBase):
             plots.append(self.draw(param_map))
         return plots
 
+
 class MainStatsBarPlot(BarPlot):
 
     def __init__(self, param_map):
@@ -139,11 +152,12 @@ class MainStatsBarPlot(BarPlot):
         self.__main_pos = param_map.get('main_pos')
         self.__player_name = param_map.get('player_name')
         self.__compare_name = param_map.get('compare_name')
+        self.__compare_pos = param_map.get('compare_pos')
         
 
     def get_ranking(self, data, name):
-        return data.index[data['Player'] == name][0]
-            
+        return data.index[data['Player'] == name][0]         
+
 
     def get_best_stats(self, param_map, name, stats):
         #stats = param_map.get('stats')
@@ -162,7 +176,8 @@ class MainStatsBarPlot(BarPlot):
             best_stats.append(x[1])
 
         return best_stats
-        
+
+
     def color_clustered_graph(self, ax, ydata, cmap_list, comparing):
 
         # set up the gradient for the cmap
@@ -255,8 +270,11 @@ class MainStatsBarPlot(BarPlot):
         plt.xlabel('Statistic', fontsize=0)
         plt.tight_layout()
         
-        self.print_value_labels(ax, 8, 'v')
-        
+        if comparing:
+            self.print_value_labels(ax, 5.5, 'v')
+        else:
+            self.print_value_labels(ax, 8, 'v')
+
         if not comparing:
             cmap_list = ['YlOrBr', 'Greens']
             self.color_clustered_graph(ax, data[stat], cmap_list, comparing)
@@ -333,7 +351,15 @@ class MainStatsBarPlot(BarPlot):
 
     def draw(self, param_map):
         
-        stats = param_map.get('stats')
+        comparable = self.are_comparable(self.__compare_name, self.__position_name, self.__compare_pos)
+        if comparable:
+            stats = param_map.get('stats')
+        else:
+            stats = ['Goals per 90', 'Offensive duels per 90',
+                    'Defensive duels per 90', 'Fouls per 90',
+                    'Interceptions per 90', 'Crosses per 90', 
+                    'Dribbles per 90', 'Progressive runs per 90',
+                    'Assists per 90']
 
         basic_bar_plots = []
         i = 0
@@ -342,8 +368,15 @@ class MainStatsBarPlot(BarPlot):
             basic_bar_plots.append(super().draw(param_map))
             i += 1
 
-        param_map['stats'] = stats
-        clustered_bar_plot = self.draw_clustered_bar_plot(param_map)
+        if comparable:
+            param_map['stats'] = stats
+            clustered_bar_plot = self.draw_clustered_bar_plot(param_map)
+        else:
+            clustered_bar_plot = []
+            param_map['stats'] = stats[:4]
+            clustered_bar_plot.append(self.draw_clustered_bar_plot(param_map))
+            param_map['stats'] = stats[4:]
+            clustered_bar_plot.append(self.draw_clustered_bar_plot(param_map))
 
         leaderboard_bar_plots = []
         best_stats_list = self.get_best_stats(param_map, self.__player_name, stats)

@@ -7,6 +7,17 @@ from app.data.preprocessors.scatter_processor import ScatterProcessor
 
 
 def get_bar_data(league_file, player_name, compare_name):
+    """
+    Function that takes a football league's data along with required parameters, and extracts the relevant data for a
+    bar chart.
+
+    :param league_file: Excel file containing football league data.
+    :param player_name: The name of the player whose league data to extract.
+    :param compare_name: The name of the player to compare with and whose league data to extract.
+    :return: A dataframe containing the player's row of the league file, the columns to be displayed on the chart,
+             the player's main position, and an abbreviation of the player's position, in that order.
+             (player_row, columns, main_pos_long, main_pos)
+    """
     processor = BarProcessor()
     return processor.extract_bar_data(league_file, player_name, compare_name)
 
