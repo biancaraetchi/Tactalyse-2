@@ -56,7 +56,7 @@ class BarPlot(BarPlotBase):
                         bbox=dict(facecolor='white', edgecolor='black', boxstyle='round,pad=0.2'))
 
 
-    def color_graph(self, ax, ydata, cmap, orientation):
+    def color_graph(self, ax, max_value, cmap, orientation):
 
         # set up the gradient for the cmap
         grad = np.atleast_2d(np.linspace(0,1,256))
@@ -65,18 +65,35 @@ class BarPlot(BarPlotBase):
         axs = ax.patches[0].axes
         lim = axs.get_xlim()+axs.get_ylim()
         axs.axis(lim)
-    
+
         # color each bar
+        my_cmap = plt.get_cmap(cmap)
         for bar in ax.patches:
             bar.set_edgecolor('gray')
             bar.set_facecolor("none")
             x,y = bar.get_xy()
             w, h = bar.get_width(), bar.get_height()
             if orientation == 'h':
-                grad = np.atleast_2d(np.linspace(0,1*w/max(ydata),256))
+                grad = np.atleast_2d(np.linspace(0,1*w/max_value,256))
             else:
-                grad = np.atleast_2d(np.linspace(0,1*h/max(ydata),256)).T
-            ax.imshow(grad, extent=[x,x+w,y,y+h], origin='lower', aspect="auto", norm=cm.colors.NoNorm(vmin=0,vmax=1), cmap=plt.get_cmap(cmap))
+                grad = np.atleast_2d(np.linspace(0,1*h/max_value,256)).T
+            norm = cm.colors.NoNorm(vmin=0,vmax=1)
+            ax.imshow(grad, extent=[x,x+w,y,y+h], origin='lower', aspect="auto", norm=norm, cmap=my_cmap)
+        
+        # draw color bar
+        sm = plt.cm.ScalarMappable(cmap=my_cmap, norm=norm)
+        sm.set_array([])
+        cbar = plt.colorbar(sm)
+
+        num_ticks = 10
+        tick_values = np.linspace(0, max_value, num_ticks)
+        tick_labels = []
+        for x in tick_values:
+            x = round(x,2)
+            tick_labels.append(str(x))
+        cbar.ax.set_yticklabels(tick_labels)
+        cbar.set_label('Proximity to max value found within league', fontsize=8)
+
 
     def draw(self, param_map):
         matplotlib.use('agg')
@@ -117,10 +134,10 @@ class BarPlot(BarPlotBase):
 
         ax = plt.gca()
         self.print_value_labels(ax, 12, orientation=self.__orientation)
-        ax.tick_params(axis='both', which='major', labelsize=14)
+        ax.tick_params(axis='both', which='major', labelsize=12)
 
-        self.color_graph(ax, stat_df[stat], 'YlOrBr', self.__orientation)
-        
+        self.color_graph(ax, max(stat_df[stat]), 'YlOrBr', self.__orientation)
+
         if self.__orientation == 'v':
             for y in ax.get_yticks():
                 ax.axhline(y=y, linestyle='--', color='gray', alpha=0.5, zorder=-1)
@@ -297,7 +314,8 @@ class MainStatsBarPlot(BarPlot):
         data = param_map.get('league_data')
         data = data.sort_values(by=stat, ascending=False)
         data = data.reset_index()
-        
+        max_value = max(data[stat])
+
         if not compared_player:
             ranking = self.get_ranking(data, self.__player_name) 
         else:
@@ -308,8 +326,6 @@ class MainStatsBarPlot(BarPlot):
                 data.drop(index=i, inplace = True)
 
         plt.subplot().clear()
-        #palette = ['#FFD700' if x == 5 else '#FF471A' for x in range(len(data))]
-        #sns.barplot(x=stat, y='Player', data=data, linewidth=0.0001, palette=palette)
         sns.barplot(x=stat, y='Player', data=data, linewidth=0.0001)
         plt.xlim([0, max(data[stat]) + 1]) 
         plt.tight_layout()
@@ -334,7 +350,7 @@ class MainStatsBarPlot(BarPlot):
         plt.ylabel('Player', fontsize=0)
 
         self.print_value_labels(ax, 8, 'h')
-        self.color_graph(ax, data[stat], 'YlOrBr', 'h')
+        self.color_graph(ax, max_value, 'YlOrBr', 'h')
 
         start = (5/6) * min(data[stat])
         end = (6/5) * max(data[stat])
