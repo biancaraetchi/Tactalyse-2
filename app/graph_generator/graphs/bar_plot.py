@@ -30,7 +30,6 @@ class BarPlotBase(Graph):
         return True
                 
 
-
 class BarPlot(BarPlotBase):
     
     def __init__(self, param_map):
@@ -99,6 +98,7 @@ class BarPlot(BarPlotBase):
         matplotlib.use('agg')
         data = param_map.get('league_data')
         stat = param_map.get('stats')
+        comparing = (self.__compare_name != None)
     
         player_value = data.loc[data['Player'] == self.__player_name].iloc[0][stat]
         if self.__compare_name != None:
@@ -115,7 +115,7 @@ class BarPlot(BarPlotBase):
         else:
             avg_column_name = self.__position_name.replace(' ', '\n') + ' \nleague \naverage'
 
-        if self.__compare_name == None:
+        if not comparing:
             player_vs_avg_data = {' ': [self.__player_name, avg_column_name], stat: [player_value, avg]}
         else:
             player_vs_avg_data = {' ': [self.__player_name, self.__compare_name, avg_column_name], stat: [player_value, compare_player_value, avg]}
@@ -125,11 +125,10 @@ class BarPlot(BarPlotBase):
         plt.subplot().clear()
         if (self.__orientation == 'v'):
             sns.barplot(x=" ", y=stat, data=df, orient=self.__orientation)
-            plt.ylabel(stat, fontsize=14, fontweight='bold')
         else:
             sns.barplot(x=stat, y=" ", data=df, orient=self.__orientation)
-            plt.xlabel(stat, fontsize=14, fontweight='bold')
-
+        
+        plt.xlabel(stat, fontsize=14, fontweight='bold')
         plt.tight_layout()
 
         ax = plt.gca()
@@ -144,6 +143,11 @@ class BarPlot(BarPlotBase):
         else:
             for x in ax.get_xticks():
                 ax.axvline(x=x, linestyle='--', color='gray', alpha=0.5, zorder=-1)
+
+        if not comparing:
+            ax.axhline(df[stat][1], color='#FF7700', linestyle='-. -')
+        else:
+            ax.axhline(df[stat][2], color='#FF7700', linestyle='-.')
         buffer = io.BytesIO()
         plt.savefig(buffer, format='png')
         buffer.seek(0)
