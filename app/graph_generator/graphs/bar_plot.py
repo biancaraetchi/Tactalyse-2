@@ -145,7 +145,7 @@ class BarPlot(BarPlotBase):
                 ax.axvline(x=x, linestyle='--', color='gray', alpha=0.5, zorder=-1)
 
         if not comparing:
-            ax.axhline(df[stat][1], color='#FF7700', linestyle='-. -')
+            ax.axhline(df[stat][1], color='#FF7700', linestyle='-.') ##
         else:
             ax.axhline(df[stat][2], color='#FF7700', linestyle='-.')
         buffer = io.BytesIO()
