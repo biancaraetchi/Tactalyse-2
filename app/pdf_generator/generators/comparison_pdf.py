@@ -6,8 +6,8 @@ class ComparisonPDF(PDFGenerator):
         """
         Function that prints player's and compare player's image and basic information in the first page
         """
-        self._pdf.image('app/pdf_generator/resources/images/placeholder_player_photo.jpg', 10, 60, 60)
-        self._pdf.image('app/pdf_generator/resources/images/Foto william Troost-Ekong.jpeg', 10, 140, 60)
+        self._pdf.image('app/pdf_generator/resources/images/placeholder_player_photo.jpg', 10, 60, 60, 60)
+        self._pdf.image('app/pdf_generator/resources/images/Foto william Troost-Ekong.jpeg', 10, 140, 60, 60)
         self._pdf.set_font(self._pdf.font, 'B', 14)
         self._pdf.print_comparison_info_col1(self._pdf.player, self._pdf.compare)
         # self._pdf.print_comparison_info_col2(self._pdf.player, self._pdf.compare)

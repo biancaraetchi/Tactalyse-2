@@ -123,7 +123,7 @@ class PDF(FPDF):
         """
         Function that sets the main title of the pdf using the player's name 
         """
-        self.set_font(self.__font, '', 30)
+        self.set_font(self.__font, '', 25)
         self.ln(8)
         self.cell(0, 14, "Stats Report for " + self.__player.get_player_name(), 0, 1, 'C', False)
         self.ln(4)
@@ -189,31 +189,6 @@ class PDF(FPDF):
 
         self.print_player_info_label(start_x_pos, start_y_pos, end_pos, 'LEAGUE: ', 30, player.get_player_league())
 
-        # self.print_player_info_label(start_x_pos, start_y_pos, end_pos + 35, 'CONTRACT EXPIRES ON: ', 20,
-        #                              player.get_player_contract_date())
-
-        # self.print_player_info_label(start_x_pos, start_y_pos, end_pos, 'HEIGHT: ', 60, player.get_player_height())
-
-        # self.print_player_info_label(start_x_pos, start_y_pos, end_pos, 'FOOT: ', 70, player.get_player_foot())
-
-    # def print_player_info_col2(self, player):
-    #     """
-    #     Function that defines the layout of the second column of the player's information.
-    #     The absolute position and the offset values for the labels within the A4 sheet of the pdf 
-    #     are defined respectively by start_x2_pos, start_y2_pos and end_pos.
-    #     """
-    #     start_x2_pos = 125.0
-    #     start_y2_pos = 150.0
-    #     end_pos = 30
-
-    #     self.print_player_info_label(start_x2_pos, start_y2_pos, end_pos, 'LEAGUE: ', 0, player.get_player_league())
-
-    #     self.print_player_info_label(start_x2_pos, start_y2_pos, end_pos, '#MATCHES: ', 10,
-    #                                  player.get_player_num_matches())
-
-    #     self.print_player_info_label(start_x2_pos, start_y2_pos, end_pos, 'AGE: ', 50, player.get_player_age())
-
-    #     self.print_player_info_label(start_x2_pos, start_y2_pos, end_pos, 'WEIGHT: ', 60, player.get_player_weight())
 
     def print_comparison_info_col1(self, player, compare):
         """
@@ -240,13 +215,6 @@ class PDF(FPDF):
 
         self.print_comparison_info_label(start_x_pos, start_y_pos, end_pos, 'LEAGUE: ', 30, player.get_player_league())
 
-        # self.print_comparison_info_label(start_x_pos, start_y_pos, end_pos, 'HEIGHT: ', 30, player.get_player_height())
-
-        # self.print_comparison_info_label(start_x_pos, start_y_pos, end_pos, 'FOOT: ', 40, player.get_player_foot())
-
-        # self.print_comparison_info_label(start_x_pos, start_y_pos, end_pos + 25, 'CONTRACT EXPIRES ON: ', 50,
-        #                              player.get_player_contract_date())
-
         ## Compare player's information section
 
         self.print_comparison_info_label(start_x_pos, start_y_pos, end_pos, 'POSITION: ', 80, compare.get_player_position())
@@ -257,44 +225,6 @@ class PDF(FPDF):
 
         self.print_comparison_info_label(start_x_pos, start_y_pos, end_pos, 'LEAGUE: ', 110, compare.get_player_league())
 
-        # self.print_comparison_info_label(start_x_pos, start_y_pos, end_pos, 'HEIGHT: ', 110, compare.get_player_height())
-
-        # self.print_comparison_info_label(start_x_pos, start_y_pos, end_pos, 'FOOT: ', 120, compare.get_player_foot())
-
-        # self.print_comparison_info_label(start_x_pos, start_y_pos, end_pos + 25, 'CONTRACT EXPIRES ON: ', 130,
-        #                              compare.get_player_contract_date())
-
-    # def print_comparison_info_col2(self, player, compare):
-    #     """
-    #     Function that defines the layout of the second column of the player's and compare player's information.
-    #     The absolute position and the offset values for the labels within the A4 sheet of the pdf 
-    #     are defined respectively by start_x2_pos, start_y2_pos and end_pos.
-    #     """
-    #     start_x2_pos = 155.0
-    #     start_y2_pos = 60.0
-    #     end_pos = 30
-
-    #     self.print_comparison_info_label(start_x2_pos, start_y2_pos, end_pos, 'LEAGUE: ', 0, player.get_player_league())
-
-    #     self.print_comparison_info_label(start_x2_pos, start_y2_pos, end_pos, '#MATCHES: ', 10,
-    #                                  player.get_player_num_matches())
-
-    #     self.print_comparison_info_label(start_x2_pos, start_y2_pos, end_pos, 'AGE: ', 20, player.get_player_age())
-
-    #     self.print_comparison_info_label(start_x2_pos, start_y2_pos, end_pos, 'WEIGHT: ', 30, player.get_player_weight())
-
-    #     ## Compare player's information section
-
-    #     self.print_comparison_info_label(start_x2_pos, start_y2_pos, end_pos, 'LEAGUE: ', 80, compare.get_player_league())
-
-    #     self.print_comparison_info_label(start_x2_pos, start_y2_pos, end_pos, '#MATCHES: ', 90,
-    #                                  compare.get_player_num_matches())
-
-    #     self.print_comparison_info_label(start_x2_pos, start_y2_pos, end_pos, 'AGE: ', 100, compare.get_player_age())
-
-    #     self.print_comparison_info_label(start_x2_pos, start_y2_pos, end_pos, 'WEIGHT: ', 110, compare.get_player_weight())
-        
-        
 
     def print_plot(self, plot):
         """
