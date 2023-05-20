@@ -20,9 +20,19 @@ class ScatterPlot(Graph):
         fig, ax = plt.subplots()
         ax.clear()
         axis_titles=data.columns[column_numbers[0]].split("/")
-        data={axis_titles[0]:data[data.columns[column_numbers[0]]], axis_titles[1]:data[data.columns[column_numbers[1]]]}
-        data=pd.DataFrame(data=data)
-        sns.regplot(x=axis_titles[0], y=axis_titles[1] ,data=data)
+        compare_data = param_map.get("compare_player_data")
+        if isinstance(compare_data, type(None)):
+            enter_data={axis_titles[0]:data[data.columns[column_numbers[0]]], axis_titles[1]:data[data.columns[column_numbers[1]]]}
+            hue = None
+        else:
+            data["Player"] = [param_map.get('player_name')] * len(data)
+            compare_data["Player"] = [param_map.get('compare_player_name')] * len(compare_data)
+            necessary_data = pd.concat([data, compare_data])
+            enter_data={axis_titles[0]:necessary_data[data.columns[column_numbers[0]]], axis_titles[1]:necessary_data[data.columns[column_numbers[1]]], "Player":necessary_data['Player']}
+            hue = "Player"
+        enter_data=pd.DataFrame(data=enter_data)
+        sns.lmplot(x=axis_titles[0], y=axis_titles[1],data=enter_data, hue=hue)
+
         buffer = io.BytesIO()
         plt.savefig(buffer, format='png')
         buffer.seek(0)

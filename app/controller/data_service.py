@@ -57,7 +57,7 @@ def get_line_data(league_file, player_file, player_name, compare_file, compare_n
                                        end_date)
 
 
-def get_scatter_data(player_file):
+def get_scatter_data(player_file, compare_file, player_name, compare_name):
     """
     Function that takes a football player's data along with required parameters, and extracts the relevant data for a
     line plot.
@@ -67,7 +67,7 @@ def get_scatter_data(player_file):
              order. (player_data, columns_line_plot)
     """
     processor = ScatterProcessor()
-    return processor.extract_scatter_data(player_file)
+    return processor.extract_scatter_data(player_file, compare_file, player_name, compare_name)
 
 
 def get_pdf_data(league_data, player_name, compare_name, line_plots, bar_plots, scatter_plots):

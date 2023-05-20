@@ -9,7 +9,7 @@ def create_pdf(param_map):
     :param param_map: Map containing all parameters needed to generate a PDF.
     :return: The PDF generated based on passed parameters and plots, in byte form.
     """
-    if param_map['compare_name'] is None:
+    if param_map.get('compare_name') is None:
         return create_standard_pdf(param_map)
     else:
         return create_comparison_pdf(param_map)
