@@ -60,11 +60,13 @@ def get_line_data(league_file, player_file, player_name, compare_file, compare_n
 def get_scatter_data(player_file, compare_file, player_name, compare_name):
     """
     Function that takes a football player's data along with required parameters, and extracts the relevant data for a
-    line plot.
+    scatter plot.
     :param player_file: Excel file containing a player's match data.
-    :param player_name: The abbreviated position of the player whose league data to extract.
-    :return: A dataframe containing the player's match data, and the columns to be displayed on the line plots, in that
-             order. (player_data, columns_line_plot)
+    :param compare_file: Excel file containing a second players' match data, or None, if there is no comparison.
+    :param player_name: The abbreviated name of the player, in the form of "J. Doe".
+    :param compare_name: The abbreviated name of the second player, if any is provided, in the form of "J. Doe".
+    :return: A dataframe containing the player's match data, and the columns to be displayed on the scatter plots, in that
+             order.
     """
     processor = ScatterProcessor()
     return processor.extract_scatter_data(player_file, compare_file, player_name, compare_name)
