@@ -123,7 +123,7 @@ class PDF(FPDF):
         """
         Function that sets the main title of the pdf using the player's name 
         """
-        self.set_font(self.__font, '', 25)
+        self.set_font(self.__font, '', 30)
         self.ln(8)
         self.cell(0, 14, "Stats Report for " + self.__player.get_player_name(), 0, 1, 'C', False)
         self.ln(4)
