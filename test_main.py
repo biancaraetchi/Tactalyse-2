@@ -14,21 +14,22 @@ def generate_pdf():
     player_name = "T. Cleverley"
     compare_name = "A. Masina"
     compare_file = "app/pdf_generator/resources/test_data/Player stats I. Sarr.xlsx"
-    # compare_name = None
-    # compare_file = None
+    #compare_name = None
+    #compare_file = None
     start_date = "2016-09-25"
     end_date = "2020-12-23"
     
     radar_map = get_radar_data(league_file, player_name, compare_name)
     line_map = get_line_data(league_file, player_file, player_name, compare_file, compare_name, start_date, end_date) 
-    bar_map_main_stats = get_bar_data(league_file, player_name, compare_name)
+    bar_map = get_bar_data(league_file, player_name, compare_name)
     scatter_map=get_scatter_data(player_file, compare_file, player_name, compare_name)
 
     # Pass the maps to get lists containing plots in byte form from the graph_generator module
     radar_chart = create_radar_chart(radar_map)
     line_plots = create_line_plots(line_map)
-    bar_plot_set = create_main_stats_bar_plot(bar_map_main_stats)
+    bar_plot_set = create_bar_plot_set(bar_map)
     scatter_plots=create_scatter_plots(scatter_map)
+
     # Get a parameter map with relevant data for generating a PDF from the data module, and pass it to the pdf_generator
     # module along with the graphs
     pdf_map = get_pdf_data(league_file, player_name, compare_name, line_plots, bar_plot_set, scatter_plots)

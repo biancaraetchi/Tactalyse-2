@@ -27,4 +27,5 @@ class BarProcessor(Preprocessor):
             compare_pos = self.position_dictionary().get(self.main_position(compare_row))
             bar_map.update({"compare_name": compare_name})
             bar_map.update({"compare_pos": compare_pos})
+
         return bar_map

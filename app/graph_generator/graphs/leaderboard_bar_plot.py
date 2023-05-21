@@ -1,6 +1,6 @@
-from .main_stats_bar_plot import *
+from .clustered_bar_plot import *
 
-class LeaderboardBarPlot(MainStatsBarPlot):
+class LeaderboardBarPlot(ClusteredBarPlot):
 
     def __init__(self, param_map):
         param_map.update({"orientation": 'v'})
@@ -67,3 +67,23 @@ class LeaderboardBarPlot(MainStatsBarPlot):
         plt.close()
         return buffer.getvalue()
 
+    def draw_all(self, param_map):
+        comparable = self.are_comparable(self.__compare_name, self.__position_name, self.__compare_pos)
+        if comparable:
+            stats = param_map.get('stats')
+        else:
+            stats = self.get_stats_superset()
+
+        leaderboard_bar_plots = []
+        best_stats_list = self.get_best_stats(param_map, self.__player_name, stats)
+        for stat in best_stats_list:
+            param_map['stats'] = stat
+            leaderboard_bar_plots.append(self.draw(param_map))
+
+        if self.__compare_name != None:
+            best_stats_list = self.get_best_stats(param_map, self.__compare_name, stats)
+            for stat in best_stats_list:
+                param_map['stats'] = stat
+                leaderboard_bar_plots.append(self.draw(param_map, True))
+        
+        return leaderboard_bar_plots

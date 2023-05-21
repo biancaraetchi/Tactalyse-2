@@ -2,7 +2,7 @@ from ..graph_generator.factories.bar_plot_factory import BarPlotFactory
 from ..graph_generator.factories.line_plot_factory import LinePlotFactory
 from ..graph_generator.factories.radar_chart_factory import RadarChartFactory
 from ..graph_generator.factories.scatter_plot_factory import ScatterPlotFactory
-
+import copy
 
 def create_radar_chart(radar_map):
     """
@@ -46,25 +46,25 @@ def create_bar_plots(bar_map, orientation):
     plots = plot_obj.draw_all(bar_map)
     return plots
 
-def create_main_stats_bar_plot(bar_map):
+def create_clustered_bar_plot(bar_map):
     factory = BarPlotFactory()
-    param_map = {'type': 'main_stats', 'params': bar_map}
+    param_map = {'type': 'clustered', 'params': bar_map}
     plot_obj = factory.create_instance(param_map)
-    return plot_obj.draw(bar_map)
+    plots = plot_obj.draw(bar_map)
+    return plots
 
-def create_bar_plot_set(bar_map):
-    return_list = []
+def create_leaderboard_bar_plot(bar_map):
     factory = BarPlotFactory()
-    param_map = {'type': 'Default', 'params': bar_map}
-    plot_obj = factory.create_instance(param_map)
-    return_list.append(plot_obj.draw_all(bar_map))
-    param_map = {'type': 'main_stats', 'params': bar_map}
-    plot_obj = factory.create_instance(param_map)
-    return_list.append(plot_obj.draw(bar_map))
     param_map = {'type': 'leaderboard', 'params': bar_map}
     plot_obj = factory.create_instance(param_map)
-    return_list.append(plot_obj.draw(bar_map))
-    return return_list
+    return plot_obj.draw_all(bar_map)
+
+def create_bar_plot_set(bar_map):
+    save = copy.deepcopy(bar_map)
+    basic_bar_plots = create_bar_plots(bar_map, 'v')
+    clustered_plots = create_clustered_bar_plot(save)
+    leaderboard_plots = create_leaderboard_bar_plot(save)
+    return [basic_bar_plots, clustered_plots, leaderboard_plots]
 
 def create_scatter_plots(scatter_map):
     """
