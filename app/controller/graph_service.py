@@ -52,6 +52,20 @@ def create_main_stats_bar_plot(bar_map):
     plot_obj = factory.create_instance(param_map)
     return plot_obj.draw(bar_map)
 
+def create_bar_plot_set(bar_map):
+    return_list = []
+    factory = BarPlotFactory()
+    param_map = {'type': 'Default', 'params': bar_map}
+    plot_obj = factory.create_instance(param_map)
+    return_list.append(plot_obj.draw_all(bar_map))
+    param_map = {'type': 'main_stats', 'params': bar_map}
+    plot_obj = factory.create_instance(param_map)
+    return_list.append(plot_obj.draw(bar_map))
+    param_map = {'type': 'leaderboard', 'params': bar_map}
+    plot_obj = factory.create_instance(param_map)
+    return_list.append(plot_obj.draw(bar_map))
+    return return_list
+
 def create_scatter_plots(scatter_map):
     """
     Function that retrieves a drawn scatter plot for further use.

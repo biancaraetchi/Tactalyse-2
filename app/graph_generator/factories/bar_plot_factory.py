@@ -1,5 +1,7 @@
 from ..factories.abstract_graph_factory import AbstractGraphFactory
 from ..graphs.bar_plot import *
+from ..graphs.bar_plot_base import *
+from ..graphs.main_stats_bar_plot import *
 
 
 class BarPlotFactory(AbstractGraphFactory):
