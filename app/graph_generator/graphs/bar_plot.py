@@ -89,7 +89,6 @@ class BarPlot(BarPlotBase):
         plot's format.
         :return: a bar plot in byte form to be displayed onto a pdf.
         """
-
         matplotlib.use('agg')
         comparing = (self.__compare_name != None)
         data = param_map.get('league_data')

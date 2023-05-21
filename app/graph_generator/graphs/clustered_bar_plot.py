@@ -2,7 +2,8 @@ from .bar_plot import *
 
 class ClusteredBarPlot(BarPlot):
     """
-    Class
+    Class that represents a clustered bar plot, that is, a bar plot with more than one bar per label
+    on the x axis.
     """
     def __init__(self, param_map):
         param_map.update({"orientation": 'v'})
@@ -12,41 +13,16 @@ class ClusteredBarPlot(BarPlot):
         self.__player_name = param_map.get('player_name')
         self.__compare_name = param_map.get('compare_name')
         self.__compare_pos = param_map.get('compare_pos')
-        
+    
 
-    def get_index(self, data, name):
+    def color_clustered_bar_plot(self, ax, max_value, cmap_list):
         """
-        Function that returns the player's index in the provided dataframe. If such data is sorted
-        based on a stat's value, then the index corresponds to the player's ranking within the league
-        for such statistic.
-        :param data: dataframe containing (sorted) league data.
-        :param name: the player's name.
-        :return: the player's index in the dataframe.
+        Function that colors the bars within the graphs with specific gradients.
+        :param ax: current Axes object that allows to access and manipulate the properties of the plot's axes
+        :param max_value: the value that will correspond to the darkest color in the gradient
+        :param cmap_list: list of color gradients to be used for the graph. The color for each next bar
+        cycles through this list.
         """
-        return data.index[data['Player'] == name][0]         
-
-
-    def get_best_stats(self, param_map, name, stats):
-
-        data = param_map.get('league_data')
-
-        rankings = []
-        for stat in stats:
-            data = data.sort_values(by=stat, ascending=False)
-            rankings.append((self.get_index(data.reset_index(), name), stat))
-
-        rankings.sort()
-        rankings = rankings[:3]
-        
-        best_stats = []
-        for x in rankings:
-            best_stats.append(x[1])
-
-        return best_stats
-
-
-    def color_clustered_graph(self, ax, ydata, cmap_list, comparing):
-
         # set up the gradient for the cmap
         grad = np.atleast_2d(np.linspace(0,1,256))
 
@@ -71,12 +47,19 @@ class ClusteredBarPlot(BarPlot):
                 h = bars[j][i].get_height()
                 w = bars[j][i].get_width()
 
-                grad = np.atleast_2d(np.linspace(0,1*h/max(ydata),256)).T
-                ax.imshow(grad, extent=[x,x+w,y,y+h], origin='lower', aspect="auto", norm=cm.colors.NoNorm(vmin=0,vmax=1), cmap=plt.get_cmap(cmap_list[j]))
+                grad = np.atleast_2d(np.linspace(0,1*h/max_value,256)).T
+                ax.imshow(grad, extent=[x,x+w,y,y+h], origin='lower', aspect="auto", 
+                          norm=cm.colors.NoNorm(vmin=0,vmax=1), cmap=plt.get_cmap(cmap_list[j]))
                 
 
-    def draw_clustered_bar_plot(self, param_map):
-        
+    def draw_main_stats_plot(self, param_map):
+        """
+        Function that draws a clustered bar plot displaying the player's main statistics and
+        how they compare to the league average for their position in just one graph.
+        :param param_map: set of parameters containing information about the player, the league, and the
+        plot's format.
+        :return: a clustered bar plot in byte form about the player's main statistics.
+        """
         if self.__compare_name != None:
             comparing = True
         else:
@@ -144,10 +127,10 @@ class ClusteredBarPlot(BarPlot):
 
         if not comparing:
             cmap_list = ['YlOrBr', 'Greens']
-            self.color_clustered_graph(ax, data[stat], cmap_list, comparing)
+            self.color_clustered_bar_plot(ax, max(data[stat]), cmap_list)
         else:
             cmap_list = ['YlOrBr', 'Blues', 'Greens']
-            self.color_clustered_graph(ax, data[stat], cmap_list, comparing)
+            self.color_clustered_bar_plot(ax, max(data[stat]), cmap_list)
 
         for y in ax.get_yticks():
             ax.axhline(y=y, linestyle='--', color='gray', alpha=0.5, zorder=-1)
@@ -158,22 +141,25 @@ class ClusteredBarPlot(BarPlot):
         return buffer.getvalue()
 
     def draw(self, param_map):
-        
+        """
+        Function that draws clustered plots and is called by the graph service. It provides 1 clustered
+        bar plot if there is no comparison or the players being compared have the same main stats.
+        Otherwise it displays their main stats in 2 distinct graphs. 
+        :param param_map: a dictionary containing information about the player and their league.
+        :return: a (list of) clustered bar plot(s) in byte form.
+        """
         comparable = self.are_comparable(self.__compare_name, self.__position_name, self.__compare_pos)
         if comparable:
             stats = param_map.get('stats')
+            param_map['stats'] = stats
+            clustered_bar_plot = self.draw_main_stats_plot(param_map)
         else:
             stats = self.get_stats_superset()
-
-        if comparable:
-            param_map['stats'] = stats
-            clustered_bar_plot = self.draw_clustered_bar_plot(param_map)
-        else:
             clustered_bar_plot = []
             param_map['stats'] = stats[:4]
-            clustered_bar_plot.append(self.draw_clustered_bar_plot(param_map))
+            clustered_bar_plot.append(self.draw_main_stats_plot(param_map))
             param_map['stats'] = stats[4:]
-            clustered_bar_plot.append(self.draw_clustered_bar_plot(param_map))
+            clustered_bar_plot.append(self.draw_main_stats_plot(param_map))
     
         return clustered_bar_plot
     

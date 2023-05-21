@@ -1,9 +1,11 @@
 from .clustered_bar_plot import *
 
-class LeaderboardBarPlot(ClusteredBarPlot):
-
+class LeaderboardBarPlot(BarPlot):
+    """
+    A class representing a horizontal bar plot where the player's statistic is shown amongst
+    the other players' values in a leaderboard format, displaying the player's ranking. 
+    """
     def __init__(self, param_map):
-        param_map.update({"orientation": 'v'})
         super().__init__(param_map)
         self.__position_name = param_map.get('player_pos')
         self.__main_pos = param_map.get('main_pos')
@@ -11,7 +13,20 @@ class LeaderboardBarPlot(ClusteredBarPlot):
         self.__compare_name = param_map.get('compare_name')
         self.__compare_pos = param_map.get('compare_pos')
     
-    def draw(self, param_map, compared_player = False):
+    def draw_leaderboard(self, param_map, compared_player = False):
+        """
+        Function that draws a leaderboard bar graph showing the player's ranking for a given statistic,
+        found in param_map.
+        The graph shows the 5 players above and below the analysed one and provides the main player's
+        ranking.
+        Since values between adjacent rankings may not differ a lot, the graph is "zoomed in"
+        by a factor set by zoom_values.
+        :param compared_player: is True if the graph being generated is about the compared player 
+        and not the main one. 
+        :param param_map: a dictionary containing information about the player(s) and their league.
+        :return: a leaderboard bar plot in byte form.
+        """
+        zoom_values = [5/6, 6/5]
 
         stat = param_map.get('stats')
         data = param_map.get('league_data')
@@ -55,8 +70,8 @@ class LeaderboardBarPlot(ClusteredBarPlot):
         self.print_value_labels(ax, 8, 'h')
         self.color_graph(ax, max_value, 'YlOrBr', 'h')
 
-        start = (5/6) * min(data[stat])
-        end = (6/5) * max(data[stat])
+        start = zoom_values[0] * min(data[stat])
+        end = zoom_values[1] * max(data[stat])
         ax.set_xlim(start,end)
 
         for x in ax.get_xticks():
@@ -68,6 +83,11 @@ class LeaderboardBarPlot(ClusteredBarPlot):
         return buffer.getvalue()
 
     def draw_all(self, param_map):
+        """
+        Function that draws leaderboard plots for each of the player's best statistics.
+        :param param_map: a dictionary containing information about the player and their league.
+        :return: a list of leaderboard bar plots in byte form.
+        """
         comparable = self.are_comparable(self.__compare_name, self.__position_name, self.__compare_pos)
         if comparable:
             stats = param_map.get('stats')
@@ -78,12 +98,13 @@ class LeaderboardBarPlot(ClusteredBarPlot):
         best_stats_list = self.get_best_stats(param_map, self.__player_name, stats)
         for stat in best_stats_list:
             param_map['stats'] = stat
-            leaderboard_bar_plots.append(self.draw(param_map))
+            leaderboard_bar_plots.append(self.draw_leaderboard(param_map))
 
+        # In case of a comparison with another player, draw leaderboards for their best stats too.
         if self.__compare_name != None:
             best_stats_list = self.get_best_stats(param_map, self.__compare_name, stats)
             for stat in best_stats_list:
                 param_map['stats'] = stat
-                leaderboard_bar_plots.append(self.draw(param_map, True))
+                leaderboard_bar_plots.append(self.draw_leaderboard(param_map, True))
         
         return leaderboard_bar_plots
