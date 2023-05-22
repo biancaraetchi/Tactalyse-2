@@ -58,6 +58,9 @@ class LineProcessor(Preprocessor):
         main_pos = self.main_position(player_row)
         line_map.update({'main_pos': main_pos})
 
+        player_pos = self.position_dictionary().get(main_pos)
+        line_map.update({'player_pos': player_pos})
+
         main_pos_short = self.shortened_dictionary().get(main_pos)
         line_map.update({'main_pos_short': main_pos_short})
         return line_map
