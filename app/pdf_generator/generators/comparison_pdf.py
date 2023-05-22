@@ -26,7 +26,6 @@ class ComparisonPDF(PDFGenerator):
         compare_pos = param_map["compare_pos"]
         line_plots = param_map["line_plots"]
         bar_plots = param_map["bar_plots"]
-        scatter_plots = param_map["scatter_plots"]
 
         self._pdf.set_info(player_name, league_df, main_pos)
         self._pdf.set_compare_info(compare_name, league_df, compare_pos)
@@ -35,6 +34,6 @@ class ComparisonPDF(PDFGenerator):
         self._pdf.print_comparison_title()
         self.print_player_info()
 
-        self.print_plots(line_plots, bar_plots, scatter_plots)
+        self.print_plots(line_plots, bar_plots)
 
         return self._pdf.output(dest='S')

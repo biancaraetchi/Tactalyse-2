@@ -100,16 +100,14 @@ def pass_data(league_file, player_file, player_name, start_date, end_date, compa
     # Get parameter maps with relevant data for generating plots from the data module
     line_map = get_line_data(league_file, player_file, player_name, compare_file, compare_name, start_date, end_date)
     bar_map_main_stats = get_bar_data(league_file, player_name, compare_name)
-    scatter_map = get_scatter_data(player_file)
 
     # Pass the maps to get lists containing plots in byte form from the graph_generator module
     line_plots = create_line_plots(line_map)
     main_stats_bar_plot = create_main_stats_bar_plot(bar_map_main_stats)
-    scatter_plots = create_scatter_plots(scatter_map)
 
     # Get a parameter map with relevant data for generating a PDF from the data module, and pass it to the pdf_generator
     # module along with the graphs
-    pdf_map = get_pdf_data(league_file, player_name, compare_name, line_plots, main_stats_bar_plot, scatter_plots)
+    pdf_map = get_pdf_data(league_file, player_name, compare_name, line_plots, main_stats_bar_plot)
     pdf_bytes = create_pdf(pdf_map)
 
     response = make_response(bytes(pdf_bytes))

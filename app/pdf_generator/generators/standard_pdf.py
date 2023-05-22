@@ -12,7 +12,6 @@ class StandardPDF(PDFGenerator):
         self._pdf.image('app/pdf_generator/resources/images/placeholder_player_photo.jpg', 50, 60, 115)
         self._pdf.set_font(self._pdf.font, 'B', 14)
         self._pdf.print_player_info_col1(self._pdf.player)
-        # self._pdf.print_player_info_col2(self._pdf.player)
 
     def generate_pdf(self, param_map):
         """
@@ -25,7 +24,6 @@ class StandardPDF(PDFGenerator):
         main_pos = param_map["main_pos"]
         line_plots = param_map["line_plots"]
         bar_plots = param_map["bar_plots"]
-        scatter_plots = param_map["scatter_plots"]
 
         self._pdf.set_info(player_name, league_df, main_pos)
         self.set_standard_properties(player_name)
@@ -33,6 +31,6 @@ class StandardPDF(PDFGenerator):
         self._pdf.print_title()
         self.print_player_info()
 
-        self.print_plots(line_plots, bar_plots, scatter_plots)
+        self.print_plots(line_plots, bar_plots)
 
         return self._pdf.output(dest='S')

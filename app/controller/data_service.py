@@ -72,7 +72,7 @@ def get_scatter_data(player_file, compare_file, player_name, compare_name):
     return processor.extract_scatter_data(player_file, compare_file, player_name, compare_name)
 
 
-def get_pdf_data(league_data, player_name, compare_name, line_plots, bar_plots, scatter_plots):
+def get_pdf_data(league_data, player_name, compare_name, line_plots, bar_plots):
     """
     Function that takes a football player's data along with required parameters, and extracts the relevant data for a
     pdf.
@@ -87,7 +87,7 @@ def get_pdf_data(league_data, player_name, compare_name, line_plots, bar_plots, 
              order. (player_data, columns_line_plot)
     """
     processor = PDFProcessor()
-    return processor.params_to_map(league_data, player_name, compare_name, line_plots, bar_plots, scatter_plots)
+    return processor.params_to_map(league_data, player_name, compare_name, line_plots, bar_plots)
 
 
 def both_in_league(league_file, player_name, compare_name):
