@@ -1,4 +1,5 @@
 from .bar_plot_base import *
+import matplotlib.ticker as ticker
                 
 class BarPlot(BarPlotBase):
     """
@@ -34,7 +35,7 @@ class BarPlot(BarPlotBase):
                         bbox=dict(facecolor='white', edgecolor='black', boxstyle='round,pad=0.2'))
 
 
-    def color_graph(self, ax, max_value, cmap, orientation, toggle_color_bar=True):
+    def color_graph(self, ax, max_value, cmap, orientation, offset, toggle_color_bar=True):
         """
         Function that colors the bars within the graphs with a specific gradient and prints a
         color bar to the side as a legend.
@@ -70,16 +71,31 @@ class BarPlot(BarPlotBase):
         if toggle_color_bar:
             sm = plt.cm.ScalarMappable(cmap=my_cmap, norm=norm)
             sm.set_array([])
-            cbar = plt.colorbar(sm)
 
-            num_ticks = 10
-            tick_values = np.linspace(0, max_value, num_ticks)
-            tick_labels = []
+            bbox = ax.get_position()
+            bottom = bbox.y0
+            width = bbox.width * 0.7
+            height = bbox.height
+            left = bbox.x0 + 0.15 * width
+
+            ax.set_position([left+offset[0], bottom, width, height])
+            cbar_ax = ax.figure.add_axes([left-offset[1], bottom, 0.02, height])
+            cbar = plt.colorbar(sm, cax=cbar_ax)
+
+            num_ticks = 20
+            cbar.ax.yaxis.set_major_locator(ticker.MaxNLocator(num_ticks))
+            tick_values = np.linspace(0, max_value, num_ticks-2)
+            tick_labels = ['0.0']
             for x in tick_values:
                 x = round(x,2)
                 tick_labels.append(str(x))
             cbar.ax.set_yticklabels(tick_labels)
-            cbar.set_label('Proximity to max value found within league', fontsize=8)
+
+            cbar.set_label('Proximity to max value found within league', fontsize=7.5)
+            cbar.ax.yaxis.set_label_coords(-0.85, 0.5)
+
+            if orientation == 'v':
+                ax.set_ylim(0,max_value)
 
 
     def draw(self, param_map):
@@ -104,44 +120,50 @@ class BarPlot(BarPlotBase):
         else:
             avg = 0
 
-        if (self.__orientation == 'v'):
-            avg_column_name = self.__position_name + ' \nleague average'
-        else:
-            avg_column_name = self.__position_name.replace(' ', '\n') + ' \nleague \naverage'
-
         if not comparing:
-            player_vs_avg_data = {' ': [self.__player_name, avg_column_name], stat: [player_value, avg]}
+            player_data = {' ': [self.__player_name], stat: [player_value]}
         else:
-            player_vs_avg_data = {' ': [self.__player_name, self.__compare_name, avg_column_name], stat: [player_value, compare_player_value, avg]}
+            player_data = {' ': [self.__player_name, self.__compare_name], stat: [player_value, compare_player_value]}
 
-        df = pd.DataFrame(player_vs_avg_data)
+        df = pd.DataFrame(player_data)
         plt.subplot().clear()
         if (self.__orientation == 'v'):
             sns.barplot(x=" ", y=stat, data=df, orient=self.__orientation)
         else:
             sns.barplot(x=stat, y=" ", data=df, orient=self.__orientation)
         
-        plt.xlabel(stat, fontsize=14, fontweight='bold')
         plt.tight_layout()
 
         ax = plt.gca()
+        
+        ax.set_ylabel('')
         self.print_value_labels(ax, 12, orientation=self.__orientation)
         ax.tick_params(axis='both', which='major', labelsize=12)
 
-        self.color_graph(ax, max(stat_df[stat]), 'YlOrBr', self.__orientation)
+        self.color_graph(ax, max(stat_df[stat]), 'YlOrBr', self.__orientation, [0.06,0.06])
 
         if self.__orientation == 'v':
+            tick_values = np.linspace(ax.get_ylim()[0], ax.get_ylim()[1], 18)
+            ax.set_yticks(tick_values)
             for y in ax.get_yticks():
-                ax.axhline(y=y, linestyle='--', color='gray', alpha=0.5, zorder=-1)
+                ax.axhline(y=y, linestyle='--', color='gray', alpha=0.2, zorder=-1)
+            avg_line_name = self.__position_name + ' \nleague average (' + str("%0.2f" % float(avg)) + ')'
         else:
+            tick_values = np.linspace(ax.get_xlim()[0], ax.get_xlim()[1], 18)
+            ax.set_xticks(tick_values)
             for x in ax.get_xticks():
-                ax.axvline(x=x, linestyle='--', color='gray', alpha=0.5, zorder=-1)
+                ax.axvline(x=x, linestyle='--', color='gray', alpha=0.2, zorder=-1)
+            avg_line_name = (self.__position_name.replace(' ', '\n') + ' \nleague \naverage \n' + '(' + 
+                            str("%0.2f" % float(avg)) + ')')
 
+        ax.axhline(avg, color='black', linestyle='-', linewidth=0.7)
         if not comparing:
-            ax.axhline(df[stat][1], color='#FF7700', linestyle='-.')
+            ax.text(0.5, avg, avg_line_name, color='black', ha='right', va='center', fontsize=7.6)
         else:
-            ax.axhline(df[stat][2], color='#FF7700', linestyle='-.')
-
+            ax.text(0.5, avg, avg_line_name, color='black', ha='center', va='center', fontsize=7.6)
+        
+        ax.set_xlabel(stat, fontsize=14, fontweight='bold')
+        ax.set_yticklabels([])
         buffer = io.BytesIO()
         plt.savefig(buffer, format='png')
         buffer.seek(0)

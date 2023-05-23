@@ -68,7 +68,7 @@ class LeaderboardBarPlot(BarPlot):
         plt.ylabel('Player', fontsize=0)
 
         self.print_value_labels(ax, 8, 'h')
-        self.color_graph(ax, max_value, 'YlOrBr', 'h')
+        self.color_graph(ax, max_value, 'YlOrBr', 'h', [0.13,0.13])
 
         start = zoom_values[0] * min(data[stat])
         end = zoom_values[1] * max(data[stat])
