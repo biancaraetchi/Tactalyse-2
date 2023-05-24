@@ -20,6 +20,13 @@ class BarPlotBase(Graph):
     __player_name = ''
     __compare_name = None
 
+    def __init__(self):
+        pass
+
+    def draw(self):
+        pass
+
+
     def are_comparable(self, cmp_name, pos, cmp_pos):
         """
         Functions that checks whether the players being compared are in a set of positions
@@ -32,6 +39,10 @@ class BarPlotBase(Graph):
         if cmp_name != None:
             comparable_1 = ['Attacking Midfielder', 'Winger', 'Striker']
             comparable_2 = ['Full Back', 'Center Back', 'Defensive Midfielder']
+            if(pos not in comparable_1 and pos not in comparable_2):
+                raise ValueError("Position '{}' is not accepted.".format(pos))          
+            if(cmp_pos not in comparable_1 and cmp_pos not in comparable_2):
+                raise ValueError("Position '{}' is not accepted.".format(cmp_pos))     
             if ((pos in comparable_1 and cmp_pos in comparable_2) or 
                 (pos in comparable_2 and cmp_pos in comparable_1)):
                 return False
@@ -58,10 +69,13 @@ class BarPlotBase(Graph):
         :param name: the player's name.
         :return: the player's index in the dataframe.
         """
-        return data.index[data['Player'] == name][0]         
+        selected_rows = data[data['Player'] == name]
+        if selected_rows.empty:
+            raise ValueError("Player '{}' not found in the dataframe.".format(name))          
+        return data.index[data['Player'] == name][0]
 
 
-    def get_best_stats(self, param_map, name, stats):
+    def get_best_stats(self, param_map, name, stats, number_of_best_statistics=3):
         """
         Function that computes what are the best statistics for a given player, that is to say, 
         the statistics in which they rank the highest amongst the league they play in.
@@ -69,11 +83,14 @@ class BarPlotBase(Graph):
         :param param_map: dictionary containing information regarding the player and their league.
         :param name: the player's name.
         :param stats: list of statistics to seek the best ones in.
+        :param number_of_best_statistics: how many best statistics to compute. Default is 3.
         :return: a list of the (3) best statistics for a given player.
         """
-        number_of_best_statistics = 3
+        
+        if number_of_best_statistics > len(stats):
+            raise ValueError("Number of best statistics exceeds the length of the stats list.")
+        
         data = param_map.get('league_data')
-
         rankings = []
         for stat in stats:
             data = data.sort_values(by=stat, ascending=False)
