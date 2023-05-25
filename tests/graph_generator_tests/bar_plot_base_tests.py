@@ -1,4 +1,4 @@
-from papp.graph_generator.graphs.bar_plot_base import *
+from app.graph_generator.graphs.bar_plot_base import *
 import unittest
 
 class BarPlotBaseTests(unittest.TestCase):
