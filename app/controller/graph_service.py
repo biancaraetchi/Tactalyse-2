@@ -64,7 +64,7 @@ def create_bar_plot_set(bar_map):
     basic_bar_plots = create_bar_plots(bar_map, 'v')
     clustered_plots = create_clustered_bar_plot(save)
     leaderboard_plots = create_leaderboard_bar_plot(save)
-    return [basic_bar_plots, clustered_plots, leaderboard_plots]
+    return [leaderboard_plots, basic_bar_plots, clustered_plots]
 
 def create_scatter_plots(scatter_map):
     """

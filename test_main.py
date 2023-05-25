@@ -14,8 +14,8 @@ def generate_pdf():
     player_name = "T. Cleverley"
     compare_name = "A. Masina"
     compare_file = "app/pdf_generator/resources/test_data/Player stats I. Sarr.xlsx"
-    # compare_name = None
-    # compare_file = None
+    #compare_name = None
+    #compare_file = None
     start_date = "2016-09-25"
     end_date = "2020-12-23"
     
@@ -26,7 +26,8 @@ def generate_pdf():
     # Pass the maps to get lists containing plots in byte form from the graph_generator module
     radar_chart = create_radar_chart(radar_map)
     line_plots = create_line_plots(line_map)
-    bar_plot_set = create_bar_plot_set(bar_map)
+    #bar_plot_set = create_bar_plot_set(bar_map)
+    bar_plot_set = create_bar_plots(bar_map, 'v')
 
     # Get a parameter map with relevant data for generating a PDF from the data module, and pass it to the pdf_generator
     # module along with the graphs

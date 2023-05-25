@@ -101,11 +101,11 @@ class ClusteredBarPlot(BarPlot):
         if not comparing:
             df = pd.melt(df, id_vars=['Statistic'], value_vars=[self.__player_name, 'League Average'], var_name='Player/Avg Value', value_name='Value')
             sns.barplot(x='Statistic', y='Value', hue='Player/Avg Value', data=df)
-            my_palette =['#E45707', '#449D2B']
+            my_palette =['#B35702', '#FF0505']
         else:
             df = pd.melt(df, id_vars=['Statistic'], value_vars=[self.__player_name, self.__compare_name, 'League Average'], var_name='Player1/Player2/Avg Value', value_name='Value')
             sns.barplot(x='Statistic', y='Value', hue='Player1/Player2/Avg Value', data=df)
-            my_palette =['#E45707', '#3D85C6' , '#449D2B']
+            my_palette =['#B35702', '#DE0030' , '#FF0505']
     
         handles, labels = ax.get_legend_handles_labels()
         new_handles = [plt.Rectangle((0,0),1,1, color=color) for color in my_palette]
@@ -126,10 +126,10 @@ class ClusteredBarPlot(BarPlot):
             self.print_value_labels(ax, 8, 'v')
 
         if not comparing:
-            cmap_list = ['YlOrBr', 'Greens']
+            cmap_list = ['YlOrBr', 'Reds']
             self.color_clustered_bar_plot(ax, max(data[stat]), cmap_list)
         else:
-            cmap_list = ['YlOrBr', 'Blues', 'Greens']
+            cmap_list = ['YlOrBr', 'OrRd', 'Reds']
             self.color_clustered_bar_plot(ax, max(data[stat]), cmap_list)
 
         for y in ax.get_yticks():

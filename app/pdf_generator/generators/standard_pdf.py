@@ -9,7 +9,7 @@ class StandardPDF(PDFGenerator):
         """
         Function that prints player's image and basic information in the first page
         """
-        self._pdf.image('app/pdf_generator/resources/images/placeholder_player_photo.jpg', 50, 60, 115)
+        self._pdf.image('app/pdf_generator/resources/images/placeholder_player_photo.jpg', 35, 60, 140)
         self._pdf.set_font(self._pdf.font, 'B', 14)
         self._pdf.print_player_info_col1(self._pdf.player)
 
