@@ -41,7 +41,9 @@ def json_process(payload):
 
     league_file = request.json.get('league-file')
     player_file = request.json.get('player-file')
+    compare_file = request.json.get('compare-file')
     player_name = request.json.get('player-name')
+    compare_name = request.json.get('compare-name')
     start_date = request.json.get('start-date')
     end_date = request.json.get('end-date')
 
@@ -52,7 +54,7 @@ def json_process(payload):
     elif not player_name:
         return Response("Error: player-name was not specified.", 400, mimetype='application/json')
 
-    return pass_data(league_file, player_file, player_name, start_date, end_date)
+    return pass_data(league_file, player_file, player_name, start_date, end_date, compare_file, compare_name)
 
 
 def key_value_process(files, form):
