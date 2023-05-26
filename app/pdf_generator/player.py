@@ -3,7 +3,7 @@ class Player:
     Class that represents the player for which the statistics/graphs/pdf are being processed.
     All the player's personal and football-related information is stored as attributes.
     """
-
+    
     __player_name = "Name"
     __player_position = "Position"
     __player_height = "Height"
