@@ -31,10 +31,10 @@ class ComparisonPDFTests(unittest.TestCase):
         # Create a sample param_map for testing
         param_map = {
             "league_data": "mock_league_data",
-            "player_name": "mock_player_name",
-            "main_pos": "mock_main_pos",
-            "compare_name": "mock_compare_name",
-            "compare_pos": "mock_compare_pos",
+            "player_name": "T Clevery",
+            "main_pos": "DM",
+            "compare_name": "A Masina",
+            "compare_pos": "FB",
             "line_plots": "mock_line_plots",
             "bar_plots": "mock_bar_plots"
         }
@@ -46,8 +46,8 @@ class ComparisonPDFTests(unittest.TestCase):
         result = self.comparison_pdf.generate_pdf(param_map)
 
         # Assert the expected method calls on the mock objects
-        self.pdf_generator_mock.set_info.assert_called_with("mock_player_name", "mock_league_data", "mock_main_pos")
-        self.pdf_generator_mock.set_compare_info.assert_called_with("mock_compare_name", "mock_league_data", "mock_compare_pos")
+        self.pdf_generator_mock.set_info.assert_called_with("T Clevery", "mock_league_data", "DM")
+        self.pdf_generator_mock.set_compare_info.assert_called_with("A Masina", "mock_league_data", "FB")
         self.pdf_generator_mock.print_comparison_title.assert_called()
         self.pdf_generator_mock.output.assert_called_with(dest='S')
 
