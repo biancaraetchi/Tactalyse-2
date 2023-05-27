@@ -101,7 +101,87 @@ class TestPDF(unittest.TestCase):
         # Assert that the cell method is called with the correct parameters
         mock_cell.assert_called_with(0, 10, 'Page ' + str(self.pdf.page_no()) + '/{nb}', 0, 0, 'C')
 
+    def test_chapter_title(self):
+        pdf = PDF()
+        pdf.set_font = MagicMock()
+        pdf.ln = MagicMock()
+        pdf.cell = MagicMock()
 
+        title = "Chapter 1"
+        pdf.chapter_title(title)
+
+        pdf.set_font.assert_called_once_with(pdf._PDF__font, '', 27)
+        pdf.cell.assert_called_once_with(0, 14, title, 'B', 1, 'C', False)
+        pdf.ln.assert_called_with(4)
+
+    def test_chapter_body(self):
+        pdf = PDF()
+        pdf.set_font = MagicMock()
+        pdf.multi_cell = MagicMock()
+        pdf.ln = MagicMock()
+
+        text = "The chapter's text body"
+        pdf.chapter_body(text)
+
+        pdf.set_font.assert_called_once_with(pdf._PDF__font, '', 12)
+        pdf.multi_cell.assert_called_once_with(0, 5, text)
+        pdf.ln.assert_called_once()
+
+    def test_print_chapter(self):
+        title = "Chapter 1"
+        text = "The chapter's text body"
+
+        # Mock the required methods
+        self.pdf.add_page = MagicMock()
+        self.pdf.chapter_title = MagicMock()
+        self.pdf.chapter_body = MagicMock()
+        self.pdf.set_font = MagicMock()
+
+        # Call the method
+        self.pdf.print_chapter(title, text)
+
+        # Assert the method calls
+        self.pdf.add_page.assert_called_once()
+        self.pdf.chapter_title.assert_called_once_with(title)
+        self.pdf.chapter_body.assert_called_once_with(text)
+        self.pdf.set_font.assert_called_with('Arial', '', 12)
+
+    def test_print_title(self):
+        # Mock the required methods
+        self.pdf.set_font = MagicMock()
+        self.pdf.ln = MagicMock()
+        self.pdf.cell = MagicMock()
+        self.pdf.player.get_player_name = MagicMock(return_value="Son")
+
+        # Call the method
+        self.pdf.print_title()
+
+        # Assert the method calls
+        self.pdf.set_font.assert_called_once_with('Arial', '', 22)
+        self.pdf.cell.assert_called_once_with(0, 14, "Stats Report for Son", 0, 1, 'C', False)
+        self.pdf.ln.assert_called_with(4)
+
+    def test_print_comparison_title(self):
+        # Mock the required methods
+        self.pdf.set_font = MagicMock()
+        self.pdf.ln = MagicMock()
+        self.pdf.cell = MagicMock()
+        self.pdf.player.get_player_name = MagicMock(return_value="Son")
+        self.pdf.compare.get_player_name = MagicMock(return_value="Haaland")
+
+        # Call the method
+        self.pdf.print_comparison_title()
+
+        # Assert the method calls
+        self.pdf.set_font.assert_called_once_with('Arial', '', 22)
+        self.pdf.cell.assert_called_once_with(0, 14, "Comparison Report for Son and Haaland", 0, 1, 'C', False)
+        self.pdf.ln.assert_called_with(4)
+
+    def test_set_plot_properties(self):
+        # Test the set_plot_properties method
+        self.pdf.set_plot_properties(200, 150)
+        self.assertEqual(self.pdf.img_w, 200)
+        self.assertEqual(self.pdf.img_h, 150)
 
 
 
