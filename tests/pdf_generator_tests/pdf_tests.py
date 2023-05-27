@@ -1,5 +1,5 @@
 import unittest
-from unittest.mock import patch
+from unittest.mock import patch, call
 import pandas as pd
 from io import StringIO
 from PIL import Image
@@ -62,6 +62,27 @@ class TestPDF(unittest.TestCase):
         self.assertEqual(compare.get_player_position(), main_pos)
 
         # Assert that the compare player's football info is set using the mock DataFrame
+
+    @patch('app.pdf_generator.pdf.FPDF.set_font')
+    @patch('app.pdf_generator.pdf.FPDF.cell')
+    @patch('app.pdf_generator.pdf.FPDF.ln')
+    @patch('app.pdf_generator.pdf.FPDF.image')
+    def test_header(self, mock_image, mock_ln, mock_cell, mock_set_font):
+        self.pdf.add_page()  # Add a new page
+        
+        self.pdf.header()
+
+        # Assert that the expected functions are called
+        expected_calls = [
+        call('app/pdf_generator/resources/images/Logo_Tactalyse.png', 4, 2, 25),
+        call('app/pdf_generator/resources/images/Logo_Tactalyse_Stats.png', 50, 7, 115),
+        call("app/pdf_generator/resources/images/BackgroundClean.png", x=0, y=30, w=self.pdf.w, h=self.pdf.h)
+        ]
+        mock_image.assert_has_calls(expected_calls)
+        mock_set_font.assert_called_with(self.pdf._PDF__font, 'B', 15)
+        mock_cell.assert_called_with(80)
+        mock_ln.assert_called_with(20)
+
 
 
 if __name__ == '__main__':
