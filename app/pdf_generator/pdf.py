@@ -272,7 +272,7 @@ class PDF(FPDF):
 
     @property
     def img_h(self):
-        return self.__img_w
+        return self.__img_h
 
     @current_y.setter
     def current_y(self, value):
