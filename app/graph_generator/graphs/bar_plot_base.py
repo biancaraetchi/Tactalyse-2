@@ -39,9 +39,9 @@ class BarPlotBase(Graph):
         if cmp_name != None:
             comparable_1 = ['Attacking Midfielder', 'Winger', 'Striker']
             comparable_2 = ['Full Back', 'Center Back', 'Defensive Midfielder']
-            if(pos not in comparable_1 and pos not in comparable_2):
+            if(pos not in comparable_1 and pos not in comparable_2 and pos != 'Goalkeeper'):
                 raise ValueError("Position '{}' is not accepted.".format(pos))          
-            if(cmp_pos not in comparable_1 and cmp_pos not in comparable_2):
+            if(cmp_pos not in comparable_1 and cmp_pos not in comparable_2 and pos != 'Goalkeeper'):
                 raise ValueError("Position '{}' is not accepted.".format(cmp_pos))     
             if ((pos in comparable_1 and cmp_pos in comparable_2) or 
                 (pos in comparable_2 and cmp_pos in comparable_1)):

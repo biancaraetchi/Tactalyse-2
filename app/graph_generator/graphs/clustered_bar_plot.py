@@ -140,6 +140,7 @@ class ClusteredBarPlot(BarPlot):
         plt.close()
         return buffer.getvalue()
 
+
     def draw(self, param_map):
         """
         Function that draws clustered plots and is called by the graph service. It provides 1 clustered
@@ -154,6 +155,7 @@ class ClusteredBarPlot(BarPlot):
             param_map['stats'] = stats
             clustered_bar_plot = self.draw_main_stats_plot(param_map)
         else:
+            print('NOT COMP')
             stats = self.get_stats_superset()
             clustered_bar_plot = []
             param_map['stats'] = stats[:4]

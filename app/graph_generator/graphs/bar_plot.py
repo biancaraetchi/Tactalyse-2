@@ -1,6 +1,6 @@
 from .bar_plot_base import *
 import matplotlib.ticker as ticker
-                
+
 class BarPlot(BarPlotBase):
     """
     Class that represents a bar plot comparing player(s) stats against the league average for that
@@ -37,7 +37,7 @@ class BarPlot(BarPlotBase):
         return ax
 
 
-    def color_graph(self, ax, max_value, cmap, orientation, offset, toggle_color_bar=True):
+    def color_graph(self, ax, max_value, cmap, orientation, offset, toggle_color_bar=True, leaderboard=False):
         """
         Function that colors the bars within the graphs with a specific gradient and prints a
         color bar to the side as a legend.
@@ -75,8 +75,13 @@ class BarPlot(BarPlotBase):
             sm = plt.cm.ScalarMappable(cmap=my_cmap, norm=norm)
             sm.set_array([])
 
-            if orientation == 'v':
-                ax.set_ylim(0,max_value)
+            if orientation == 'v' or leaderboard:
+                
+                if leaderboard:
+                    ax.set_ylabel('')
+                    ax.set_xlim(0,max_value)
+                else:
+                    ax.set_ylim(0,max_value)
 
                 bbox = ax.get_position()
                 bottom = bbox.y0
@@ -104,6 +109,7 @@ class BarPlot(BarPlotBase):
             cbar.set_label('Proximity to max value found within league', fontsize=7.5)
 
         return ax
+
 
     def draw_ticks_and_labels(self, ax, stat, avg, comparing):
         """
@@ -140,10 +146,7 @@ class BarPlot(BarPlotBase):
             ax.xaxis.set_major_formatter(ticker.FormatStrFormatter('%.2f'))
             ax.tick_params(axis='x', which='major', labelsize=6)
             ax.axvline(avg, color='black', linestyle='-', linewidth=0.7)
-            if not comparing:
-                ax.text(avg, 0.5, avg_line_name, color='black', ha='right', va='center', fontsize=7.6)
-            else:
-                ax.text(avg, 0.5, avg_line_name, color='black', ha='right', va='center', fontsize=7.6)
+            ax.text(avg, 0.5, avg_line_name, color='black', ha='right', va='center', fontsize=7.6)
 
 
     def draw(self, param_map):
@@ -154,6 +157,7 @@ class BarPlot(BarPlotBase):
         :return: a bar plot in byte form to be displayed onto a pdf.
         """
         matplotlib.use('agg')
+        color_palette = 'coolwarm'
         comparing = (self.__compare_name != None)
         data = param_map.get('league_data')
         stat = param_map.get('stats')
@@ -183,7 +187,7 @@ class BarPlot(BarPlotBase):
         plt.tight_layout()
         ax = plt.gca()
         ax = self.print_value_labels(ax, 12, orientation=self.__orientation)
-        ax = self.color_graph(ax, max(stat_df[stat]), 'YlOrBr', self.__orientation, [0.06,0.06])
+        ax = self.color_graph(ax, max(stat_df[stat]), color_palette, self.__orientation, [0.06,0.06])
         ax = self.draw_ticks_and_labels(ax, stat, avg, comparing)
 
         buffer = io.BytesIO()

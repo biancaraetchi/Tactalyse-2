@@ -13,6 +13,28 @@ class LeaderboardBarPlot(BarPlot):
         self.__compare_name = param_map.get('compare_name')
         self.__compare_pos = param_map.get('compare_pos')
     
+    def draw_ticks_and_labels(self, ax, data, compared_player, ranking):
+        """
+        :return: modified Axes object.
+        """
+        new_labels = []
+        for string in data['Player']:
+            if (string != self.__player_name and not compared_player) or (string != self.__compare_name and compared_player):
+                new_string = string
+            else:
+                new_string = string + '\n(' + str(ranking) + '°)'
+            new_labels.append(new_string)
+
+        plt.yticks(range(len(data.iloc[:, 1])), new_labels)
+        plt.yticks(fontsize=9)
+        labels = ax.get_yticklabels()
+        labels[5].set_fontsize(11)
+        labels[5].set_weight('bold')
+        plt.xticks(fontsize=12)
+        ax.xaxis.get_label().set_size(14)
+        
+        return ax
+
     def draw_leaderboard(self, param_map, compared_player = False):
         """
         Function that draws a leaderboard bar graph showing the player's ranking for a given statistic,
@@ -47,35 +69,18 @@ class LeaderboardBarPlot(BarPlot):
         sns.barplot(x=stat, y='Player', data=data, linewidth=0.0001)
         plt.xlim([0, max(data[stat]) + 1]) 
         plt.tight_layout()
-        
-        new_labels = []
-        for string in data['Player']:
-            if (string != self.__player_name and not compared_player) or (string != self.__compare_name and compared_player):
-                new_string = string
-            else:
-                new_string = string + '\n(' + str(ranking) + '°)'
-            new_labels.append(new_string)
-        plt.yticks(range(len(data.iloc[:, 1])), new_labels)
 
         ax = plt.gca()
-        plt.yticks(fontsize=9)
-        labels = ax.get_yticklabels()
-        labels[5].set_fontsize(11)
-        labels[5].set_weight('bold')
-
-        plt.xticks(fontsize=12)
-        ax.xaxis.get_label().set_size(14)
-        plt.ylabel('Player', fontsize=0)
-
-        self.print_value_labels(ax, 8, 'h')
-        self.color_graph(ax, max_value, 'YlOrBr', 'h', [0.13,0.13])
+        ax = self.draw_ticks_and_labels(ax, data=data, compared_player=compared_player, ranking=ranking)
+        ax = self.print_value_labels(ax, 8, 'h')
+        ax = self.color_graph(ax, max_value, 'YlOrBr', 'h', [0.13,0.13], leaderboard=True)
 
         start = zoom_values[0] * min(data[stat])
         end = zoom_values[1] * max(data[stat])
         ax.set_xlim(start,end)
-
         for x in ax.get_xticks():
             ax.axvline(x=x, linestyle='--', color='gray', alpha=0.5, zorder=-1)
+
         buffer = io.BytesIO()
         plt.savefig(buffer, format='png')
         buffer.seek(0)
@@ -102,6 +107,7 @@ class LeaderboardBarPlot(BarPlot):
 
         # In case of a comparison with another player, draw leaderboards for their best stats too.
         if self.__compare_name != None:
+            print('COMPARING')
             best_stats_list = self.get_best_stats(param_map, self.__compare_name, stats)
             for stat in best_stats_list:
                 param_map['stats'] = stat
