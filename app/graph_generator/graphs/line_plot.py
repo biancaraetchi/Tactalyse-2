@@ -97,6 +97,12 @@ class LinePlot(Graph):
         sns.lineplot(x=dates_x_values, y=data, ax=ax, color=color, label=label, zorder=order, linewidth=1)
 
     def create_sub_plot_data(self, subcolumns, player_data, column_index):
+        """
+        Function creates sub line plots data based on the player data
+        :param subcolumns: indicate columns for the sub plot
+        :param player_data: data file which the sub plot will be based on
+        :param column_index: give index for the columns
+        """
         player_sub_data, second_column = None, None
         if len(subcolumns) > 1:
             second_column = subcolumns[1].strip()
@@ -105,6 +111,14 @@ class LinePlot(Graph):
 
     def plot_player(self, ax, player_x_values, player_stat_data, player, stat, color, player_sub_data=None,
                     sub_stat=None, sub_color=None):
+        """
+        Function creates players' line plots based on the player data
+        :param ax: current Axes object
+        :param player_x_values: indicate player's stat data's x values
+        :param player: name of the target player
+        :param stat: stat's of the target player
+        :param color: color of the line plots
+        """
         x_vals, y_vals = self.average_entries(player_x_values, player_stat_data)
         label = stat + " for " + player
         self.create_plot(ax, x_vals, y_vals, color, label, order=1)
@@ -114,6 +128,12 @@ class LinePlot(Graph):
             self.create_plot(ax, x_vals, y_vals, sub_color, label, order=1)
 
     def draw_years(self, ax, year_x_values, years):
+        """
+        Function draw years line in the plots
+        :param ax: current Axes object
+        :param year_x_values: indicate year's x values for drawing plot
+        :param years: years in the data
+        """
         plt.xlabel("Year")
         ax.set(xticks=year_x_values, xticklabels=years)
         no_label = False
@@ -126,6 +146,12 @@ class LinePlot(Graph):
         return ax
 
     def draw_tactalyse_dates(self, ax, data, start_date, end_date):
+        """
+        Function draw Tactalyse start and end date line in the plots
+        :param ax: current Axes object
+        :param start_date: indicate start date of the employee
+        :param end_date: indicate end date of the employee
+        """
         dates = pd.to_datetime(data["Date"], format='%Y-%m-%d')
         dates = dates.sort_values().reset_index(drop=True)
         start = pd.Timestamp(start_date)
@@ -144,6 +170,13 @@ class LinePlot(Graph):
         return ax
 
     def set_layout(self, ax, p1, p2, stat):
+        """
+        Function set layout of the plots
+        :param ax: current Axes object
+        :param p1: indicate player 1
+        :param p2: indicate player 2
+        :param stat: indicate stats of the player
+        """
         determinant = ', a '
         if self.__position[0].lower() in ['a', 'e', 'i', 'o', 'u']:
             determinant = ', an '
@@ -158,6 +191,11 @@ class LinePlot(Graph):
         return ax
 
     def draw(self, param_map):
+        """
+        Function draw the plot
+        :param param_map: include all parameters for drawing line plots. This includes 
+        "player_data, column_name, start_date, end_date, player, compare, compare_data"
+        """
         player_data = param_map.get('player_data')
         column_name = param_map.get('columns')
         start_date = param_map.get('start_date')
@@ -210,6 +248,11 @@ class LinePlot(Graph):
         return buffer.getvalue()
 
     def draw_all(self, param_map):
+        """
+        Function draw the all plots
+        :param param_map: include all parameters for drawing line plots. This includes 
+        "player_data, column_name, start_date, end_date, player, compare, compare_data"
+        """
         columns = param_map.get('columns')
         plots = []
         for column in columns:
