@@ -1,5 +1,5 @@
 import unittest
-from unittest.mock import patch, call
+from unittest.mock import patch, call, MagicMock
 import pandas as pd
 from io import StringIO
 from PIL import Image
@@ -36,7 +36,7 @@ class TestPDF(unittest.TestCase):
         self.assertEqual(player.get_player_name(), player_name)
         self.assertEqual(player.get_player_position(), main_pos)
 
-        # Assert that the player's football info is set using the mock DataFrame
+
 
     def test_set_compare_info(self):
         player_name = "A Masina"
@@ -61,7 +61,7 @@ class TestPDF(unittest.TestCase):
         self.assertEqual(compare.get_player_name(), player_name)
         self.assertEqual(compare.get_player_position(), main_pos)
 
-        # Assert that the compare player's football info is set using the mock DataFrame
+
 
     @patch('app.pdf_generator.pdf.FPDF.set_font')
     @patch('app.pdf_generator.pdf.FPDF.cell')
@@ -69,7 +69,7 @@ class TestPDF(unittest.TestCase):
     @patch('app.pdf_generator.pdf.FPDF.image')
     def test_header(self, mock_image, mock_ln, mock_cell, mock_set_font):
         self.pdf.add_page()  # Add a new page
-        
+
         self.pdf.header()
 
         # Assert that the expected functions are called
@@ -82,6 +82,26 @@ class TestPDF(unittest.TestCase):
         mock_set_font.assert_called_with(self.pdf._PDF__font, 'B', 15)
         mock_cell.assert_called_with(80)
         mock_ln.assert_called_with(20)
+        
+
+
+    @patch("app.pdf_generator.pdf.FPDF.set_y")
+    @patch("app.pdf_generator.pdf.FPDF.set_font")
+    @patch("app.pdf_generator.pdf.FPDF.cell")
+    def test_footer(self, mock_cell, mock_set_font, mock_set_y):
+        # Call the footer method
+        self.pdf.footer()
+
+        # Assert that the set_y method is called with the expected parameters
+        mock_set_y.assert_called_with(-15)
+
+        # Assert that the set_font method is called with the expected parameters
+        mock_set_font.assert_called_with(self.pdf._PDF__font, 'I', 8)
+    
+        # Assert that the cell method is called with the correct parameters
+        mock_cell.assert_called_with(0, 10, 'Page ' + str(self.pdf.page_no()) + '/{nb}', 0, 0, 'C')
+
+
 
 
 
