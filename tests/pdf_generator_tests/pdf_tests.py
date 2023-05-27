@@ -36,8 +36,6 @@ class TestPDF(unittest.TestCase):
         self.assertEqual(player.get_player_name(), player_name)
         self.assertEqual(player.get_player_position(), main_pos)
 
-
-
     def test_set_compare_info(self):
         player_name = "A Masina"
         league_df = pd.DataFrame({
@@ -61,8 +59,6 @@ class TestPDF(unittest.TestCase):
         self.assertEqual(compare.get_player_name(), player_name)
         self.assertEqual(compare.get_player_position(), main_pos)
 
-
-
     @patch('app.pdf_generator.pdf.FPDF.set_font')
     @patch('app.pdf_generator.pdf.FPDF.cell')
     @patch('app.pdf_generator.pdf.FPDF.ln')
@@ -83,8 +79,6 @@ class TestPDF(unittest.TestCase):
         mock_cell.assert_called_with(80)
         mock_ln.assert_called_with(20)
         
-
-
     @patch("app.pdf_generator.pdf.FPDF.set_y")
     @patch("app.pdf_generator.pdf.FPDF.set_font")
     @patch("app.pdf_generator.pdf.FPDF.cell")
@@ -176,6 +170,86 @@ class TestPDF(unittest.TestCase):
         self.pdf.set_font.assert_called_once_with('Arial', '', 22)
         self.pdf.cell.assert_called_once_with(0, 14, "Comparison Report for Son and Haaland", 0, 1, 'C', False)
         self.pdf.ln.assert_called_with(4)
+  
+    def test_print_player_info_label(self):
+        # Mocking the necessary methods
+        self.pdf.set_text_color = MagicMock()
+        self.pdf.set_xy = MagicMock()
+        self.pdf.cell = MagicMock()
+
+        # Test data
+        start_x_pos = 10
+        start_y_pos = 20
+        end_pos = 30
+        label = "Label"
+        y_offset = 40
+        value = "Value"
+
+        # Call the method
+        self.pdf.print_player_info_label(
+            start_x_pos, start_y_pos, end_pos, label, y_offset, value
+        )
+
+        # Assertions
+        self.pdf.set_text_color.assert_called_with(0, 0, 0)
+        self.pdf.set_xy.assert_called_with(start_x_pos + end_pos, start_y_pos + y_offset)
+        self.pdf.cell.assert_called_with(0, 20, value, ln=1)
+
+    def test_print_comparison_info_label(self):
+        # Mocking the necessary methods
+        self.pdf.set_font = MagicMock()
+        self.pdf.set_text_color = MagicMock()
+        self.pdf.set_xy = MagicMock()
+        self.pdf.cell = MagicMock()
+
+        # Test data
+        start_x_pos = 10
+        start_y_pos = 20
+        end_pos = 30
+        label = "Label"
+        y_offset = 40
+        value = "Value"
+
+        # Call the method
+        self.pdf.print_comparison_info_label(
+            start_x_pos, start_y_pos, end_pos, label, y_offset, value
+        )
+
+        # Assertions
+        self.pdf.set_font.assert_called_once_with('Arial', 'B', 12)
+        self.pdf.set_text_color.assert_called_with(0, 0, 0)
+        self.pdf.set_xy.assert_called_with(start_x_pos + end_pos, start_y_pos + y_offset)
+        self.pdf.cell.assert_called_with(0, 20, value, ln=1)
+
+    def test_print_player_info_col1(self):
+        pdf = PDF()
+        player = MagicMock()
+        player.get_player_position.return_value = 'Forward'
+        player.get_player_club.return_value = 'Real Madrid'
+        player.get_player_country.return_value = 'Spain'
+        player.get_player_league.return_value = 'La Liga'
+
+        pdf.print_player_info_label = MagicMock()
+
+        pdf.print_player_info_col1(player)
+
+        pdf.print_player_info_label.assert_any_call(35.0, 160.0, 30, 'POSITION: ', 0, 'Forward')
+        pdf.print_player_info_label.assert_any_call(35.0, 160.0, 30, 'CLUB: ', 10, 'Real Madrid')
+        pdf.print_player_info_label.assert_any_call(35.0, 160.0, 30, 'COUNTRY: ', 20, 'Spain')
+        pdf.print_player_info_label.assert_any_call(35.0, 160.0, 30, 'LEAGUE: ', 30, 'La Liga')
+
+    def test_print_comparison_info_col1(self):
+        pdf = PDF()
+        player = MagicMock()
+        player.get_player_position.return_value = 'Forward'
+        player.get_player_club.return_value = 'Real Madrid'
+        player.get_player_country.return_value = 'Spain'
+        player.get_player_league.return_value = 'La Liga'
+
+        compare = MagicMock()
+        compare.get_player_position.return_value = 'Midfielder'
+        compare.get_player_club.return_value = 'Barcelona'
+        compare.get_player_country.return_value = 'Spain'
 
     def test_set_plot_properties(self):
         # Test the set_plot_properties method
