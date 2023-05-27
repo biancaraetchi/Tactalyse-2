@@ -10,6 +10,9 @@ from .abstract_models import Graph
 
 
 class LinePlot(Graph):
+    """
+    Class that represents a line plot for standard/compare data reports with league and personal data
+    """
     __position = ''
     __tactalyse = "#EC4A24"
     __black = "#242424"
@@ -31,10 +34,19 @@ class LinePlot(Graph):
         if player_pos:
             self.__position = player_pos
 
+
     def dates_to_int(self, dates):
+        """
+        Function to change dates(in YYYY-MM-DD format) into int value
+        :param dates: data["Date"] in the personal data
+        """
         return (dates - dates.min()).dt.days
 
     def scaled_date_values(self, dates):
+        """
+        Function to calculate scaled x-values for the plots
+        :param dates: data["Date"] in the personal data
+        """
         # Calculate time differences in days
         time_diff = dates.diff().dt.days
         time_diff = time_diff.fillna(0)
@@ -45,6 +57,10 @@ class LinePlot(Graph):
 
 
     def get_xlabels(self, data):
+        """
+        Function to get x-labels for the plots
+        :param data: player personal data file
+        """
         dates = pd.to_datetime(data["Date"], format='%Y-%m-%d')
         dates = dates.sort_values().reset_index(drop=True)
         scaled_x_values = self.scaled_date_values(dates)
@@ -60,11 +76,24 @@ class LinePlot(Graph):
         return scaled_x_values, year_x_values, years
 
     def average_entries(self, x_vals, y_vals, window=5):
+        """
+        Function to get mean values of the x and y valuesf according to the target plots
+        :param x_vals: target data which will be placed in x axis in the plot
+        :param y_vals: target data which will be placed in y axis in the plot
+        :param window = 5: rolling function will be performed with 5 data
+        """
         avg_x = x_vals.rolling(window=window).mean()
         avg_y = y_vals.rolling(window=window).mean()
         return avg_x, avg_y
 
     def create_plot(self, ax, dates_x_values, data, color, label, order):
+        """
+        Function creates line plots based on the data
+        :param ax: current Axes object 
+        :param dates_x_values: calculated x values based on dates
+        :param data: player data for the plots
+        :param color: the color of the line
+        """
         sns.lineplot(x=dates_x_values, y=data, ax=ax, color=color, label=label, zorder=order, linewidth=1)
 
     def create_sub_plot_data(self, subcolumns, player_data, column_index):

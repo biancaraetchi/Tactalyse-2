@@ -14,8 +14,8 @@ def generate_pdf():
     player_name = "T. Cleverley"
     compare_name = "A. Masina"
     compare_file = "app/pdf_generator/resources/test_data/Player stats I. Sarr.xlsx"
-    #compare_name = None
-    #compare_file = None
+    # compare_name = None
+    # compare_file = None
     start_date = "2016-09-25"
     end_date = "2020-12-23"
     
