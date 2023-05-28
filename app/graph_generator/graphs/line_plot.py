@@ -1,7 +1,6 @@
 import io
 
 import matplotlib.pyplot as plt
-from matplotlib.offsetbox import AnnotationBbox, OffsetImage
 import numpy as np
 import pandas as pd
 import seaborn as sns
@@ -16,10 +15,11 @@ class LinePlot(Graph):
     __position = ''
     __tactalyse = "#EC4A24"
     __black = "#242424"
-    __player_color = '#EC4A24'
-    __player_sub_color = '#5e1d0e'
+    __season_color = "#00a70b"
+    __player_color = '#f45600'
+    __player_sub_color = '#f0a780'
     __compare_color = '#4a24ec'
-    __compare_sub_color = '#1d0e5e'
+    __compare_sub_color = '#bbafec'
     __title = "#D46508"
     __subtitle = "#5E5E5E"
     __bottom_offset = 0.1
@@ -57,23 +57,27 @@ class LinePlot(Graph):
 
 
     def get_xlabels(self, data):
-        """
-        Function to get x-labels for the plots
-        :param data: player personal data file
-        """
         dates = pd.to_datetime(data["Date"], format='%Y-%m-%d')
         dates = dates.sort_values().reset_index(drop=True)
         scaled_x_values = self.scaled_date_values(dates)
 
-        # Get the indices where the year changes
-        year_indices = np.where(dates.dt.year.diff() != 0)[0]
+        year = dates.dt.year
+        month = dates.dt.month
+
+        year_indices = []
+        for y in year.unique():
+            year_dates = dates[year == y]
+            first_of_july = year_dates[(month >= 7) & (year_dates.dt.day > 1)].index.min()
+            if pd.notnull(first_of_july):
+                year_indices.append(first_of_july)
         year_x_values = []
         for i in year_indices:
             year_x_values.append(scaled_x_values[i])
         date_strings = dates.iloc[year_indices].dt.strftime('%Y-%m-%d')
         years = date_strings.str.slice(start=2, stop=4)
+        seasons = [f"{n}/{int(n)+1}" for n in years]
 
-        return scaled_x_values, year_x_values, years
+        return scaled_x_values, year_x_values, seasons
 
     def average_entries(self, x_vals, y_vals, window=5):
         """
@@ -139,9 +143,9 @@ class LinePlot(Graph):
         no_label = False
         for year in year_x_values:
             if no_label:
-                ax.axvline(x=year, linestyle="dashed", color='#B5B3FF')
+                ax.axvline(x=year, linestyle="dashed", color=self.__season_color)
             else:
-                ax.axvline(x=year, linestyle="dashed", color='#B5B3FF', label="Year")
+                ax.axvline(x=year, linestyle="dashed", color=self.__season_color, label="Season")
                 no_label = True
         return ax
 
@@ -169,7 +173,7 @@ class LinePlot(Graph):
                 ax.axvline(x=end_x, linestyle="-", color=self.__black)
         return ax
 
-    def set_layout(self, ax, p1, p2, stat):
+    def set_layout(self, ax, p2, stat):
         """
         Function set layout of the plots
         :param ax: current Axes object
@@ -177,14 +181,10 @@ class LinePlot(Graph):
         :param p2: indicate player 2
         :param stat: indicate stats of the player
         """
-        determinant = ', a '
-        if self.__position[0].lower() in ['a', 'e', 'i', 'o', 'u']:
-            determinant = ', an '
-        title = 'Line plot for ' + p1 + determinant + self.__position
+        title = "Stat: " + stat
         subtitle = ""
         if p2 is not None:
             subtitle += "Compared with " + p2 + "\n"
-        subtitle += "Stat: " + stat
         plt.suptitle(subtitle, fontsize=12, y=self.__subtitle_offset, color=self.__subtitle)
         ax.set_title(title, fontsize=15, fontweight=0, color=self.__title, weight="bold", y=self.__title_offset)
 
@@ -207,7 +207,6 @@ class LinePlot(Graph):
         fig, ax = plt.subplots(figsize=(8, 6), gridspec_kw={'top': self.__top_offset, 'bottom': self.__bottom_offset,
                                                             'left': self.__left_offset, 'right': self.__right_offset})
         ax.clear()
-        fig.set_facecolor('#EDEDED')
 
         player_x_values, year_x_values, years = self.get_xlabels(player_data)
         subcolumns = column_name.split("/")
@@ -237,7 +236,7 @@ class LinePlot(Graph):
         if start_date:
             ax = self.draw_tactalyse_dates(ax, player_data, start_date, end_date)
 
-        ax = self.set_layout(ax, player, compare, column_name)
+        ax = self.set_layout(ax, compare, column_name)
 
         plt.legend(bbox_to_anchor=(0.5, 1), loc='upper center', fontsize="small")
 
