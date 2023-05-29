@@ -22,6 +22,8 @@ class LinePlot(Graph):
     __compare_sub_color = '#bbafec'
     __title = "#D46508"
     __subtitle = "#5E5E5E"
+    __fig_w = 8
+    __fig_h = 7.75
     __bottom_offset = 0.1
     __top_offset = 0.85
     __right_offset = 0.9
@@ -138,7 +140,7 @@ class LinePlot(Graph):
         :param year_x_values: indicate year's x values for drawing plot
         :param years: years in the data
         """
-        plt.xlabel("Year")
+        plt.xlabel("Season", fontsize=14)
         ax.set(xticks=year_x_values, xticklabels=years)
         no_label = False
         for year in year_x_values:
@@ -181,12 +183,13 @@ class LinePlot(Graph):
         :param p2: indicate player 2
         :param stat: indicate stats of the player
         """
+        plt.ylabel(stat, fontsize=14)
         title = "Stat: " + stat
         subtitle = ""
         if p2 is not None:
             subtitle += "Compared with " + p2 + "\n"
-        plt.suptitle(subtitle, fontsize=12, y=self.__subtitle_offset, color=self.__subtitle)
-        ax.set_title(title, fontsize=15, fontweight=0, color=self.__title, weight="bold", y=self.__title_offset)
+        plt.suptitle(subtitle, fontsize=15, y=self.__subtitle_offset, color=self.__subtitle)
+        ax.set_title(title, fontsize=18, fontweight=0, color=self.__title, weight="bold", y=self.__title_offset)
 
         return ax
 
@@ -204,8 +207,10 @@ class LinePlot(Graph):
         compare = param_map.get('compare')
         compare_data = param_map.get('compare_data')
 
-        fig, ax = plt.subplots(figsize=(8, 6), gridspec_kw={'top': self.__top_offset, 'bottom': self.__bottom_offset,
-                                                            'left': self.__left_offset, 'right': self.__right_offset})
+        fig, ax = plt.subplots(figsize=(self.__fig_w, self.__fig_h), gridspec_kw={'top': self.__top_offset,
+                                                                                  'bottom': self.__bottom_offset,
+                                                                                  'left': self.__left_offset,
+                                                                                  'right': self.__right_offset})
         ax.clear()
 
         player_x_values, year_x_values, years = self.get_xlabels(player_data)
@@ -238,7 +243,7 @@ class LinePlot(Graph):
 
         ax = self.set_layout(ax, compare, column_name)
 
-        plt.legend(bbox_to_anchor=(0.5, 1), loc='upper center', fontsize="small")
+        plt.legend(bbox_to_anchor=(0.5, 1), loc='upper center', fontsize="medium")
 
         buffer = io.BytesIO()
         plt.savefig(buffer, format='png')

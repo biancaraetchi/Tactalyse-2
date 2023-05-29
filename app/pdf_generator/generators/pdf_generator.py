@@ -32,6 +32,7 @@ class PDFGenerator(ABC):
         for plot in line_plots:
             self._pdf.print_plot(plot)
         self._pdf.current_y = 70
+        self._pdf.current_x = 10
 
         self._pdf.print_chapter('Bar Plots',
                                 'These plots showcase player statistics compared to those of players in the same position within the league.')
@@ -42,6 +43,7 @@ class PDFGenerator(ABC):
                 for plt in plot:
                     self._pdf.print_plot(plt)
         self._pdf.current_y = 70
+        self._pdf.current_x = 10
 
     @abstractmethod
     def print_player_info(self):

@@ -23,8 +23,9 @@ class PDF(FPDF):
         self.__compare = Player()
         self.__font = 'Arial'
         self.__current_y = 70
-        self.__img_w = 145
-        self.__img_h = 100
+        self.__current_x = 10
+        self.__img_w = 50
+        self.__img_h = 35
 
     def set_info(self, player_name, league_df, main_pos):
         """
@@ -232,16 +233,17 @@ class PDF(FPDF):
         """
         img = Image.open(io.BytesIO(plot))
 
-        if self.__current_y + self.__img_h > self.h:
-            self.add_page()
-            self.__current_y = 40
+        # Print the image at the current x,y position
+        self.image(img, self.__current_x, self.__current_y, 90, 80)
+        self.__current_x += 100
 
-        # Print the image at the current y position
-        x = (self.w - self.__img_w) / 2.0
-        self.image(img, x, self.__current_y, self.__img_w, self.__img_h)
-
-        # Update the current y position to be below the current image
-        self.__current_y += self.__img_h + 10
+        if self.__current_x + 100 > self.w:
+            self.__current_x = 10
+            self.__current_y += 110
+            if self.__current_y + 110 > self.h:
+                self.add_page()
+                self.__current_x = 10
+                self.__current_y = 55
 
     def set_plot_properties(self, width, height):
         """
@@ -277,3 +279,11 @@ class PDF(FPDF):
     @current_y.setter
     def current_y(self, value):
         self.__current_y = value
+
+    @property
+    def current_x(self):
+        return self.__current_x
+
+    @current_x.setter
+    def current_x(self, value):
+        self.__current_x = value
