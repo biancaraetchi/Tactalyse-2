@@ -125,13 +125,13 @@ class PDF(FPDF):
         Function that sets the main title of the pdf using the player's name 
         """
         self.set_font(self.__font, '', 22)
-        self.ln(8)
+        self.ln(22)
         self.cell(0, 14, "Stats Report for " + self.__player.get_player_name(), 0, 1, 'C', False)
         self.ln(4)
 
     def print_comparison_title(self):
         self.set_font(self.__font, '', 22)
-        self.ln(8)
+        self.ln(18)
         self.cell(0, 14, "Comparison Report for " + self.__player.get_player_name() + " and " + self.__compare.get_player_name(), 0, 1, 'C', False)
         self.ln(4)
 
@@ -178,8 +178,8 @@ class PDF(FPDF):
         The absolute position and the offset values for the labels within the A4 sheet of the pdf 
         are defined respectively by start_x_pos, start_y_pos and end_pos.
         """
-        start_x_pos = 35.0
-        start_y_pos = 160.0
+        start_x_pos = 52.0
+        start_y_pos = 210.0
         end_pos = 30
 
         self.print_player_info_label(start_x_pos, start_y_pos, end_pos, 'POSITION: ', 0, player.get_player_position())
@@ -198,12 +198,12 @@ class PDF(FPDF):
         are defined respectively by start_x2_pos, start_y2_pos and end_pos.
         """
         start_x_pos = 80.0
-        start_y_pos = 70.0
+        start_y_pos = 100.0
         end_pos = 30
 
         self.set_xy(start_x_pos, start_y_pos - 5)
         self.cell(0, 14, "" + self.__player.get_player_name(), 0, 1)
-        self.set_xy(start_x_pos, start_y_pos + 105)
+        self.set_xy(start_x_pos, start_y_pos + 75)
         self.cell(0, 14, "" + self.__compare.get_player_name(), 0, 1)
 
         ## Main player's information section
@@ -218,13 +218,13 @@ class PDF(FPDF):
 
         ## Compare player's information section
 
-        self.print_comparison_info_label(start_x_pos, start_y_pos, end_pos, 'POSITION: ', 110, compare.get_player_position())
+        self.print_comparison_info_label(start_x_pos, start_y_pos, end_pos, 'POSITION: ', 80, compare.get_player_position())
 
-        self.print_comparison_info_label(start_x_pos, start_y_pos, end_pos, 'CLUB: ', 120, compare.get_player_club())
+        self.print_comparison_info_label(start_x_pos, start_y_pos, end_pos, 'CLUB: ', 90, compare.get_player_club())
 
-        self.print_comparison_info_label(start_x_pos, start_y_pos, end_pos, 'COUNTRY: ',130, compare.get_player_country())
+        self.print_comparison_info_label(start_x_pos, start_y_pos, end_pos, 'COUNTRY: ', 100, compare.get_player_country())
 
-        self.print_comparison_info_label(start_x_pos, start_y_pos, end_pos, 'LEAGUE: ', 140, compare.get_player_league())
+        self.print_comparison_info_label(start_x_pos, start_y_pos, end_pos, 'LEAGUE: ', 110, compare.get_player_league())
 
 
     def print_plot(self, plot):
