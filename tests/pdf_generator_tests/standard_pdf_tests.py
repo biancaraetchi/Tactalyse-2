@@ -16,7 +16,7 @@ class StandardPDFTests(unittest.TestCase):
 
         # Add assertions to verify the expected behavior two images for the players
         self.assertTrue(self.standard_pdf._pdf.image.called_with(
-            'app/pdf_generator/resources/images/placeholder_player_photo.jpg', 10, 70, 60, 60
+            'app/pdf_generator/resources/images/Default.png', 55, 85, 100, 100
         ))
 
         # assert that the expected method was called with the correct arguments

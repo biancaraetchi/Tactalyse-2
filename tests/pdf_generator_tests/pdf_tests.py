@@ -233,10 +233,10 @@ class TestPDF(unittest.TestCase):
 
         pdf.print_player_info_col1(player)
 
-        pdf.print_player_info_label.assert_any_call(35.0, 160.0, 30, 'POSITION: ', 0, 'Forward')
-        pdf.print_player_info_label.assert_any_call(35.0, 160.0, 30, 'CLUB: ', 10, 'Real Madrid')
-        pdf.print_player_info_label.assert_any_call(35.0, 160.0, 30, 'COUNTRY: ', 20, 'Spain')
-        pdf.print_player_info_label.assert_any_call(35.0, 160.0, 30, 'LEAGUE: ', 30, 'La Liga')
+        pdf.print_player_info_label.assert_any_call(52.0, 210.0, 30, 'POSITION: ', 0, 'Forward')
+        pdf.print_player_info_label.assert_any_call(52.0, 210.0, 30, 'CLUB: ', 10, 'Real Madrid')
+        pdf.print_player_info_label.assert_any_call(52.0, 210.0, 30, 'COUNTRY: ', 20, 'Spain')
+        pdf.print_player_info_label.assert_any_call(52.0, 210.0, 30, 'LEAGUE: ', 30, 'La Liga')
 
     def test_print_comparison_info_col1(self):
         pdf = PDF()

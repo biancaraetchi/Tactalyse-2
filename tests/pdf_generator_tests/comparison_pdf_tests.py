@@ -16,10 +16,10 @@ class ComparisonPDFTests(unittest.TestCase):
 
         # Add assertions to verify the expected behavior two images for the players
         self.assertTrue(self.comparison_pdf._pdf.image.called_with(
-            'app/pdf_generator/resources/images/placeholder_player_photo.jpg', 10, 70, 60, 60
+            'app/pdf_generator/resources/images/Default.png', 10, 90, 60, 60
         ))
         self.assertTrue(self.comparison_pdf._pdf.image.called_with(
-            'app/pdf_generator/resources/images/Foto william Troost-Ekong.jpeg', 10, 180, 60, 60
+            'app/pdf_generator/resources/images/Default.png', 10, 170, 60, 60
         ))
 
         # assert that the expected method was called with the correct arguments
