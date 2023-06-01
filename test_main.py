@@ -24,7 +24,7 @@ def generate_pdf():
     bar_map = get_bar_data(league_file, player_name, compare_name)
 
     # Pass the maps to get lists containing plots in byte form from the graph_generator module
-    radar_chart = create_radar_chart(radar_map)
+    #radar_chart = create_radar_chart(radar_map)
     line_plots = create_line_plots(line_map)
     bar_plot_set = create_bar_plot_set(bar_map)
     #bar_plot_set = create_bar_plots(bar_map, 'v')

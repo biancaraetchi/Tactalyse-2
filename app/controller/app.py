@@ -45,6 +45,8 @@ def json_process(payload):
     compare_name = request.json.get('compare-name')
     start_date = request.json.get('start-date')
     end_date = request.json.get('end-date')
+    player_image = request.json.get('player-image')
+    player_cmp_image = request.json.get('player-cmp-image')
 
     if not league_file:
         return Response("Error: league-file was not sent.", 400, mimetype='application/json')
@@ -53,7 +55,7 @@ def json_process(payload):
     elif not player_name:
         return Response("Error: player-name was not specified.", 400, mimetype='application/json')
 
-    return pass_data(league_file, player_file, player_name, start_date, end_date, compare_file, compare_name)
+    return pass_data(league_file, player_file, player_name, start_date, end_date, compare_file, compare_name, player_image, player_cmp_image)
 
 
 def key_value_process(files, form):
@@ -78,11 +80,13 @@ def key_value_process(files, form):
     compare_name = form.get('compare-name')
     start_date = form.get('start-date')
     end_date = form.get('end-date')
+    player_image = form.get('player-image')
+    player_cmp_image = form.get('player-cmp-image')
 
-    return pass_data(league_file, player_file, player_name, start_date, end_date, compare_file, compare_name)
+    return pass_data(league_file, player_file, player_name, start_date, end_date, compare_file, compare_name, player_image, player_cmp_image)
 
 
-def pass_data(league_file, player_file, player_name, start_date, end_date, compare_file, compare_name):
+def pass_data(league_file, player_file, player_name, start_date, end_date, compare_file, compare_name, player_image, player_cmp_image):
     """
     Function that passes the received data to the appropriate services, and generates a PDF.
 
@@ -108,7 +112,7 @@ def pass_data(league_file, player_file, player_name, start_date, end_date, compa
 
     # Get a parameter map with relevant data for generating a PDF from the data module, and pass it to the pdf_generator
     # module along with the graphs
-    pdf_map = get_pdf_data(league_file, player_name, compare_name, line_plots, bar_plot_set)
+    pdf_map = get_pdf_data(league_file, player_name, compare_name, line_plots, bar_plot_set, player_image, player_cmp_image)
     pdf_bytes = create_pdf(pdf_map)
 
     response = make_response(bytes(pdf_bytes))

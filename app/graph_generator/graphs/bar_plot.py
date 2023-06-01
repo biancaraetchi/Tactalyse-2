@@ -157,7 +157,7 @@ class BarPlot(BarPlotBase):
         :return: a bar plot in byte form to be displayed onto a pdf.
         """
         matplotlib.use('agg')
-        color_palette = 'coolwarm'
+        color_palette = 'Oranges'
         comparing = (self.__compare_name != None)
         data = param_map.get('league_data')
         stat = param_map.get('stats')

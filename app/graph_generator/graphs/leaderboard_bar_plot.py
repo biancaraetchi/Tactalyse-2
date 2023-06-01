@@ -22,7 +22,7 @@ class LeaderboardBarPlot(BarPlot):
             if (string != self.__player_name and not compared_player) or (string != self.__compare_name and compared_player):
                 new_string = string
             else:
-                new_string = string + '\n(' + str(ranking) + '°)'
+                new_string = string + '\n(' + str(ranking) + 'th)'
             new_labels.append(new_string)
 
         plt.yticks(range(len(data.iloc[:, 1])), new_labels)
@@ -48,6 +48,7 @@ class LeaderboardBarPlot(BarPlot):
         :param param_map: a dictionary containing information about the player(s) and their league.
         :return: a leaderboard bar plot in byte form.
         """
+        color_palette = 'Oranges'
         zoom_values = [5/6, 6/5]
 
         stat = param_map.get('stats')
@@ -73,7 +74,7 @@ class LeaderboardBarPlot(BarPlot):
         ax = plt.gca()
         ax = self.draw_ticks_and_labels(ax, data=data, compared_player=compared_player, ranking=ranking)
         ax = self.print_value_labels(ax, 8, 'h')
-        ax = self.color_graph(ax, max_value, 'YlOrBr', 'h', [0.13,0.13], leaderboard=True)
+        ax = self.color_graph(ax, max_value, color_palette, 'h', [0.13,0.13], leaderboard=True)
 
         start = zoom_values[0] * min(data[stat])
         end = zoom_values[1] * max(data[stat])
