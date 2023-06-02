@@ -33,6 +33,5 @@ class TestLinePlot(unittest.TestCase):
             expected = 'plot'
             self.assertEqual(expected, result)
 
-
 if __name__ == "__main__":
     unittest.main()
