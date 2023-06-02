@@ -46,23 +46,32 @@ class LeaderboardBarPlotTests(unittest.TestCase):
 
 
     def test_draw_all_with_comparison(self):
+        num_of_graphs = 6
         param_map=self.set_up()
         param_map['stats'] = ['Stat1', 'Stat3', 'Stat5', 'Stat9', 'Stat10']
         result = self.obj.draw_all(param_map)
-        self.assertEqual(len(result), 6)
+        self.assertEqual(len(result), num_of_graphs)
         for x in result:
             self.assertNotEqual(x, None, 'no graph')
             self.assertNotEqual(pickle.dumps(x), pickle.dumps(None), 'empty graph')
 
 
     def test_draw_all_without_comparison(self):
+        num_of_graphs = 3
         param_map=self.set_up(False)
         param_map['stats'] = ['Stat1', 'Stat3', 'Stat5', 'Stat9', 'Stat10']
         result = self.obj.draw_all(param_map)
-        self.assertEqual(len(result), 3)
+        self.assertEqual(len(result), num_of_graphs)
         for x in result:
             self.assertNotEqual(x, None, 'no graph')
             self.assertNotEqual(pickle.dumps(x), pickle.dumps(None), 'empty graph')
+
+    def test_image_format(self):
+        param_map=self.set_up()
+        param_map['stats'] = ['Stat1', 'Stat3', 'Stat5', 'Stat9', 'Stat10']
+        graph_list = self.obj.draw_all(param_map)
+        for bytes in graph_list:
+            self.assertTrue(bytes.startswith(b'\x89PNG'), 'Wrong graph format. Expected PNG.')
 
 
 if __name__ == '__main__':

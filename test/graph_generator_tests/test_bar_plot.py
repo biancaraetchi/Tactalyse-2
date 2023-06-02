@@ -36,88 +36,153 @@ class BarPlotTests(unittest.TestCase):
         self.obj = BarPlot(param_map)
         return param_map
 
-    def test_print_value_labels(self):
+    def test_print_value_labels_vertical(self):
         self.set_up()
         ax = plt.gca()
         font_size = 8
-        for orientation in ['v','h']:
-            player_data = {' ': ['John Doe'], 'Stat2': [5]}
-            df=pd.DataFrame(player_data)
-            if(orientation=='v'):
-                sns.barplot(x=" ", y='Stat2', data=df, orient=orientation)
-            else:
-                sns.barplot(x='Stat2', y=' ', data=df, orient=orientation)
+        player_data = {' ': ['John Doe'], 'Stat2': [5]}
+        df=pd.DataFrame(player_data)
+        
+        sns.barplot(x=" ", y='Stat2', data=df, orient='v')
 
-            byte1=pickle.dumps(ax)
-            ax = self.obj.print_value_labels(ax, font_size, orientation)
-            byte2=pickle.dumps(ax)
+        byte1=pickle.dumps(ax)
+        ax = self.obj.print_value_labels(ax, font_size, 'v')
+        byte2=pickle.dumps(ax)
 
-            self.assertNotEqual(byte1,byte2,'no changes')
+        self.assertNotEqual(byte1,byte2,'no changes')
 
-    def test_color_graph(self):
+    def test_print_value_labels_horizontal(self):
         self.set_up()
         ax = plt.gca()
-        for orientation in ['v', 'h']:
-            player_data = {'Player': ['John Doe'], 'Stat2': [5]}
-            df=pd.DataFrame(player_data)
-            if(orientation=='v'):
-                sns.barplot(x="Player", y='Stat2', data=df, orient=orientation)
-            else:
-                sns.barplot(x='Stat2', y='Player', data=df, orient=orientation)
-
-            byte1=pickle.dumps(ax)
-            ax = self.obj.color_graph(ax, random.randint(0,50), 'Oranges', orientation, [random.random(),random.random()])
-            byte2=pickle.dumps(ax)
-            self.assertNotEqual(byte1,byte2,'no changes')
-
-            byte1=pickle.dumps(ax)
-            ax = self.obj.color_graph(ax, random.randint(0,50), 'Oranges', orientation, [random.random(),random.random()], False)
-            byte2=pickle.dumps(ax)
-            self.assertNotEqual(byte1,byte2,'no changes')
-
-            byte1=pickle.dumps(ax)
-            ax = self.obj.color_graph(ax, random.randint(0,50), 'Oranges', orientation, [random.random(),random.random()], True)
-            byte2=pickle.dumps(ax)
-            self.assertNotEqual(byte1,byte2,'no changes')
-
-            byte1=pickle.dumps(ax)
-            ax = self.obj.color_graph(ax, random.randint(0,50), 'Oranges', orientation, [random.random(),random.random()], True, True)
-            byte2=pickle.dumps(ax)
-            self.assertNotEqual(byte1,byte2,'no changes')
-
-            byte1=pickle.dumps(ax)
-            ax = self.obj.color_graph(ax, random.randint(0,50), 'Oranges', orientation, [random.random(),random.random()], True, False)
-            byte2=pickle.dumps(ax)
-            self.assertNotEqual(byte1,byte2,'no changes')
+        font_size = 8
+        player_data = {' ': ['John Doe'], 'Stat2': [5]}
+        df=pd.DataFrame(player_data)
         
-    def test_draw_ticks_and_labels(self):
+        sns.barplot(x='Stat2', y=' ', data=df, orient='h')
+
+        byte1=pickle.dumps(ax)
+        ax = self.obj.print_value_labels(ax, font_size, 'h')
+        byte2=pickle.dumps(ax)
+
+        self.assertNotEqual(byte1,byte2,'no changes')
+
+    def test_color_graph_vertical(self):
         self.set_up()
-        for orientation in ['v', 'h']:
-            player_data = {'Player': ['John Doe'], 'Stat2': [5]}
-            df=pd.DataFrame(player_data)
-            if(orientation=='v'):
-                sns.barplot(x="Player", y='Stat2', data=df, orient=orientation)
-            else:
-                sns.barplot(x='Stat2', y='Player', data=df, orient=orientation)
-                
-            ax = plt.gca()
-            byte1=pickle.dumps(ax)
-            ax = self.obj.draw_ticks_and_labels(ax, 'Stat2', random.randint(0,50), False)
-            byte2=pickle.dumps(ax)
-            self.assertNotEqual(byte1,byte2,'no changes')
+        ax = plt.gca()
+        player_data = {'Player': ['John Doe'], 'Stat2': [5]}
+        df=pd.DataFrame(player_data)
+        
+        sns.barplot(x="Player", y='Stat2', data=df, orient='v')
+
+        byte1=pickle.dumps(ax)
+        ax = self.obj.color_graph(ax, random.randint(0,50), 'Oranges', 'v', [random.random(),random.random()])
+        byte2=pickle.dumps(ax)
+        self.assertNotEqual(byte1,byte2,'no changes')
+
+        byte1=pickle.dumps(ax)
+        ax = self.obj.color_graph(ax, random.randint(0,50), 'Oranges', 'v', [random.random(),random.random()], False)
+        byte2=pickle.dumps(ax)
+        self.assertNotEqual(byte1,byte2,'no changes')
+
+        byte1=pickle.dumps(ax)
+        ax = self.obj.color_graph(ax, random.randint(0,50), 'Oranges', 'v', [random.random(),random.random()], True)
+        byte2=pickle.dumps(ax)
+        self.assertNotEqual(byte1,byte2,'no changes')
+
+        byte1=pickle.dumps(ax)
+        ax = self.obj.color_graph(ax, random.randint(0,50), 'Oranges', 'v', [random.random(),random.random()], True, True)
+        byte2=pickle.dumps(ax)
+        self.assertNotEqual(byte1,byte2,'no changes')
+
+        byte1=pickle.dumps(ax)
+        ax = self.obj.color_graph(ax, random.randint(0,50), 'Oranges', 'v', [random.random(),random.random()], True, False)
+        byte2=pickle.dumps(ax)
+        self.assertNotEqual(byte1,byte2,'no changes')
+        
+    def test_color_graph_horizontal(self):
+        self.set_up()
+        ax = plt.gca()
+        player_data = {'Player': ['John Doe'], 'Stat2': [5]}
+        df=pd.DataFrame(player_data)
+        
+        sns.barplot(x='Stat2', y='Player', data=df, orient='h')
+
+        byte1=pickle.dumps(ax)
+        ax = self.obj.color_graph(ax, random.randint(0,50), 'Oranges', 'h', [random.random(),random.random()])
+        byte2=pickle.dumps(ax)
+        self.assertNotEqual(byte1,byte2,'no changes')
+
+        byte1=pickle.dumps(ax)
+        ax = self.obj.color_graph(ax, random.randint(0,50), 'Oranges', 'h', [random.random(),random.random()], False)
+        byte2=pickle.dumps(ax)
+        self.assertNotEqual(byte1,byte2,'no changes')
+
+        byte1=pickle.dumps(ax)
+        ax = self.obj.color_graph(ax, random.randint(0,50), 'Oranges', 'h', [random.random(),random.random()], True)
+        byte2=pickle.dumps(ax)
+        self.assertNotEqual(byte1,byte2,'no changes')
+
+        byte1=pickle.dumps(ax)
+        ax = self.obj.color_graph(ax, random.randint(0,50), 'Oranges', 'h', [random.random(),random.random()], True, True)
+        byte2=pickle.dumps(ax)
+        self.assertNotEqual(byte1,byte2,'no changes')
+
+        byte1=pickle.dumps(ax)
+        ax = self.obj.color_graph(ax, random.randint(0,50), 'Oranges', 'h', [random.random(),random.random()], True, False)
+        byte2=pickle.dumps(ax)
+        self.assertNotEqual(byte1,byte2,'no changes')
+
+    def test_draw_ticks_and_labels_vertical(self):
+        self.set_up()
+        player_data = {'Player': ['John Doe'], 'Stat2': [5]}
+        df=pd.DataFrame(player_data)
+
+        sns.barplot(x="Player", y='Stat2', data=df, orient='v')
             
-            ax = plt.gca()
-            byte1=pickle.dumps(ax)
-            ax = self.obj.draw_ticks_and_labels(ax, 'Stat2', random.randint(0,50), True)
-            byte2=pickle.dumps(ax)
-            self.assertNotEqual(byte1,byte2,'no changes')
+        ax = plt.gca()
+        byte1=pickle.dumps(ax)
+        ax = self.obj.draw_ticks_and_labels(ax, 'Stat2', random.randint(0,50), False)
+        byte2=pickle.dumps(ax)
+        self.assertNotEqual(byte1,byte2,'no changes')
+        
+        ax = plt.gca()
+        byte1=pickle.dumps(ax)
+        ax = self.obj.draw_ticks_and_labels(ax, 'Stat2', random.randint(0,50), True)
+        byte2=pickle.dumps(ax)
+        self.assertNotEqual(byte1,byte2,'no changes')
             
+    def test_draw_ticks_and_labels_horizontal(self):
+        self.set_up()
+        player_data = {'Player': ['John Doe'], 'Stat2': [5]}
+        df=pd.DataFrame(player_data)
+
+        sns.barplot(x='Stat2', y='Player', data=df, orient='h')
+            
+        ax = plt.gca()
+        byte1=pickle.dumps(ax)
+        ax = self.obj.draw_ticks_and_labels(ax, 'Stat2', random.randint(0,50), False)
+        byte2=pickle.dumps(ax)
+        self.assertNotEqual(byte1,byte2,'no changes')
+        
+        ax = plt.gca()
+        byte1=pickle.dumps(ax)
+        ax = self.obj.draw_ticks_and_labels(ax, 'Stat2', random.randint(0,50), True)
+        byte2=pickle.dumps(ax)
+        self.assertNotEqual(byte1,byte2,'no changes')
+
     def test_draw(self):
         param_map=self.set_up()
         param_map['stats'] = 'Stat2'
-        byte = None
-        byte = self.obj.draw(param_map)
-        self.assertNotEqual(byte,None,'no changes')
+        bytes = None
+        bytes = self.obj.draw(param_map)
+        self.assertNotEqual(bytes,None,'no changes')
+
+    def test_image_format(self):
+        param_map=self.set_up()
+        param_map['stats'] = 'Stat2'
+        bytes = None
+        bytes = self.obj.draw(param_map)
+        self.assertTrue(bytes.startswith(b'\x89PNG'), 'Wrong graph format. Expected PNG.')
 
     def test_draw_all(self):
         param_map=self.set_up()

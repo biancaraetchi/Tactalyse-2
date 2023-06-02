@@ -81,6 +81,12 @@ class ClusteredBarPlotTests(unittest.TestCase):
         result = self.obj.draw(param_map)
         self.assertNotEqual(pickle.dumps(result), pickle.dumps(None), 'empty graph')
 
+    def test_image_format(self):
+        param_map=self.set_up()
+        param_map['stats'] = ['Goals per 90', 'Defensive duels per 90', 'Crosses per 90', 'Interceptions per 90', 'Assists per 90']
+        bytes = self.obj.draw(param_map)
+        self.assertTrue(bytes.startswith(b'\x89PNG'), 'Wrong graph format. Expected PNG.')
+
 
 if __name__ == '__main__':
     unittest.main()
