@@ -9,7 +9,7 @@ class StandardPDF(PDFGenerator):
         """
         Function that prints player's image and basic information in the first page
         """
-        if player_image!=None:
+        if player_image is not None:
             self._pdf.image(player_image, 55, 85, 100, 100)
         else:
             self._pdf.image('app/pdf_generator/resources/images/Default.png', 55, 85, 100, 100)
@@ -28,7 +28,7 @@ class StandardPDF(PDFGenerator):
         main_pos = param_map["main_pos"]
         line_plots = param_map["line_plots"]
         bar_plots = param_map["bar_plots"]
-        player_image = param_map["player_image"]
+        player_image = param_map.get("player_image")
 
         self._pdf.set_info(player_name, league_df, main_pos)
         self.set_standard_properties(player_name)

@@ -7,12 +7,12 @@ class ComparisonPDF(PDFGenerator):
         """
         Function that prints player's and compare player's image and basic information in the first page
         """
-        if player_image != None:
+        if player_image is not None:
             self._pdf.image(player_image, 10, 90, 60, 60)
         else:
             self._pdf.image('app/pdf_generator/resources/images/Default.png', 10, 90, 60, 60)
 
-        if player_cmp_image != None:
+        if player_cmp_image is not None:
             self._pdf.image(player_cmp_image, 10, 90, 60, 60)
         else:
             self._pdf.image('app/pdf_generator/resources/images/Default.png', 10, 170, 60, 60)
@@ -34,8 +34,8 @@ class ComparisonPDF(PDFGenerator):
         compare_pos = param_map["compare_pos"]
         line_plots = param_map["line_plots"]
         bar_plots = param_map["bar_plots"]
-        player_image = param_map["player_image"]
-        player_cmp_image = param_map["player_cmp_image"]
+        player_image = param_map.get("player_image")
+        player_cmp_image = param_map.get("player_cmp_image")
 
         self._pdf.set_info(player_name, league_df, main_pos)
         self._pdf.set_compare_info(compare_name, league_df, compare_pos)
