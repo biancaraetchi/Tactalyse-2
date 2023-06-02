@@ -169,7 +169,7 @@ class LinePlot(Graph):
         if p2 is not None:
             subtitle += "Compared with " + p2 + "\n"
         plt.suptitle(subtitle, fontsize=15, y=self.__subtitle_offset, color=self.__subtitle)
-        ax.set_title(title, fontsize=18, fontweight=0, color=self.__title, weight="bold", y=self.__title_offset)
+        ax.set_title(title, fontsize=18, fontweight=0, color=self.__tactalyse, weight="bold", y=self.__title_offset)
 
         return ax
 
