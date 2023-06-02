@@ -3,6 +3,11 @@ from app.pdf_generator.generators.standard_pdf import StandardPDF
 
 
 class PDFService:
+
+    def __init__(self):
+        self.__standard_generator = StandardPDF()
+        self.__comparison_generator = ComparisonPDF()
+
     def create_pdf(self, param_map):
         """
         Function that retrieves a generated football analysis report for further use.
@@ -15,12 +20,16 @@ class PDFService:
         else:
             return self.create_comparison_pdf(param_map)
 
-
     def create_standard_pdf(self, param_map):
-        generator = StandardPDF()
-        return generator.generate_pdf(param_map)
-
+        return self.__standard_generator.generate_pdf(param_map)
 
     def create_comparison_pdf(self, param_map):
-        generator = ComparisonPDF()
-        return generator.generate_pdf(param_map)
+        return self.__comparison_generator.generate_pdf(param_map)
+
+    @property
+    def standard_generator(self):
+        return self.__standard_generator
+
+    @property
+    def comparison_generator(self):
+        return self.__comparison_generator
