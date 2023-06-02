@@ -1,9 +1,8 @@
 from flask import Flask, request, Response, make_response
 
-from app.controller.data_service import get_bar_data, get_line_data, get_pdf_data
-from app.controller.data_service import both_in_league
-from .graph_service import create_bar_plots, create_line_plots
-from .pdf_service import create_pdf
+from app.controller.data_service import DataService
+from .graph_service import GraphService
+from .pdf_service import PDFService
 
 app = Flask(__name__)
 
@@ -99,21 +98,25 @@ def pass_data(league_file, player_file, player_name, start_date, end_date, compa
     :param compare_name: Name of the player to compare with.
     :return: A response containing the generated PDF in byte representation.
     """
-    if compare_name and not both_in_league(league_file, player_name, compare_name):
+    data_service = DataService()
+    if compare_name and not data_service.both_in_league(league_file, player_name, compare_name):
         return Response("Error: The second player name was not found in the league file.", 400,
                         mimetype='application/json')
     # Get parameter maps with relevant data for generating plots from the data module
-    line_map = get_line_data(league_file, player_file, player_name, compare_file, compare_name, start_date, end_date)
-    bar_map = get_bar_data(league_file, player_name, compare_name)
+    line_map = data_service.get_line_data(league_file, player_file, player_name, compare_file, compare_name, start_date, end_date)
+    bar_map = data_service.get_bar_data(league_file, player_name, compare_name)
 
     # Pass the maps to get lists containing plots in byte form from the graph_generator module
-    line_plots = create_line_plots(line_map)
-    bar_plot_set = create_bar_plots(bar_map, 'v')
+    graph_service = GraphService()
+    line_plots = graph_service.create_line_plots(line_map)
+    bar_plot_set = graph_service.create_bar_plots(bar_map, 'v')
 
     # Get a parameter map with relevant data for generating a PDF from the data module, and pass it to the pdf_generator
     # module along with the graphs
-    pdf_map = get_pdf_data(league_file, player_name, compare_name, line_plots, bar_plot_set, player_image, player_cmp_image)
-    pdf_bytes = create_pdf(pdf_map)
+    pdf_service = PDFService()
+    pdf_map = data_service.get_pdf_data(league_file, player_name, compare_name, line_plots, bar_plot_set, player_image,
+                                       player_cmp_image)
+    pdf_bytes = pdf_service.create_pdf(pdf_map)
 
     response = make_response(bytes(pdf_bytes))
     response.headers.set('Content-Type', 'application/pdf')

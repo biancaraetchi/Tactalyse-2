@@ -27,7 +27,12 @@ class TestApp(unittest.TestCase):
         self.end_date = '2023-06-01'
 
     def tearDown(self):
-        pass
+        # Clean up the files
+        self.league_file.close()
+        self.player_file.close()
+        self.compare_file.close()
+        self.player_image.close()
+        self.player_cmp_image.close()
 
     def check_assertions(self, response):
         # Assert the response
@@ -35,13 +40,6 @@ class TestApp(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.content_type, 'application/pdf')
         self.assertIsInstance(response.data, bytes)
-
-        # Clean up the files
-        self.league_file.close()
-        self.player_file.close()
-        self.compare_file.close()
-        self.player_image.close()
-        self.player_cmp_image.close()
 
     def test_pdf_endpoint(self):
 
