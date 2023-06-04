@@ -143,6 +143,11 @@ class LinePlotDataHelper:
         return player_data, column_name, start_date, end_date, player, compare, compare_data
 
     def set_season_tick_values(self, season_x_vals):
+        """
+        Function that sets the tick values.
+        :param season_x_vals: x values in the season.
+        :return: tick values.
+        """
         tick_vals = []
         for i, season in enumerate(season_x_vals):
             if i == len(season_x_vals) - 1:

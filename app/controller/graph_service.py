@@ -50,6 +50,12 @@ class GraphService:
 
 
     def create_clustered_bar_plot(self, bar_map):
+        """
+        Function that retrieves a drawn clusterd bar plot for further use.
+
+        :param bar_map:
+        :return: The clustered bar plot drawn based on passed parameters, in byte form.
+        """
         factory = BarPlotFactory()
         param_map = {'type': 'clustered', 'params': bar_map}
         plot_obj = factory.create_instance(param_map)
@@ -58,6 +64,12 @@ class GraphService:
 
 
     def create_leaderboard_bar_plot(self, bar_map):
+        """
+        Function that retrieves a drawn leaderboard bar plot for further use.
+
+        :param bar_map:
+        :return: The leaderboard bar plot drawn based on passed parameters, in byte form.
+        """
         factory = BarPlotFactory()
         param_map = {'type': 'leaderboard', 'params': bar_map}
         plot_obj = factory.create_instance(param_map)
@@ -65,6 +77,12 @@ class GraphService:
 
 
     def create_bar_plot_set(self, bar_map):
+        """
+        Function that retrieves all drawn bar plots for further use.
+
+        :param bar_map:
+        :return: All bar plots drawn based on passed parameters, in byte form.
+        """
         save = copy.deepcopy(bar_map)
         basic_bar_plots = self.create_bar_plots(bar_map, 'v')
         clustered_plots = self.create_clustered_bar_plot(save)

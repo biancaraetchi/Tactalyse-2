@@ -4,6 +4,9 @@ from .preprocessor import Preprocessor
 
 class PDFProcessor(Preprocessor):
     def params_to_map(self, league_file, player_name, compare_name, line_plots, bar_plots, player_image=None, player_cmp_image=None):
+        """
+        Function that preprocess parameters to map.
+        """
         reader = ExcelReader()
         league_df = reader.league_data(league_file, player_name, compare_name)
         pdf_map = {'league_data': league_df}

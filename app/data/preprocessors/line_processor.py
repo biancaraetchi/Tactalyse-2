@@ -38,10 +38,16 @@ class LineProcessor(Preprocessor):
         return line_map
 
     def set_player(self, player_name, line_map):
+        """
+        Function that sets the player name.
+        """
         line_map.update({'player': player_name})
         return line_map
 
     def set_compare(self, compare, compare_file, line_map):
+        """
+        Function that sets the compare player name and data frame.
+        """
         if not compare:
             return line_map
         line_map.update({'compare': compare})
@@ -51,6 +57,9 @@ class LineProcessor(Preprocessor):
         return line_map
 
     def set_player_data(self, player_name, player_file, league_file, line_map):
+        """
+        Function that sets the player's data.
+        """
         player_df = self.__reader.player_data(player_file)
         line_map.update({'player_data': player_df})
 
@@ -66,11 +75,17 @@ class LineProcessor(Preprocessor):
         return line_map
 
     def set_tactalyse_data(self, start_date, end_date, line_map):
+        """
+        Function that sets the tactalyse start & end date.
+        """
         line_map.update({'start_date': start_date})
         line_map.update({'end_date': end_date})
         return line_map
 
     def set_stats(self, player_pos, line_map):
+        """
+        Function that sets the stats with the player position.
+        """
         columns = self.get_columns_line_plots(player_pos)
         line_map.update({'columns': columns})
         return line_map

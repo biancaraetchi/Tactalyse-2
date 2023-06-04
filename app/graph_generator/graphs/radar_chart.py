@@ -16,6 +16,9 @@ class RadarChart(Graph):
             self.__position = player_pos
 
     def draw(self, param_map):
+        """
+        Function that draw a radar chart based on the param_map.
+        """
         data = param_map.get('player_row')
         column_names = param_map.get('columns')
         player = data.iloc[0]['Player']

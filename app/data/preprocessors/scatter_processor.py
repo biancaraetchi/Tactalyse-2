@@ -5,6 +5,12 @@ import numpy as np
 
 class ScatterProcessor(Preprocessor):
     def get_scatter_columns(self, player_df):
+        """
+        Function that provides a list of headers to use for graphing the scatter plots.
+
+        :param player_df: player's data frame which will be used for graph.
+        :return: All columns containing the required stats to graph.
+        """
         columns = []
         if isinstance(player_df, type(None)):
             return columns
@@ -38,12 +44,18 @@ class ScatterProcessor(Preprocessor):
         return scatter_map
     
     def set_player(self, player_file, player_name, scatter_map, reader):
+        """
+        Function that sets the player data.
+        """
         player_df = reader.player_data(player_file)
         scatter_map.update({"player_data":player_df})
         scatter_map.update({"player_name":player_name})
         return scatter_map
     
     def set_compare_player(self, compare_file, compare_name, scatter_map, reader):
+        """
+        Function that sets the compare player data.
+        """
         if not compare_file:
             return scatter_map
         compare_df = reader.player_data(compare_file)
@@ -52,6 +64,9 @@ class ScatterProcessor(Preprocessor):
         return scatter_map
     
     def select_only_columns_with_slashes(self, player_df):
+        """
+        Function that extracts and sets slashed data in the data frame.
+        """
         columns_to_drop = []
         for column in player_df.columns:
             if "/" not in column or 'Unnamed' not in column:
@@ -60,6 +75,9 @@ class ScatterProcessor(Preprocessor):
         return player_df
     
     def set_columns(self, scatter_map):
+        """
+        Function that sets the param map for drawing scatter plot.
+        """
         columns_player = self.get_scatter_columns(scatter_map.get("player_data"))
         if isinstance(scatter_map.get("compare_player_data"), type(None)):
             scatter_map.update({"columns":columns_player})
@@ -70,6 +88,9 @@ class ScatterProcessor(Preprocessor):
         return scatter_map
     
     def drop_unique_columns(self, player_df, compare_player_df, columns_player):
+        """
+        Function that remove unique columns.
+        """
         columns_to_remove = []
         for i in range(len(columns_player)):
             if player_df.columns[columns_player[i][0]] not in compare_player_df.columns:
