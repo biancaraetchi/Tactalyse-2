@@ -177,7 +177,7 @@ class BarPlotTests(unittest.TestCase):
         bytes = self.obj.draw(param_map)
         self.assertNotEqual(bytes,None,'no changes')
 
-    def test_image_format(self):
+    def test_bar_plot_image_format(self):
         param_map=self.set_up()
         param_map['stats'] = 'Stat2'
         bytes = None

@@ -155,7 +155,6 @@ class ClusteredBarPlot(BarPlot):
             param_map['stats'] = stats
             clustered_bar_plot = self.draw_main_stats_plot(param_map)
         else:
-            print('NOT COMP')
             stats = self.get_stats_superset()
             clustered_bar_plot = []
             param_map['stats'] = stats[:4]

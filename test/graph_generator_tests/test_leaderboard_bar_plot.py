@@ -66,7 +66,7 @@ class LeaderboardBarPlotTests(unittest.TestCase):
             self.assertNotEqual(x, None, 'no graph')
             self.assertNotEqual(pickle.dumps(x), pickle.dumps(None), 'empty graph')
 
-    def test_image_format(self):
+    def test_leaderboard_bar_plot_image_format(self):
         param_map=self.set_up()
         param_map['stats'] = ['Stat1', 'Stat3', 'Stat5', 'Stat9', 'Stat10']
         graph_list = self.obj.draw_all(param_map)
