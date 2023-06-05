@@ -29,12 +29,13 @@ class TestPDF(unittest.TestCase):
         })
         main_pos = "DM"
 
-        self.pdf.set_info(player_name, league_df, main_pos)
+        self.pdf.set_info(player_name, "League", league_df, main_pos)
 
         # Assert that the player's information is correctly set
         player = self.pdf.player
         self.assertEqual(player.get_player_name(), player_name)
         self.assertEqual(player.get_player_position(), main_pos)
+        self.assertEqual("League", player.get_player_league())
 
     def test_set_compare_info(self):
         player_name = "A Masina"
@@ -52,7 +53,7 @@ class TestPDF(unittest.TestCase):
         })
         main_pos = "FB"
 
-        self.pdf.set_compare_info(player_name, league_df, main_pos)
+        self.pdf.set_compare_info(player_name, None, league_df, main_pos)
 
         # Assert that the compare player's information is correctly set
         compare = self.pdf.compare

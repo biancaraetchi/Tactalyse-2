@@ -40,12 +40,13 @@ class StandardPDFTests(unittest.TestCase):
         result = self.standard_pdf.generate_pdf(param_map)
 
         # Assert the expected method calls on the mock objects
-        self.pdf_generator_mock.set_info.assert_called_with("T Clevery", "mock_league_data", "DM")
+        self.pdf_generator_mock.set_info.assert_called_with("T Clevery", None, "mock_league_data", "DM")
         self.pdf_generator_mock.print_title.assert_called()
         self.pdf_generator_mock.output.assert_called_with(dest='S')
 
         # Assert the result
         self.assertEqual(result, "Generated PDF")
+
 
 if __name__ == '__main__':
     unittest.main()

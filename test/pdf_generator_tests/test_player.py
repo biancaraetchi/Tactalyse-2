@@ -27,10 +27,10 @@ class TestPlayer(unittest.TestCase):
         self.assertEqual(self.player.get_player_weight(), "75")
 
     def test_set_football_info(self):
-        self.player.set_football_info("Son", self.league_df, "Winger")
+        self.player.set_football_info("Son", "League", self.league_df, "Winger")
         self.assertEqual(self.player.get_player_position(), "Winger")
         self.assertEqual(self.player.get_player_club(), "Tottenham")
-        self.assertEqual(self.player.get_player_league(), "ENG2")
+        self.assertEqual(self.player.get_player_league(), "League")
         self.assertEqual(self.player.get_player_foot(), "Right")
         self.assertEqual(self.player.get_player_on_loan(), False)
         self.assertEqual(self.player.get_player_contract_date(), "2024-01-01")

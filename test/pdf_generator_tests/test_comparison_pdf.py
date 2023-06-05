@@ -46,8 +46,8 @@ class ComparisonPDFTests(unittest.TestCase):
         result = self.comparison_pdf.generate_pdf(param_map)
 
         # Assert the expected method calls on the mock objects
-        self.pdf_generator_mock.set_info.assert_called_with("T Clevery", "mock_league_data", "DM")
-        self.pdf_generator_mock.set_compare_info.assert_called_with("A Masina", "mock_league_data", "FB")
+        self.pdf_generator_mock.set_info.assert_called_with("T Clevery", None, "mock_league_data", "DM")
+        self.pdf_generator_mock.set_compare_info.assert_called_with("A Masina", None, "mock_league_data", "FB")
         self.pdf_generator_mock.print_comparison_title.assert_called()
         self.pdf_generator_mock.output.assert_called_with(dest='S')
 

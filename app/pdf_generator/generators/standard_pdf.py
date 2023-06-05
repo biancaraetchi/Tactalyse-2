@@ -25,7 +25,7 @@ class StandardPDF(PDFGenerator):
         """
         league_df = param_map["league_data"]
         player_name = param_map["player_name"]
-        league_name = param_map["league"]
+        league_name = param_map.get("league")
         main_pos = param_map["main_pos"]
         line_plots = param_map["line_plots"]
         bar_plots = param_map["bar_plots"]
