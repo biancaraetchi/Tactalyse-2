@@ -2,6 +2,7 @@ import unittest
 from flask import Response
 from app.controller.app import app
 import os
+import time
 
 
 class TestApp(unittest.TestCase):
@@ -42,8 +43,29 @@ class TestApp(unittest.TestCase):
         self.assertIsInstance(response.data, bytes)
 
     def test_pdf_endpoint(self):
+        start_time = time.time()
 
-        # Make a POST request to the endpoint
+        response = self.app.post('/pdf',
+                                 data={
+                                     'league-file': (self.league_file, 'league_file.xlsx'),
+                                     'player-file': (self.player_file, 'player_file.xlsx'),
+                                     'player-name': self.player_name,
+                                     'start-date': self.start_date,
+                                     'end-date': self.end_date,
+                                     'player-image': (self.player_image, 'player_image.png')
+                                 },
+                                 content_type='multipart/form-data')
+
+        elapsed_time = time.time() - start_time
+
+        self.check_assertions(response)
+
+        time_limit = 20
+        self.assertLessEqual(elapsed_time, time_limit, f"Request took longer than {time_limit} seconds.")
+
+    def test_pdf_endpoint_compare(self):
+        start_time = time.time()
+
         response = self.app.post('/pdf',
                                  data={
                                      'league-file': (self.league_file, 'league_file.xlsx'),
@@ -57,7 +79,13 @@ class TestApp(unittest.TestCase):
                                      'player-cmp-image': (self.player_cmp_image, 'player_cmp_image.png')
                                  },
                                  content_type='multipart/form-data')
+
+        elapsed_time = time.time() - start_time
+
         self.check_assertions(response)
+
+        time_limit = 20
+        self.assertLessEqual(elapsed_time, time_limit, f"Request took longer than {time_limit} seconds.")
 
 
 if __name__ == '__main__':
