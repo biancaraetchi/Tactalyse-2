@@ -33,7 +33,7 @@ class Player:
         self.__player_country = league_df.loc[league_df['Player'] == player_name, 'Birth country'].values[0]
         self.__player_weight = str(league_df.loc[league_df['Player'] == player_name, 'Weight'].values[0])
 
-    def set_football_info(self, player_name, league_df, position):
+    def set_football_info(self, player_name, league_name, league_df, position):
         """
         Function that sets the class attributes relating to the player's football information
         to their appropriate values.
@@ -47,8 +47,10 @@ class Player:
         self.__player_position = position
         self.__player_club = league_df.loc[league_df['Player'] == player_name, 'Team'].values[0]
 
-        # Placeholder, might need to have the league's name passed from the frontend
-        self.__player_league = "ENG2"
+        league = league_name
+        if league is None:
+            league = "Unknown"
+        self.__player_league = league
 
         self.__player_foot = league_df.loc[league_df['Player'] == player_name, 'Foot'].values[0]
         self.__player_on_loan = league_df.loc[league_df['Player'] == player_name, 'On loan'].values[0]

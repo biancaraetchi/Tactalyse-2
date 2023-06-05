@@ -29,6 +29,7 @@ class ComparisonPDF(PDFGenerator):
         """
         league_df = param_map["league_data"]
         player_name = param_map["player_name"]
+        league_name = param_map["league"]
         main_pos = param_map["main_pos"]
         compare_name = param_map["compare_name"]
         compare_pos = param_map["compare_pos"]
@@ -37,8 +38,8 @@ class ComparisonPDF(PDFGenerator):
         player_image = param_map.get("player_image")
         player_cmp_image = param_map.get("player_cmp_image")
 
-        self._pdf.set_info(player_name, league_df, main_pos)
-        self._pdf.set_compare_info(compare_name, league_df, compare_pos)
+        self._pdf.set_info(player_name, league_name, league_df, main_pos)
+        self._pdf.set_compare_info(compare_name, league_name, league_df, compare_pos)
         self.set_standard_properties(player_name)
 
         self._pdf.print_comparison_title()

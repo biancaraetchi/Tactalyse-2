@@ -18,6 +18,7 @@ def generate_pdf():
     # compare_file = None
     start_date = "2016-09-25"
     end_date = "2020-12-23"
+    league_name = "Eredivisie"
 
     data_service = DataService()
     line_map = data_service.get_line_data(league_file, player_file, player_name, compare_file, compare_name, start_date, end_date)
@@ -33,7 +34,7 @@ def generate_pdf():
     # Get a parameter map with relevant data for generating a PDF from the data module, and pass it to the pdf_generator
     # module along with the graphs
     pdf_service = PDFService()
-    pdf_map = data_service.get_pdf_data(league_file, player_name, compare_name, line_plots, bar_plot_set)
+    pdf_map = data_service.get_pdf_data(league_file, player_name, league_name, compare_name, line_plots, bar_plot_set)
     pdf_bytes = pdf_service.create_pdf(pdf_map)
 
     # Save the PDF to a file

@@ -3,7 +3,8 @@ from .preprocessor import Preprocessor
 
 
 class PDFProcessor(Preprocessor):
-    def params_to_map(self, league_file, player_name, compare_name, line_plots, bar_plots, player_image=None, player_cmp_image=None):
+    def params_to_map(self, league_file, player_name, league_name, compare_name, line_plots, bar_plots,
+                      player_image=None, player_cmp_image=None):
         """
         Function that preprocess parameters to map.
         """
@@ -16,6 +17,7 @@ class PDFProcessor(Preprocessor):
         main_pos = self.main_position(player_row)
         main_pos = self.position_dictionary().get(main_pos)
         pdf_map.update({'main_pos': main_pos})
+        pdf_map.update({'league': league_name})
 
         if compare_name:
             pdf_map.update({'compare_name': compare_name})

@@ -72,8 +72,8 @@ class DataService:
         processor = ScatterProcessor()
         return processor.extract_scatter_data(player_file, compare_file, player_name, compare_name)
 
-
-    def get_pdf_data(self, league_data, player_name, compare_name, line_plots, bar_plots, player_image=None, player_cmp_image=None):
+    def get_pdf_data(self, league_data, player_name, league_name, compare_name, line_plots, bar_plots,
+                     player_image=None, player_cmp_image=None):
         """
         Function that takes a football player's data along with required parameters, and extracts the relevant data for a
         pdf.
@@ -88,7 +88,8 @@ class DataService:
                  order. (player_data, columns_line_plot)
         """
         processor = PDFProcessor()
-        return processor.params_to_map(league_data, player_name, compare_name, line_plots, bar_plots, player_image, player_cmp_image)
+        return processor.params_to_map(league_data, player_name, league_name,
+                                       compare_name, line_plots, bar_plots, player_image, player_cmp_image)
 
 
     def both_in_league(self, league_file, player_name, compare_name):

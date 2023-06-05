@@ -41,6 +41,7 @@ def json_process(payload):
     player_file = request.json.get('player-file')
     compare_file = request.json.get('compare-file')
     player_name = request.json.get('player-name')
+    league_name = request.json.get('league-name')
     compare_name = request.json.get('compare-name')
     start_date = request.json.get('start-date')
     end_date = request.json.get('end-date')
@@ -54,7 +55,8 @@ def json_process(payload):
     elif not player_name:
         return Response("Error: player-name was not specified.", 400, mimetype='application/json')
 
-    return pass_data(league_file, player_file, player_name, start_date, end_date, compare_file, compare_name, player_image, player_cmp_image)
+    return pass_data(league_file, player_file, player_name, league_name, start_date, end_date, compare_file,
+                     compare_name, player_image, player_cmp_image)
 
 
 def key_value_process(files, form):
@@ -75,6 +77,7 @@ def key_value_process(files, form):
     league_file = files['league-file']
     player_file = files['player-file']
     compare_file = files.get('compare-file')
+    league_name = files.get('league-name')
     player_name = form['player-name']
     compare_name = form.get('compare-name')
     start_date = form.get('start-date')
@@ -82,10 +85,12 @@ def key_value_process(files, form):
     player_image = form.get('player-image')
     player_cmp_image = form.get('player-cmp-image')
 
-    return pass_data(league_file, player_file, player_name, start_date, end_date, compare_file, compare_name, player_image, player_cmp_image)
+    return pass_data(league_file, player_file, player_name, league_name, start_date, end_date, compare_file,
+                     compare_name, player_image, player_cmp_image)
 
 
-def pass_data(league_file, player_file, player_name, start_date, end_date, compare_file, compare_name, player_image, player_cmp_image):
+def pass_data(league_file, player_file, player_name, league_name, start_date, end_date, compare_file, compare_name,
+              player_image, player_cmp_image):
     """
     Function that passes the received data to the appropriate services, and generates a PDF.
 
@@ -114,8 +119,8 @@ def pass_data(league_file, player_file, player_name, start_date, end_date, compa
     # Get a parameter map with relevant data for generating a PDF from the data module, and pass it to the pdf_generator
     # module along with the graphs
     pdf_service = PDFService()
-    pdf_map = data_service.get_pdf_data(league_file, player_name, compare_name, line_plots, bar_plot_set, player_image,
-                                       player_cmp_image)
+    pdf_map = data_service.get_pdf_data(league_file, player_name, league_name, compare_name, line_plots, bar_plot_set,
+                                        player_image, player_cmp_image)
     pdf_bytes = pdf_service.create_pdf(pdf_map)
 
     response = make_response(bytes(pdf_bytes))

@@ -27,7 +27,7 @@ class PDF(FPDF):
         self.__img_w = 50
         self.__img_h = 35
 
-    def set_info(self, player_name, league_df, main_pos):
+    def set_info(self, player_name, league_name, league_df, main_pos):
         """
         Function that sets the information within the player object attribute by calling the Player
         class set methods.
@@ -36,9 +36,9 @@ class PDF(FPDF):
         :param main_pos: the player's main position within the team
         """
         self.__player.set_personal_info(player_name, league_df)
-        self.__player.set_football_info(player_name, league_df, main_pos)
+        self.__player.set_football_info(player_name, league_name, league_df, main_pos)
 
-    def set_compare_info(self, player_name, league_df, main_pos):
+    def set_compare_info(self, player_name, league_name, league_df, main_pos):
         """
         Function that sets the information within the compare object attribute by calling the Player
         class set methods.
@@ -47,7 +47,7 @@ class PDF(FPDF):
         :param main_pos: the compared player's main position within the team
         """
         self.__compare.set_personal_info(player_name, league_df)
-        self.__compare.set_football_info(player_name, league_df, main_pos)
+        self.__compare.set_football_info(player_name, league_name, league_df, main_pos)
 
     def header(self):
         """
