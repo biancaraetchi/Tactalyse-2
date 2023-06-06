@@ -49,7 +49,7 @@ class RadarChart(Graph):
         ax.fill(angles, values, 'b', alpha=0.1)
 
         # Save the plot to a file
-        buffer = io.BytesIO()
-        plt.savefig(buffer, format='png')
-        buffer.seek(0)
-        return buffer.getvalue()
+        buf = io.BytesIO()
+        plt.savefig(buf, format='png')
+        buf.seek(0)
+        return buf.getvalue()

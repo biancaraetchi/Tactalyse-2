@@ -240,7 +240,6 @@ class TestPDF(unittest.TestCase):
         pdf.print_player_info_label.assert_any_call(52.0, 210.0, 30, 'LEAGUE: ', 30, 'La Liga')
 
     def test_print_comparison_info_col1(self):
-        pdf = PDF()
         player = MagicMock()
         player.get_player_position.return_value = 'Forward'
         player.get_player_club.return_value = 'Real Madrid'

@@ -1,31 +1,10 @@
-import io
-import re
-import matplotlib
-import matplotlib.pyplot as plt
-from matplotlib import cm
-import pandas as pd
-import seaborn as sns
-import numpy as np
-from PIL import Image, ImageDraw, ImageFont
 from .abstract_models import Graph
 
 class BarPlotBase(Graph):
     """
-    Class that acts as base class for all bar plots and provides default values for attributes.
+    Class that acts as base class for all bar plots. 
+    Every subclass of BarPlotBase should have a draw method.
     """
-    __main_pos = ''
-    __position_name = ''
-    __compare_pos = ''
-    __orientation = 'v'
-    __player_name = ''
-    __compare_name = None
-
-    def __init__(self):
-        pass
-
-    def draw(self):
-        pass
-
 
     def are_comparable(self, cmp_name, pos, cmp_pos):
         """
@@ -51,6 +30,8 @@ class BarPlotBase(Graph):
 
     def get_stats_superset(self):
         """
+        This function returns a hard coded list of statistics that may need be changed if the statistics
+        were to change.
         :return: the union of sets of main statistics for attacking and defensive positions.
         """
         return ['Goals per 90', 'Offensive duels per 90',

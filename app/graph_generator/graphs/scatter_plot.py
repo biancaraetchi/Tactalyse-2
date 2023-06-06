@@ -50,11 +50,11 @@ class ScatterPlot(Graph):
         enter_data=pd.DataFrame(data=enter_data)
         sns.lmplot(x=axis_titles[0], y=axis_titles[1],data=enter_data, hue=hue)
 
-        buffer = io.BytesIO()
-        plt.savefig(buffer, format='png')
-        buffer.seek(0)
+        buf = io.BytesIO()
+        plt.savefig(buf, format='png')
+        buf.seek(0)
         plt.close()
-        return buffer.getvalue()
+        return buf.getvalue()
     
     def draw_all(self, param_map):
         """

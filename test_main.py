@@ -1,7 +1,6 @@
 from app.controller.graph_service import GraphService
 from app.controller.data_service import DataService
 from app.controller.pdf_service import PDFService
-import pandas as pd
 import os
 import matplotlib
 
@@ -25,11 +24,9 @@ def generate_pdf():
     bar_map = data_service.get_bar_data(league_file, player_name, compare_name)
 
     # Pass the maps to get lists containing plots in byte form from the graph_generator module
-    #radar_chart = create_radar_chart(radar_map)
     graph_service = GraphService()
     line_plots = graph_service.create_line_plots(line_map)
     bar_plot_set = graph_service.create_bar_plot_set(bar_map)
-    #bar_plot_set = create_bar_plots(bar_map, 'v')
 
     # Get a parameter map with relevant data for generating a PDF from the data module, and pass it to the pdf_generator
     # module along with the graphs

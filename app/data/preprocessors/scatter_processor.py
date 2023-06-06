@@ -82,7 +82,6 @@ class ScatterProcessor(Preprocessor):
         if isinstance(scatter_map.get("compare_player_data"), type(None)):
             scatter_map.update({"columns":columns_player})
             return scatter_map
-        columns_compare_player = self.get_scatter_columns(scatter_map.get("compare_player_data"))
         columns = self.drop_unique_columns(scatter_map.get("player_data"), scatter_map.get("compare_player_data"), columns_player)
         scatter_map.update({"columns":columns})
         return scatter_map

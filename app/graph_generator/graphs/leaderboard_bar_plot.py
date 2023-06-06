@@ -1,4 +1,7 @@
-from .clustered_bar_plot import *
+import io
+import matplotlib.pyplot as plt
+import seaborn as sns
+from .bar_plot import BarPlot
 
 class LeaderboardBarPlot(BarPlot):
     """
@@ -8,7 +11,6 @@ class LeaderboardBarPlot(BarPlot):
     def __init__(self, param_map):
         super().__init__(param_map)
         self.__position_name = param_map.get('player_pos')
-        self.__main_pos = param_map.get('main_pos')
         self.__player_name = param_map.get('player_name')
         self.__compare_name = param_map.get('compare_name')
         self.__compare_pos = param_map.get('compare_pos')
@@ -82,11 +84,11 @@ class LeaderboardBarPlot(BarPlot):
         for x in ax.get_xticks():
             ax.axvline(x=x, linestyle='--', color='gray', alpha=0.5, zorder=-1)
 
-        buffer = io.BytesIO()
-        plt.savefig(buffer, format='png')
-        buffer.seek(0)
+        buf = io.BytesIO()
+        plt.savefig(buf, format='png')
+        buf.seek(0)
         plt.close()
-        return buffer.getvalue()
+        return buf.getvalue()
 
     def draw_all(self, param_map):
         """
@@ -115,3 +117,4 @@ class LeaderboardBarPlot(BarPlot):
                 leaderboard_bar_plots.append(self.draw_leaderboard(param_map, True))
         
         return leaderboard_bar_plots
+    

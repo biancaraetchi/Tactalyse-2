@@ -1,4 +1,11 @@
-from .bar_plot import *
+import io
+import matplotlib
+import matplotlib.pyplot as plt
+from matplotlib import cm
+import pandas as pd
+import seaborn as sns
+import numpy as np
+from .bar_plot import BarPlot
 
 class ClusteredBarPlot(BarPlot):
     """
@@ -23,8 +30,6 @@ class ClusteredBarPlot(BarPlot):
         :param cmap_list: list of color gradients to be used for the graph. The color for each next bar
         cycles through this list.
         """
-        # set up the gradient for the cmap
-        grad = np.atleast_2d(np.linspace(0,1,256))
 
         # reestablish the plot area
         axs = ax.patches[0].axes
@@ -134,11 +139,11 @@ class ClusteredBarPlot(BarPlot):
 
         for y in ax.get_yticks():
             ax.axhline(y=y, linestyle='--', color='gray', alpha=0.5, zorder=-1)
-        buffer = io.BytesIO()
-        plt.savefig(buffer, format='png')
-        buffer.seek(0)
+        buf = io.BytesIO()
+        plt.savefig(buf, format='png')
+        buf.seek(0)
         plt.close()
-        return buffer.getvalue()
+        return buf.getvalue()
 
 
     def draw(self, param_map):

@@ -6,6 +6,7 @@ from .pdf_service import PDFService
 
 app = Flask(__name__)
 
+mimetype='application/json'
 
 @app.route('/pdf', methods=["POST"])
 def generate_pdf():
@@ -35,7 +36,7 @@ def json_process(payload):
     :return: A response either containing an error message, or the generated PDF in byte representation.
     """
     if payload is None:
-        return Response("Error: invalid JSON payload.", 400, mimetype='application/json')
+        return Response("Error: invalid JSON payload.", 400, mimetype=mimetype)
 
     league_file = request.json.get('league-file')
     player_file = request.json.get('player-file')
@@ -49,11 +50,11 @@ def json_process(payload):
     player_cmp_image = request.json.get('player-cmp-image')
 
     if not league_file:
-        return Response("Error: league-file was not sent.", 400, mimetype='application/json')
+        return Response("Error: league-file was not sent.", 400, mimetype=mimetype)
     elif not player_file:
-        return Response("Error: player-file was not sent.", 400, mimetype='application/json')
+        return Response("Error: player-file was not sent.", 400, mimetype=mimetype)
     elif not player_name:
-        return Response("Error: player-name was not specified.", 400, mimetype='application/json')
+        return Response("Error: player-name was not specified.", 400, mimetype=mimetype)
 
     return pass_data(league_file, player_file, player_name, league_name, start_date, end_date, compare_file,
                      compare_name, player_image, player_cmp_image)
@@ -68,11 +69,11 @@ def key_value_process(files, form):
     :return: A response either containing an error message, or the generated PDF in byte representation.
     """
     if 'league-file' not in files:
-        return Response("Error: league file was not sent.", 400, mimetype='application/json')
+        return Response("Error: league file was not sent.", 400, mimetype=mimetype)
     elif 'player-file' not in files:
-        return Response("Error: player file was not sent.", 400, mimetype='application/json')
+        return Response("Error: player file was not sent.", 400, mimetype=mimetype)
     elif 'player-name' not in form:
-        return Response("Error: player name was not specified.", 400, mimetype='application/json')
+        return Response("Error: player name was not specified.", 400, mimetype=mimetype)
 
     league_file = files['league-file']
     player_file = files['player-file']
@@ -106,7 +107,7 @@ def pass_data(league_file, player_file, player_name, league_name, start_date, en
     data_service = DataService()
     if compare_name and not data_service.both_in_league(league_file, player_name, compare_name):
         return Response("Error: The second player name was not found in the league file.", 400,
-                        mimetype='application/json')
+                        mimetype=mimetype)
     # Get parameter maps with relevant data for generating plots from the data module
     line_map = data_service.get_line_data(league_file, player_file, player_name, compare_file, compare_name, start_date, end_date)
     bar_map = data_service.get_bar_data(league_file, player_name, compare_name)

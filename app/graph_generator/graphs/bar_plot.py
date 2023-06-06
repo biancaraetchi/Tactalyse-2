@@ -1,4 +1,11 @@
-from .bar_plot_base import *
+from .bar_plot_base import BarPlotBase
+import io
+import matplotlib
+import matplotlib.pyplot as plt
+from matplotlib import cm
+import pandas as pd
+import seaborn as sns
+import numpy as np
 import matplotlib.ticker as ticker
 
 class BarPlot(BarPlotBase):
@@ -7,7 +14,7 @@ class BarPlot(BarPlotBase):
     position and stat.
     """
     def __init__(self, param_map):
-        if 'player_pos' in param_map and not param_map['player_pos'] is None:
+        if 'player_pos' in param_map and param_map['player_pos'] is not None:
             self.__position_name = param_map.get('player_pos')
             self.__main_pos = param_map.get('main_pos')
             self.__orientation = param_map.get('orientation')
@@ -47,9 +54,6 @@ class BarPlot(BarPlotBase):
         :param orientation: the graph's orientation. Can be vertical ('v') or horizontal ('h')
         :return: modified Axes object.
         """
-
-        # set up the gradient for the cmap
-        grad = np.atleast_2d(np.linspace(0,1,256))
 
         # reestablish the plot area
         axs = ax.patches[0].axes
@@ -190,11 +194,11 @@ class BarPlot(BarPlotBase):
         ax = self.color_graph(ax, max(stat_df[stat]), color_palette, self.__orientation, [0.06,0.06])
         ax = self.draw_ticks_and_labels(ax, stat, avg, comparing)
 
-        buffer = io.BytesIO()
-        plt.savefig(buffer, format='png')
-        buffer.seek(0)
+        buf = io.BytesIO()
+        plt.savefig(buf, format='png')
+        buf.seek(0)
         plt.close()
-        return buffer.getvalue()
+        return buf.getvalue()
 
 
     def draw_all(self, param_map):
@@ -210,11 +214,11 @@ class BarPlot(BarPlotBase):
             stats = self.get_stats_superset()
 
         basic_bar_plots = []
-        i = 0
-        for stat in stats:
+
+        for i in range(len(stats)):
             param_map['stats'] = stats[i]
             basic_bar_plots.append(self.draw(param_map))
-            i += 1
+
         return basic_bar_plots
 
 

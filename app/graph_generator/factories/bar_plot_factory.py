@@ -1,9 +1,7 @@
 from ..factories.abstract_graph_factory import AbstractGraphFactory
-from ..graphs.bar_plot import *
-from ..graphs.bar_plot_base import *
-from ..graphs.clustered_bar_plot import *
-from ..graphs.leaderboard_bar_plot import *
-
+from ..graphs.bar_plot import BarPlot
+from ..graphs.clustered_bar_plot import ClusteredBarPlot
+from ..graphs.leaderboard_bar_plot import LeaderboardBarPlot
 
 class BarPlotFactory(AbstractGraphFactory):
     """ Class representing a factory for bar plots"""

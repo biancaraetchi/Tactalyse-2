@@ -1,7 +1,6 @@
 from app.graph_generator.graphs.clustered_bar_plot import *
 import unittest
 import pickle
-import random
 
 class ClusteredBarPlotTests(unittest.TestCase):
     obj = None
@@ -40,6 +39,7 @@ class ClusteredBarPlotTests(unittest.TestCase):
         return param_map
     
     def test_color_clustered_bar_plot(self):
+        randmax = 25
         param_map=self.set_up()
         ax = plt.gca()
         
@@ -49,7 +49,7 @@ class ClusteredBarPlotTests(unittest.TestCase):
         sns.barplot(x="Player", y='Goals per 90', data=df)
 
         byte1=pickle.dumps(ax)
-        ax = self.obj.color_clustered_bar_plot(ax, random.randint(0,50), ['Oranges', 'Blues', 'Oranges'])
+        ax = self.obj.color_clustered_bar_plot(ax, randmax, ['Oranges', 'Blues', 'Oranges'])
         byte2=pickle.dumps(ax)
         self.assertNotEqual(byte1,byte2,'no changes')
 
@@ -60,7 +60,7 @@ class ClusteredBarPlotTests(unittest.TestCase):
         byte = self.obj.draw_main_stats_plot(param_map)
         self.assertNotEqual(byte,None,'no changes')
 
-    def test_draw_with_comparison_comparable(self):
+    def test_draw(self):
         param_map=self.set_up()
         param_map['stats'] = ['Goals per 90', 'Defensive duels per 90', 'Crosses per 90', 'Interceptions per 90', 'Assists per 90']
         result = self.obj.draw(param_map)
@@ -74,12 +74,6 @@ class ClusteredBarPlotTests(unittest.TestCase):
         for x in result:
             self.assertNotEqual(x, None, 'no graph')
             self.assertNotEqual(pickle.dumps(x), pickle.dumps(None), 'empty graph')
-
-    def test_draw_without_comparison(self):
-        param_map=self.set_up()
-        param_map['stats'] = ['Goals per 90', 'Defensive duels per 90', 'Crosses per 90', 'Interceptions per 90', 'Assists per 90']
-        result = self.obj.draw(param_map)
-        self.assertNotEqual(pickle.dumps(result), pickle.dumps(None), 'empty graph')
 
     def test_clustered_bar_plot_image_format(self):
         param_map=self.set_up()

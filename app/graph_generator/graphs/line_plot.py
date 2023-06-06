@@ -241,11 +241,11 @@ class LinePlot(Graph):
 
         plt.legend(bbox_to_anchor=(0.5, 1), loc='upper center', fontsize="medium")
 
-        buffer = io.BytesIO()
-        plt.savefig(buffer, format='png')
-        buffer.seek(0)
+        buf = io.BytesIO()
+        plt.savefig(buf, format='png')
+        buf.seek(0)
         plt.close()
-        return buffer.getvalue()
+        return buf.getvalue()
 
     def draw_all(self, param_map):
         """
