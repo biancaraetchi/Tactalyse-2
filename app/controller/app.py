@@ -1,10 +1,12 @@
 from flask import Flask, request, Response, make_response
-
+from flask_wtf.csrf import CSRFProtect
 from app.controller.data_service import DataService
 from .graph_service import GraphService
 from .pdf_service import PDFService
 
+csrf = CSRFProtect()
 app = Flask(__name__)
+csrf.init_app(app)
 
 mimetype='application/json'
 

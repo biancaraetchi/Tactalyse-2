@@ -86,10 +86,11 @@ class ClusteredBarPlot(BarPlot):
                 compare_player_value = data.loc[data['Player'] == self.__compare_name].iloc[0][stat]
             stat_df = data.loc[data['Main position'] == self.__main_pos].loc[:, [stat]]
             stat_list = stat_df[stat].tolist()
+            
+            avg = 0
             if len(stat_list) != 0:
                 avg = sum(stat_list) / len(stat_list)
-            else:
-                avg = 0
+                
             player_value_list.append(player_value)
             if comparing:
                 compare_player_value_list.append(compare_player_value)
@@ -99,15 +100,13 @@ class ClusteredBarPlot(BarPlot):
     
         if not comparing:
             player_vs_avg_data = {'Statistic': stats, self.__player_name: player_value_list, 'League Average' :avg_value_list}
-        else:
-            player_vs_avg_data = {'Statistic': stats, self.__player_name: player_value_list, self.__compare_name: compare_player_value_list, 'League Average' :avg_value_list}
-
-        df = pd.DataFrame(player_vs_avg_data)
-        if not comparing:
+            df = pd.DataFrame(player_vs_avg_data)
             df = pd.melt(df, id_vars=['Statistic'], value_vars=[self.__player_name, 'League Average'], var_name='Player/Avg Value', value_name='Value')
             sns.barplot(x='Statistic', y='Value', hue='Player/Avg Value', data=df)
             my_palette =['#B35702', '#FF0505']
         else:
+            player_vs_avg_data = {'Statistic': stats, self.__player_name: player_value_list, self.__compare_name: compare_player_value_list, 'League Average' :avg_value_list}
+            df = pd.DataFrame(player_vs_avg_data)
             df = pd.melt(df, id_vars=['Statistic'], value_vars=[self.__player_name, self.__compare_name, 'League Average'], var_name='Player1/Player2/Avg Value', value_name='Value')
             sns.barplot(x='Statistic', y='Value', hue='Player1/Player2/Avg Value', data=df)
             my_palette =['#B35702', '#DE0030' , '#FF0505']
@@ -125,15 +124,12 @@ class ClusteredBarPlot(BarPlot):
         plt.xlabel('Statistic', fontsize=0)
         plt.tight_layout()
         
-        if comparing:
-            self.print_value_labels(ax, 5.5, 'v')
-        else:
-            self.print_value_labels(ax, 8, 'v')
-
         if not comparing:
+            self.print_value_labels(ax, 8, 'v')
             cmap_list = ['YlOrBr', 'Reds']
             self.color_clustered_bar_plot(ax, max(data[stat]), cmap_list)
         else:
+            self.print_value_labels(ax, 5.5, 'v')
             cmap_list = ['YlOrBr', 'OrRd', 'Reds']
             self.color_clustered_bar_plot(ax, max(data[stat]), cmap_list)
 

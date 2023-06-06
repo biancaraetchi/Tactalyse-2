@@ -1,4 +1,7 @@
-from app.graph_generator.graphs.bar_plot import *
+import matplotlib.pyplot as plt
+import pandas as pd
+import seaborn as sns
+from app.graph_generator.graphs.bar_plot import BarPlot
 import unittest
 from unittest.mock import patch, call
 import pickle
@@ -6,6 +9,7 @@ import pickle
 class BarPlotTests(unittest.TestCase):
     
     no_changes_str='no changes'
+    test_player_name='John Doe'
     obj = None
 
     def set_up(self):
@@ -29,7 +33,7 @@ class BarPlotTests(unittest.TestCase):
             'player_pos': 'Striker',
             'main_pos': 'CF',
             'orientation': 'v',
-            'player_name': 'John Doe',
+            'player_name': self.test_player_name,
             'compare_name': 'Jane Smith',
             'compare_pos': 'Attacking Midfielder',
         }
@@ -40,7 +44,7 @@ class BarPlotTests(unittest.TestCase):
         self.set_up()
         ax = plt.gca()
         font_size = 8
-        player_data = {' ': ['John Doe'], 'Stat2': [5]}
+        player_data = {' ': [self.test_player_name], 'Stat2': [5]}
         df=pd.DataFrame(player_data)
         
         sns.barplot(x=" ", y='Stat2', data=df, orient='v')
@@ -55,7 +59,7 @@ class BarPlotTests(unittest.TestCase):
         self.set_up()
         ax = plt.gca()
         font_size = 8
-        player_data = {' ': ['John Doe'], 'Stat2': [5]}
+        player_data = {' ': [self.test_player_name], 'Stat2': [5]}
         df=pd.DataFrame(player_data)
         
         sns.barplot(x='Stat2', y=' ', data=df, orient='h')
@@ -71,7 +75,7 @@ class BarPlotTests(unittest.TestCase):
         rand_offset=0.5
         self.set_up()
         ax = plt.gca()
-        player_data = {'Player': ['John Doe'], 'Stat2': [5]}
+        player_data = {'Player': [self.test_player_name], 'Stat2': [5]}
         df=pd.DataFrame(player_data)
         
         sns.barplot(x="Player", y='Stat2', data=df, orient='v')
@@ -106,7 +110,7 @@ class BarPlotTests(unittest.TestCase):
         rand_offset=0.5
         self.set_up()
         ax = plt.gca()
-        player_data = {'Player': ['John Doe'], 'Stat2': [5]}
+        player_data = {'Player': [self.test_player_name], 'Stat2': [5]}
         df=pd.DataFrame(player_data)
         
         sns.barplot(x='Stat2', y='Player', data=df, orient='h')
@@ -139,7 +143,7 @@ class BarPlotTests(unittest.TestCase):
     def test_draw_ticks_and_labels_vertical(self):
         rand_avg=25
         self.set_up()
-        player_data = {'Player': ['John Doe'], 'Stat2': [5]}
+        player_data = {'Player': [self.test_player_name], 'Stat2': [5]}
         df=pd.DataFrame(player_data)
 
         sns.barplot(x="Player", y='Stat2', data=df, orient='v')
@@ -159,7 +163,7 @@ class BarPlotTests(unittest.TestCase):
     def test_draw_ticks_and_labels_horizontal(self):
         rand_avg=25
         self.set_up()
-        player_data = {'Player': ['John Doe'], 'Stat2': [5]}
+        player_data = {'Player': [self.test_player_name], 'Stat2': [5]}
         df=pd.DataFrame(player_data)
 
         sns.barplot(x='Stat2', y='Player', data=df, orient='h')

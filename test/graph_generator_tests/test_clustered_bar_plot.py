@@ -1,9 +1,14 @@
-from app.graph_generator.graphs.clustered_bar_plot import *
+import matplotlib.pyplot as plt
+import pandas as pd
+import seaborn as sns
+from app.graph_generator.graphs.clustered_bar_plot import ClusteredBarPlot
 import unittest
 import pickle
 
 class ClusteredBarPlotTests(unittest.TestCase):
+
     obj = None
+    stat_list = ['Goals per 90', 'Defensive duels per 90', 'Crosses per 90', 'Interceptions per 90', 'Assists per 90']
 
     def set_up(self, comparison=True, comparable=True):
         player_data = {
@@ -55,20 +60,20 @@ class ClusteredBarPlotTests(unittest.TestCase):
 
     def draw_main_stats_plot(self):
         param_map=self.set_up()
-        param_map['stats'] = ['Goals per 90', 'Defensive duels per 90', 'Crosses per 90', 'Interceptions per 90', 'Assists per 90']
+        param_map['stats'] = self.stat_list
         byte = None
         byte = self.obj.draw_main_stats_plot(param_map)
         self.assertNotEqual(byte,None,'no changes')
 
     def test_draw(self):
         param_map=self.set_up()
-        param_map['stats'] = ['Goals per 90', 'Defensive duels per 90', 'Crosses per 90', 'Interceptions per 90', 'Assists per 90']
+        param_map['stats'] = self.stat_list
         result = self.obj.draw(param_map)
         self.assertNotEqual(pickle.dumps(result), pickle.dumps(None), 'empty graph')
 
     def test_draw_with_comparison_not_comparable(self):
         param_map=self.set_up(comparable=False)
-        param_map['stats'] = ['Goals per 90', 'Defensive duels per 90', 'Crosses per 90', 'Interceptions per 90', 'Assists per 90']
+        param_map['stats'] = self.stat_list
         result = self.obj.draw(param_map)
         self.assertEqual(len(result), 2)
         for x in result:
@@ -77,9 +82,9 @@ class ClusteredBarPlotTests(unittest.TestCase):
 
     def test_clustered_bar_plot_image_format(self):
         param_map=self.set_up()
-        param_map['stats'] = ['Goals per 90', 'Defensive duels per 90', 'Crosses per 90', 'Interceptions per 90', 'Assists per 90']
-        bytes = self.obj.draw(param_map)
-        self.assertTrue(bytes.startswith(b'\x89PNG'), 'Wrong graph format. Expected PNG.')
+        param_map['stats'] = self.stat_list
+        byte_stream = self.obj.draw(param_map)
+        self.assertTrue(byte_stream.startswith(b'\x89PNG'), 'Wrong graph format. Expected PNG.')
 
 
 if __name__ == '__main__':

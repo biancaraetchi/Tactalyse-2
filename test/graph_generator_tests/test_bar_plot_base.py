@@ -1,12 +1,20 @@
 from app.graph_generator.graphs.bar_plot_base import *
+import pandas as pd
 import unittest
+
+class BarPlotBaseInstantiable(BarPlotBase):
+        def __init__(self):
+            pass
+
+        def draw(self):
+            pass
 
 class BarPlotBaseTests(unittest.TestCase):
     
     obj = None
 
     def set_up(self):
-        self.obj = BarPlotBase()
+        self.obj = BarPlotBaseInstantiable()
         player_data = {
             'Player': ['John Doe', 'Jane Smith', 'Michael Johnson', 'Emily Davis', 'David Brown',
                        'Emma Wilson', 'Christopher Taylor', 'Olivia Anderson', 'William Martinez', 'Sophia Lee'],
