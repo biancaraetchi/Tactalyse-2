@@ -6,6 +6,7 @@ from .pdf_service import PDFService
 app = Flask(__name__)
 mimetype='application/json'
 
+
 @app.route('/pdf', methods=["POST"])
 def generate_pdf():
     """
@@ -45,7 +46,7 @@ def json_process(payload):
     start_date = request.json.get('start-date')
     end_date = request.json.get('end-date')
     player_image = request.json.get('player-image')
-    player_cmp_image = request.json.get('player-cmp-image')
+    player_cmp_image = request.json.get('compare-image')
 
     if not league_file:
         return Response("Error: league-file was not sent.", 400, mimetype=mimetype)
@@ -82,7 +83,7 @@ def key_value_process(files, form):
     start_date = form.get('start-date')
     end_date = form.get('end-date')
     player_image = form.get('player-image')
-    player_cmp_image = form.get('player-cmp-image')
+    player_cmp_image = form.get('compare-image')
 
     return pass_data(league_file, player_file, player_name, league_name, start_date, end_date, compare_file,
                      compare_name, player_image, player_cmp_image)
