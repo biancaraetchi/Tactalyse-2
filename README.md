@@ -230,5 +230,5 @@ to keep the code decoupled and easily maintainable.
 #### Graphs
 
 We hope to have provided a solid framework for the easy addition of more graph types. As such, potential future  
-development could be focused on adding new graph types to the PDF. The graphs themselves may also need some  
+development could be focused on adding new graph types to the PDF. The existing graphs may also need some  
 fine-tuning in accordance with the company owner's needs.
