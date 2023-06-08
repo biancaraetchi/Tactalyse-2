@@ -76,8 +76,8 @@ class Preprocessor:
         atk_list = [prog_runs, assists, goals, dribbles, off_duels, fouls]
         def_list = [goals, crosses, dribbles, interceptions, def_duels, fouls]
 
-        cat_dict = dict.fromkeys(['GK'], [shots_blocked, def_duels, 
-                                           interceptions, sliding_tackles,
+        cat_dict = dict.fromkeys(['GK'], [shots_blocked, def_duels,
+                                          interceptions, sliding_tackles,
                                           long_passes, dribbles])
         cat_dict.update(dict.fromkeys(['FB'], def_list))
         cat_dict.update(dict.fromkeys(['CB'], def_list))

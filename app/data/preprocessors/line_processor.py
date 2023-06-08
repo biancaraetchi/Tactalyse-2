@@ -1,5 +1,5 @@
-from ..excel_reader import ExcelReader
 from .preprocessor import Preprocessor
+from ..excel_reader import ExcelReader
 
 
 class LineProcessor(Preprocessor):
@@ -20,12 +20,18 @@ class LineProcessor(Preprocessor):
         return stats_necessary['Attribute']
 
     def extract_line_data(self, league_file, player_file, player_name, compare_file, compare_name, start_date,
-                                       end_date):
+                          end_date):
         """
         Function that extracts all required data from the passed player match data Excel file.
 
-        :param param_map:
-        :return: DataFrame containing the player's match data (player_df), columns to use for graphing (columns).
+        :param league_file:
+        :param player_file:
+        :param player_name:
+        :param compare_file:
+        :param compare_name:
+        :param start_date:
+        :param end_date:
+        :return: Map containing data required for generating a bar plot.
         """
         line_map = {'type': "line"}
 
@@ -40,13 +46,23 @@ class LineProcessor(Preprocessor):
     def set_player(self, player_name, line_map):
         """
         Function that sets the player name.
+
+        :param player_name:
+        :param line_map:
+        :return: Passed line_map with the player appended for key 'player'.
         """
         line_map.update({'player': player_name})
         return line_map
 
     def set_compare(self, compare, compare_file, line_map):
         """
-        Function that sets the compare player name and data frame.
+        Function that sets the compare player's name and data.
+
+        :param compare:
+        :param compare_file:
+        :param line_map:
+        :return: Passed line_map with the compare player appended for key 'compare', and their match data for key
+        'compare_data'.
         """
         if not compare:
             return line_map
@@ -58,7 +74,13 @@ class LineProcessor(Preprocessor):
 
     def set_player_data(self, player_name, player_file, league_file, line_map):
         """
-        Function that sets the player's data.
+        Function that sets the player's positional information and data
+
+        :param player_name:
+        :param player_file:
+        :param league_file:
+        :param line_map:
+        :return: Passed line_map with the player's position appended in different formats, and their match data.
         """
         player_df = self.__reader.player_data(player_file)
         line_map.update({'player_data': player_df})
@@ -76,7 +98,12 @@ class LineProcessor(Preprocessor):
 
     def set_tactalyse_data(self, start_date, end_date, line_map):
         """
-        Function that sets the tactalyse start & end date.
+        Function that sets the player's start and end date of Tactalyse's contract with them.
+
+        :param start_date:
+        :param end_date:
+        :param line_map:
+        :return: Passed line_map with the start and end date appended.
         """
         line_map.update({'start_date': start_date})
         line_map.update({'end_date': end_date})
@@ -84,7 +111,11 @@ class LineProcessor(Preprocessor):
 
     def set_stats(self, player_pos, line_map):
         """
-        Function that sets the stats with the player position.
+        Function that sets the columns to use in graphing for the player position.
+
+        :param player_pos:
+        :param line_map:
+        :return: Passed line_map with the columns appended as a list for header 'columns'.
         """
         columns = self.get_columns_line_plots(player_pos)
         line_map.update({'columns': columns})

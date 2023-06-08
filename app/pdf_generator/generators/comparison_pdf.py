@@ -2,7 +2,7 @@ from .pdf_generator import PDFGenerator
 
 
 class ComparisonPDF(PDFGenerator):
-    
+
     def print_player_info(self, player_image=None, player_cmp_image=None):
         """
         Function that prints player's and compare player's image and basic information in the first page
@@ -19,7 +19,6 @@ class ComparisonPDF(PDFGenerator):
 
         self._pdf.set_font(self._pdf.font, 'B', 14)
         self._pdf.print_comparison_info_col1(self._pdf.player, self._pdf.compare)
-
 
     def generate_pdf(self, param_map):
         """

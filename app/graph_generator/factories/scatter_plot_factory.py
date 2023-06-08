@@ -6,6 +6,9 @@ class ScatterPlotFactory(AbstractGraphFactory):
     """ Class representing a factory for scatter plots"""
 
     def create_instance(self, graph_type):
+        """
+        Function that creates an instance of a scatter plot depending on the passed type.
+        """
         if graph_type != 'Default':
             print("To be implemented.")
             return ScatterPlot()

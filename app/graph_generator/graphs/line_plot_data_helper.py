@@ -69,7 +69,7 @@ class LinePlotDataHelper:
         """
         date_strings = dates.iloc[year_indices].dt.strftime('%Y-%m-%d')
         years = date_strings.str.slice(start=2, stop=4)
-        seasons = [f"{n}/{int(n)+1}" for n in years]
+        seasons = [f"{n}/{int(n) + 1}" for n in years]
         return seasons
 
     def get_xlabels(self, data):
@@ -103,9 +103,9 @@ class LinePlotDataHelper:
         :return: The input Series (x_vals, y_vals) with the data averaged over each 'window' data points.
         """
         avg_x = x_vals.rolling(window=window).mean()
-        avg_x = avg_x[window-1::window]
+        avg_x = avg_x[window - 1::window]
         avg_y = y_vals.rolling(window=window).mean()
-        avg_y = avg_y[window-1::window]
+        avg_y = avg_y[window - 1::window]
         return avg_x, avg_y
 
     def create_sub_plot_data(self, subcolumns, player_data, column_index):
@@ -152,4 +152,4 @@ class LinePlotDataHelper:
         for i, season in enumerate(season_x_vals):
             if i == len(season_x_vals) - 1:
                 return tick_vals
-            tick_vals.append((season_x_vals[i] + season_x_vals[i+1])/2)
+            tick_vals.append((season_x_vals[i] + season_x_vals[i + 1]) / 2)

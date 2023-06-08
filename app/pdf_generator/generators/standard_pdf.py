@@ -13,7 +13,7 @@ class StandardPDF(PDFGenerator):
             self._pdf.image(player_image, 55, 85, 100, 100)
         else:
             self._pdf.image('app/pdf_generator/resources/images/Default.png', 55, 85, 100, 100)
-            
+
         self._pdf.set_font(self._pdf.font, 'B', 14)
         self._pdf.print_player_info_col1(self._pdf.player)
 

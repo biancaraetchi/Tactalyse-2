@@ -5,8 +5,8 @@ import numpy as np
 import pandas as pd
 import seaborn as sns
 
-from .abstract_models import Graph
 from app.graph_generator.graphs.line_plot_data_helper import LinePlotDataHelper
+from .abstract_models import Graph
 
 
 class LinePlot(Graph):
@@ -53,7 +53,9 @@ class LinePlot(Graph):
     __logo_size = 0.4
     # Amount of original data points to average for each plotted point
     __avg_window = 4
+    # Width of the output graph figure
     __fig_w = 8
+    # Height of the output graph figure
     __fig_h = 7.75
 
     def __init__(self, param_map):
@@ -200,7 +202,7 @@ class LinePlot(Graph):
         comparison player's file (compare_data). player_data, columns and player are required, the rest is optional.
         :return: The generated line plot in byte string form.
         """
-        player_data, column_name, start_date, end_date, player, compare, compare_data =\
+        player_data, column_name, start_date, end_date, player, compare, compare_data = \
             self.__helper.extract_data_from_param_map(param_map)
 
         fig, ax = plt.subplots(figsize=(self.__fig_w, self.__fig_h), gridspec_kw={'top': self.__top_offset,
@@ -266,8 +268,14 @@ class LinePlot(Graph):
 
     @property
     def helper(self):
+        """
+        Getter for the line plot's helper attribute.
+        """
         return self.__helper
 
     @property
     def position(self):
+        """
+        Getter for the line plot's position attribute.
+        """
         return self.__position

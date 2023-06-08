@@ -6,7 +6,18 @@ class PDFProcessor(Preprocessor):
     def params_to_map(self, league_file, player_name, league_name, compare_name, line_plots, bar_plots,
                       player_image=None, player_cmp_image=None):
         """
-        Function that preprocess parameters to map.
+        Function that extracts all required data from the passed league data Excel file, along with passed parameters
+        required for PDF generation.
+
+        :param league_file:
+        :param player_name:
+        :param league_name:
+        :param compare_name:
+        :param line_plots:
+        :param bar_plots:
+        :param player_image:
+        :param player_cmp_image:
+        :return: Map containing data required for generating a bar plot.
         """
         reader = ExcelReader()
         league_df = reader.league_data(league_file, player_name, compare_name)

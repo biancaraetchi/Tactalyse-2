@@ -1,14 +1,15 @@
+import copy
+
 from ..graph_generator.factories.bar_plot_factory import BarPlotFactory
 from ..graph_generator.factories.line_plot_factory import LinePlotFactory
 from ..graph_generator.factories.radar_chart_factory import RadarChartFactory
 from ..graph_generator.factories.scatter_plot_factory import ScatterPlotFactory
-import copy
 
 
 class GraphService:
     def create_radar_chart(self, radar_map):
         """
-        Function that retrieves a drawn radio chart for further use.
+        Function that retrieves a drawn radar chart for further use.
 
         :param radar_map:
         :return: The radio chart drawn based on passed parameters, in byte form.
@@ -18,7 +19,6 @@ class GraphService:
         plot_obj = factory.create_instance(param_map)
         plot = plot_obj.draw(radar_map)
         return plot
-
 
     def create_line_plots(self, line_map):
         """
@@ -33,12 +33,12 @@ class GraphService:
         plots = plot_obj.draw_all(line_map)
         return plots
 
-
     def create_bar_plots(self, bar_map, orientation):
         """
         Function that retrieves a drawn bar plot for further use.
 
         :param bar_map:
+        :param orientation:
         :return: The bar plot drawn based on passed parameters, in byte form.
         """
         factory = BarPlotFactory()
@@ -47,7 +47,6 @@ class GraphService:
         plot_obj = factory.create_instance(param_map)
         plots = plot_obj.draw_all(bar_map)
         return plots
-
 
     def create_clustered_bar_plot(self, bar_map):
         """
@@ -62,7 +61,6 @@ class GraphService:
         plots = plot_obj.draw(bar_map)
         return plots
 
-
     def create_leaderboard_bar_plot(self, bar_map):
         """
         Function that retrieves a drawn leaderboard bar plot for further use.
@@ -74,7 +72,6 @@ class GraphService:
         param_map = {'type': 'leaderboard', 'params': bar_map}
         plot_obj = factory.create_instance(param_map)
         return plot_obj.draw_all(bar_map)
-
 
     def create_bar_plot_set(self, bar_map):
         """
@@ -88,7 +85,6 @@ class GraphService:
         clustered_plots = self.create_clustered_bar_plot(save)
         leaderboard_plots = self.create_leaderboard_bar_plot(save)
         return [leaderboard_plots, basic_bar_plots, clustered_plots]
-
 
     def create_scatter_plots(self, scatter_map):
         """

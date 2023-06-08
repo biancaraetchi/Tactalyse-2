@@ -1,5 +1,6 @@
 from .abstract_models import Graph
 
+
 class BarPlotBase(Graph):
     """
     Class that acts as base class for all bar plots. 
@@ -15,18 +16,17 @@ class BarPlotBase(Graph):
         :param cmp_pos: the position of the player that's being compared.
         :return: True if there is no comparison or if the players are comparable.
         """
-        if cmp_name != None:
+        if cmp_name is not None:
             comparable_1 = ['Attacking Midfielder', 'Winger', 'Striker']
             comparable_2 = ['Full Back', 'Center Back', 'Defensive Midfielder']
-            if(pos not in comparable_1 and pos not in comparable_2 and pos != 'Goalkeeper'):
-                raise ValueError("Position '{}' is not accepted.".format(pos))          
-            if(cmp_pos not in comparable_1 and cmp_pos not in comparable_2 and pos != 'Goalkeeper'):
-                raise ValueError("Position '{}' is not accepted.".format(cmp_pos))     
-            if ((pos in comparable_1 and cmp_pos in comparable_2) or 
-                (pos in comparable_2 and cmp_pos in comparable_1)):
+            if pos not in comparable_1 and pos not in comparable_2 and pos != 'Goalkeeper':
+                raise ValueError("Position '{}' is not accepted.".format(pos))
+            if cmp_pos not in comparable_1 and cmp_pos not in comparable_2 and pos != 'Goalkeeper':
+                raise ValueError("Position '{}' is not accepted.".format(cmp_pos))
+            if ((pos in comparable_1 and cmp_pos in comparable_2) or
+                    (pos in comparable_2 and cmp_pos in comparable_1)):
                 return False
         return True
-    
 
     def get_stats_superset(self):
         """
@@ -35,11 +35,10 @@ class BarPlotBase(Graph):
         :return: the union of sets of main statistics for attacking and defensive positions.
         """
         return ['Goals per 90', 'Offensive duels per 90',
-                    'Defensive duels per 90', 'Fouls per 90',
-                    'Interceptions per 90', 'Crosses per 90', 
-                    'Dribbles per 90', 'Progressive runs per 90',
-                    'Assists per 90']
-    
+                'Defensive duels per 90', 'Fouls per 90',
+                'Interceptions per 90', 'Crosses per 90',
+                'Dribbles per 90', 'Progressive runs per 90',
+                'Assists per 90']
 
     def get_index(self, data, name):
         """
@@ -52,9 +51,8 @@ class BarPlotBase(Graph):
         """
         selected_rows = data[data['Player'] == name]
         if selected_rows.empty:
-            raise ValueError("Player '{}' not found in the dataframe.".format(name))          
+            raise ValueError("Player '{}' not found in the dataframe.".format(name))
         return data.index[data['Player'] == name][0]
-
 
     def get_best_stats(self, param_map, name, stats, number_of_best_statistics=3):
         """
@@ -67,10 +65,10 @@ class BarPlotBase(Graph):
         :param number_of_best_statistics: how many best statistics to compute. Default is 3.
         :return: a list of the (3) best statistics for a given player.
         """
-        
+
         if number_of_best_statistics > len(stats):
             raise ValueError("Number of best statistics exceeds the length of the stats list.")
-        
+
         data = param_map.get('league_data')
         rankings = []
         for stat in stats:
@@ -79,10 +77,9 @@ class BarPlotBase(Graph):
 
         rankings.sort()
         rankings = rankings[:number_of_best_statistics]
-        
+
         best_stats = []
         for x in rankings:
             best_stats.append(x[1])
 
         return best_stats
-

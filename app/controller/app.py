@@ -1,10 +1,11 @@
 from flask import Flask, request, Response, make_response
+
 from app.controller.data_service import DataService
 from .graph_service import GraphService
 from .pdf_service import PDFService
 
 app = Flask(__name__)
-mimetype='application/json'
+mimetype = 'application/json'
 
 
 @app.route('/pdf', methods=["POST"])
@@ -97,10 +98,13 @@ def pass_data(league_file, player_file, player_name, league_name, start_date, en
     :param league_file: Excel file containing football league data.
     :param player_file: Excel file containing the player's match data.
     :param player_name: Name of the player to generate a report for.
+    :param league_name: Name of the player to compare to in the report.
     :param start_date: Start date of Tactalyse's services for the player.
     :param end_date: End date of Tactalyse's services for the player.
     :param compare_file: Excel file containing match data for the player to compare with.
     :param compare_name: Name of the player to compare with.
+    :param player_image: Image representing the main player.
+    :param player_cmp_image: Image representing the compare player.
     :return: A response containing the generated PDF in byte representation.
     """
     data_service = DataService()
@@ -108,7 +112,8 @@ def pass_data(league_file, player_file, player_name, league_name, start_date, en
         return Response("Error: The second player name was not found in the league file.", 400,
                         mimetype=mimetype)
     # Get parameter maps with relevant data for generating plots from the data module
-    line_map = data_service.get_line_data(league_file, player_file, player_name, compare_file, compare_name, start_date, end_date)
+    line_map = data_service.get_line_data(league_file, player_file, player_name, compare_file, compare_name, start_date,
+                                          end_date)
     bar_map = data_service.get_bar_data(league_file, player_name, compare_name)
 
     # Pass the maps to get lists containing plots in byte form from the graph_generator module

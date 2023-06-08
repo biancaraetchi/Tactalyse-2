@@ -30,6 +30,7 @@ class ExcelReader:
 
         :param league_file: The Excel file containing league data.
         :param player_name: The name of the player to extract.
+        :param compare_name:
         :return: A Pandas dataframe containing all data in the Excel file, including headers.
         :raises KeyError: if the passed player name matches none of the names in the Excel file under the 'Player' col.
         """
@@ -41,5 +42,11 @@ class ExcelReader:
         return player
 
     def all_league_data(self, league_file):
+        """
+        Function that converts all data from the passed league data Excel file into a Pandas dataframe.
+
+        :param league_file: League Excel file to extract all data from.
+        :return: DataFrame containing all data in the passed Excel file.
+        """
         dataframe = self.read_file(league_file)
         return dataframe

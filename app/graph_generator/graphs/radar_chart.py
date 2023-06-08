@@ -22,9 +22,10 @@ class RadarChart(Graph):
         data = param_map.get('player_row')
         column_names = param_map.get('columns')
         player = data.iloc[0]['Player']
-        # create a list of the values for each category
+
         data = data[column_names]
         values = data.iloc[0].tolist()
+
         # close the loop for the radar chart
         values += values[:1]
 

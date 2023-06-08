@@ -3,10 +3,14 @@ from ..graphs.bar_plot import BarPlot
 from ..graphs.clustered_bar_plot import ClusteredBarPlot
 from ..graphs.leaderboard_bar_plot import LeaderboardBarPlot
 
+
 class BarPlotFactory(AbstractGraphFactory):
     """ Class representing a factory for bar plots"""
 
     def create_instance(self, param_map):
+        """
+        Function that creates an instance of a bar plot depending on the passed parameter map's 'type' key's value.
+        """
         graph_type = param_map.get('type')
         params = param_map.get('params')
         if graph_type == 'clustered':

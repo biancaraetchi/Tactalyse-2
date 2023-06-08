@@ -7,7 +7,6 @@ class RadarProcessor(Preprocessor):
         """
         Function that provides a list of headers to use for graphing the radio chart.
 
-        :param processor: Data preprocessor with general data functions.
         :param position: Full position name of the player whose stats to graph.
         :return: List of column headers in string form to extract from dataframes when creating PDF graphs.
         """
@@ -17,12 +16,10 @@ class RadarProcessor(Preprocessor):
         """
         Function that extracts all required data from the passed league data Excel file.
 
-        :param processor: Data preprocessor with general data functions.
         :param league_file: Excel file containing the data of a specific football league.
         :param player_name: The name of the player whose stats to graph.
         :param compare_name: The name of the player to compare with and whose league data to extract.
-        :return: Dataframe containing a single row with the player's league data (player_row), columns to use for graphing
-                 (columns), main position of the passed player (main_pos_long), and the position abbreviated (main_pos).
+        :return: Map containing data required for generating a radar chart.
         """
         reader = ExcelReader()
         league_df = reader.league_data(league_file, player_name, compare_name)

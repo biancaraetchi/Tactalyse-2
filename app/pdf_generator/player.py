@@ -40,6 +40,7 @@ class Player:
         All these values are queried from the league dataframe except for the player's name 
         and position within the team.
         :param player_name: The name of the player whose league data to extract.
+        :param league_name:
         :param league_df: The dataframe that has been created from the league's excel file with Pandas
         :param position: The player's main position within the team that has been 
         preprocessed by the data service

@@ -32,6 +32,7 @@ class PDF(FPDF):
         Function that sets the information within the player object attribute by calling the Player
         class set methods.
         :param player_name: the player's name
+        :param league_name:
         :param league_df: dataframe obtained from the league excel file through Pandas 
         :param main_pos: the player's main position within the team
         """
@@ -43,6 +44,7 @@ class PDF(FPDF):
         Function that sets the information within the compare object attribute by calling the Player
         class set methods.
         :param player_name: the name of the player that is being compared to
+        :param league_name:
         :param league_df: dataframe obtained from the league excel file through Pandas
         :param main_pos: the compared player's main position within the team
         """
@@ -130,9 +132,14 @@ class PDF(FPDF):
         self.ln(4)
 
     def print_comparison_title(self):
+        """
+        Function for setting the title of a comparison report
+        """
         self.set_font(self.__font, '', 22)
         self.ln(18)
-        self.cell(0, 14, "Comparison Report for " + self.__player.get_player_name() + " and " + self.__compare.get_player_name(), 0, 1, 'C', False)
+        self.cell(0, 14,
+                  "Comparison Report for " + self.__player.get_player_name() + " and " + self.__compare.get_player_name(),
+                  0, 1, 'C', False)
         self.ln(4)
 
     def print_player_info_label(self, start_x_pos, start_y_pos, end_pos, label, y_offset, value):
@@ -142,6 +149,7 @@ class PDF(FPDF):
         :param start_y_pos: the starting position of the player's information label on the y axis
         :param end_pos: the offset of the player's information label on the x axis
         :param label: the name of the specific information about the player
+        :param y_offset:
         :param end_pos: the offset of the player's information label on the y axis
         :param value: the content of such information about the player
         """
@@ -160,10 +168,11 @@ class PDF(FPDF):
         :param start_y_pos: the starting position of the player's information label on the y axis
         :param end_pos: the offset of the player's information label on the x axis
         :param label: the name of the specific information about the player
+        :param y_offset:
         :param end_pos: the offset of the player's information label on the y axis
         :param value: the content of such information about the player
         """
-        
+
         self.set_font(self.__font, 'B', 12)
         self.set_text_color(255, 77, 77)
         self.set_xy(start_x_pos, start_y_pos + y_offset)
@@ -190,7 +199,6 @@ class PDF(FPDF):
 
         self.print_player_info_label(start_x_pos, start_y_pos, end_pos, 'LEAGUE: ', 30, player.get_player_league())
 
-
     def print_comparison_info_col1(self, player, compare):
         """
         Function that defines the layout of the first column of the player's and compare player's information.
@@ -206,26 +214,30 @@ class PDF(FPDF):
         self.set_xy(start_x_pos, start_y_pos + 75)
         self.cell(0, 14, "" + self.__compare.get_player_name(), 0, 1)
 
-        ## Main player's information section
+        # Main player's information section
 
-        self.print_comparison_info_label(start_x_pos, start_y_pos, end_pos, 'POSITION: ', 0, player.get_player_position())
+        self.print_comparison_info_label(start_x_pos, start_y_pos, end_pos, 'POSITION: ', 0,
+                                         player.get_player_position())
 
         self.print_comparison_info_label(start_x_pos, start_y_pos, end_pos, 'CLUB: ', 10, player.get_player_club())
 
-        self.print_comparison_info_label(start_x_pos, start_y_pos, end_pos, 'COUNTRY: ', 20, player.get_player_country())
+        self.print_comparison_info_label(start_x_pos, start_y_pos, end_pos, 'COUNTRY: ', 20,
+                                         player.get_player_country())
 
         self.print_comparison_info_label(start_x_pos, start_y_pos, end_pos, 'LEAGUE: ', 30, player.get_player_league())
 
-        ## Compare player's information section
+        # Compare player's information section
 
-        self.print_comparison_info_label(start_x_pos, start_y_pos, end_pos, 'POSITION: ', 80, compare.get_player_position())
+        self.print_comparison_info_label(start_x_pos, start_y_pos, end_pos, 'POSITION: ', 80,
+                                         compare.get_player_position())
 
         self.print_comparison_info_label(start_x_pos, start_y_pos, end_pos, 'CLUB: ', 90, compare.get_player_club())
 
-        self.print_comparison_info_label(start_x_pos, start_y_pos, end_pos, 'COUNTRY: ', 100, compare.get_player_country())
+        self.print_comparison_info_label(start_x_pos, start_y_pos, end_pos, 'COUNTRY: ', 100,
+                                         compare.get_player_country())
 
-        self.print_comparison_info_label(start_x_pos, start_y_pos, end_pos, 'LEAGUE: ', 110, compare.get_player_league())
-
+        self.print_comparison_info_label(start_x_pos, start_y_pos, end_pos, 'LEAGUE: ', 110,
+                                         compare.get_player_league())
 
     def print_plot(self, plot):
         """
