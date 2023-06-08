@@ -58,7 +58,6 @@ class Player:
         self.__player_num_matches = str(league_df.loc[league_df['Player'] == player_name, 'Matches played'].values[0])
 
     # Getter functions for the class attributes
-
     def get_player_name(self):
         return self.__player_name
 

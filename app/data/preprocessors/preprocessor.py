@@ -102,8 +102,8 @@ class Preprocessor:
         """
         Function that checks if the player is included in the league file
 
-        :param league_file:
-        :param player_name:
+        :param league_file: Excel file containing football league data.
+        :param player_name: Name of the player whose data to extract.
         :return: True if they're in the league file, false if not
         """
 

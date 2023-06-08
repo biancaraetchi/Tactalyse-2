@@ -33,8 +33,9 @@ class ScatterProcessor(Preprocessor):
         :param processor: Data preprocessor with general data functions.
         :param player_file: Excel file containing the data of a specific football player.
         :param player_name: The name of the player whose stats to graph.
-        :return: Dataframe containing a single row with the player's league data (player_row), columns to use for graphing
-                 (columns), main position of the passed player (main_pos_long), and the position abbreviated (main_pos).
+        :return: a map with dataframes for the player (`player_data`) and the second player, if any was provided, (`compare_player_data`)
+        their names (`player_name` and `compare_player_name`, respectively) and the columns that need to be selected from the dataframe (`columns`,
+        in the following format [[x1, y1], [x2, y2], ...]).
         """
         reader = ExcelReader()
         scatter_map = {}
@@ -46,6 +47,12 @@ class ScatterProcessor(Preprocessor):
     def set_player(self, player_file, player_name, scatter_map, reader):
         """
         Function that sets the player data.
+
+        :param scatter_map: 
+        :param player_file: Excel file containing the data of a specific football player.
+        :param player_name: The name of the player whose stats to graph.
+        :param reader: Excel reader to extract dataframes from Excel files.
+        :return: updated scatter_map with a dataframe with all the player data, along with the player name
         """
         player_df = reader.player_data(player_file)
         scatter_map.update({"player_data":player_df})
@@ -54,7 +61,13 @@ class ScatterProcessor(Preprocessor):
     
     def set_compare_player(self, compare_file, compare_name, scatter_map, reader):
         """
-        Function that sets the compare player data.
+        Function that sets the compare player data, if it exists.
+
+        :param scatter_map:
+        :param compare_file: Excel file containing the data of a specific football player.
+        :param compare_name: The name of the player whose stats to graph.
+        :param reader: Excel reader to extract dataframes from Excel files.
+        :return: updated scatter_map with a dataframe with all the compare player data, along with the compare player name
         """
         if not compare_file:
             return scatter_map
@@ -63,20 +76,27 @@ class ScatterProcessor(Preprocessor):
         scatter_map.update({"compare_player_name":compare_name})
         return scatter_map
     
-    def select_only_columns_with_slashes(self, player_df):
-        """
-        Function that extracts and sets slashed data in the data frame.
-        """
-        columns_to_drop = []
-        for column in player_df.columns:
-            if "/" not in column or 'Unnamed' not in column:
-                columns_to_drop.append(column)
-        player_df = player_df.drop(columns=columns_to_drop)
-        return player_df
+    # def select_only_columns_with_slashes(self, player_df):
+    #     """
+    #     Function that extracts and sets slashed data in the data frame.
+
+    #     :param scatter_map:
+    #     :param player_file: Excel file containing the data of a specific football player.
+    #     :return: player dataframe containing only columns that will be extracted for graph generation.
+    #     """
+    #     columns_to_drop = []
+    #     for column in player_df.columns:
+    #         if "/" not in column or 'Unnamed' not in column:
+    #             columns_to_drop.append(column)
+    #     player_df = player_df.drop(columns=columns_to_drop)
+    #     return player_df
     
     def set_columns(self, scatter_map):
         """
         Function that sets the param map for drawing scatter plot.
+
+        :param scatter_map:
+        :return: scatter_map with updated 'columns' key, containing only columns that will be used for graph generation.
         """
         columns_player = self.get_scatter_columns(scatter_map.get("player_data"))
         if isinstance(scatter_map.get("compare_player_data"), type(None)):
@@ -88,7 +108,12 @@ class ScatterProcessor(Preprocessor):
     
     def drop_unique_columns(self, player_df, compare_player_df, columns_player):
         """
-        Function that remove unique columns.
+        Function that removes unique columns.
+
+        :param player_df: player's data frame which will be used for graph.
+        :param compare_player_df: compare player's data frame which will be used for graph.
+        :param columns_player: index of columns from the player_df dataframe that will be used for graph generation.
+        :return: the indices of the columns with the same data for both player and compare player.
         """
         columns_to_remove = []
         for i in range(len(columns_player)):

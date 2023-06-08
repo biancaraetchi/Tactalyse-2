@@ -21,9 +21,21 @@ class PDFService:
             return self.create_comparison_pdf(param_map)
 
     def create_standard_pdf(self, param_map):
+        """
+        Function that generates a pdf report for a single player.
+
+        :param param_map: Map containing all parameters needed to generate a PDF.
+        :return: The PDF generated based on passed parameters and plots, in byte form.
+        """
         return self.__standard_generator.generate_pdf(param_map)
 
     def create_comparison_pdf(self, param_map):
+        """
+        Function that generates a pdf report to compare performance of two players.
+
+        :param param_map: Map containing all parameters needed to generate a PDF.
+        :return: The PDF generated based on passed parameters and plots, in byte form.
+        """
         return self.__comparison_generator.generate_pdf(param_map)
 
     @property
