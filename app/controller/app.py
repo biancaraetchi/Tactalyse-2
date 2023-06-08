@@ -119,13 +119,12 @@ def pass_data(league_file, player_file, player_name, league_name, start_date, en
     # Pass the maps to get lists containing plots in byte form from the graph_generator module
     graph_service = GraphService()
     line_plots = graph_service.create_line_plots(line_map)
-    bar_plot_set = graph_service.create_bar_plots(bar_map, 'v')
+    bar_plot_set = graph_service.create_bar_plot_set(bar_map)
 
     # Get a parameter map with relevant data for generating a PDF from the data module, and pass it to the pdf_generator
     # module along with the graphs
     pdf_service = PDFService()
-    pdf_map = data_service.get_pdf_data(league_file, player_name, league_name, compare_name, line_plots, bar_plot_set,
-                                        player_image, player_cmp_image)
+    pdf_map = data_service.get_pdf_data(league_file, player_name, league_name, compare_name, line_plots, bar_plot_set)
     pdf_bytes = pdf_service.create_pdf(pdf_map)
 
     response = make_response(bytes(pdf_bytes))
