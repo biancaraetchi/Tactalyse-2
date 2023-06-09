@@ -42,9 +42,7 @@ class TestApp(unittest.TestCase):
         self.assertEqual(response.content_type, 'application/pdf')
         self.assertIsInstance(response.data, bytes)
 
-    def test_pdf_endpoint(self):
-        start_time = time.time()
-
+    def create_response(self):
         response = self.app.post('/pdf',
                                  data={
                                      'league-file': (self.league_file, 'league_file.xlsx'),
@@ -55,6 +53,16 @@ class TestApp(unittest.TestCase):
                                      'player-image': (self.player_image, 'player_image.png')
                                  },
                                  content_type='multipart/form-data')
+        return response
+
+    def test_pdf_endpoint(self):
+        response = self.create_response()
+        self.check_assertions(response)
+
+    def test_pdf_endpoint_speed(self):
+        start_time = time.time()
+
+        response = self.create_response()
 
         elapsed_time = time.time() - start_time
 
@@ -63,9 +71,7 @@ class TestApp(unittest.TestCase):
         time_limit = 20
         self.assertLessEqual(elapsed_time, time_limit, f"Request took longer than {time_limit} seconds.")
 
-    def test_pdf_endpoint_compare(self):
-        start_time = time.time()
-
+    def create_compare_response(self):
         response = self.app.post('/pdf',
                                  data={
                                      'league-file': (self.league_file, 'league_file.xlsx'),
@@ -79,6 +85,17 @@ class TestApp(unittest.TestCase):
                                      'player-cmp-image': (self.player_cmp_image, 'player_cmp_image.png')
                                  },
                                  content_type='multipart/form-data')
+        return response
+
+    def test_pdf_endpoint_compare(self):
+        response = self.create_compare_response()
+
+        self.check_assertions(response)
+
+    def test_pdf_endpoint_compare_speed(self):
+        start_time = time.time()
+
+        response = self.create_compare_response()
 
         elapsed_time = time.time() - start_time
 

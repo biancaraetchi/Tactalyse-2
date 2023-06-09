@@ -8,6 +8,12 @@ matplotlib.use('TkAgg')
 
 
 def generate_pdf():
+    """
+    This function tests the functionality of the PDF generator without relying on endpoints. It uses the same classes
+    and functions, but can be run as a local script. It was mostly used for testing visual output without having to
+    dockerize our code every time. It is not part of the PDF generator code, and its removal would not affect
+    functionality. It was left in for convenience of future developers.
+    """
     league_file = "app/pdf_generator/resources/test_data/ENG2.xlsx"
     player_file = "app/pdf_generator/resources/test_data/Player stats T. Cleverley.xlsx"
     player_name = "T. Cleverley"
